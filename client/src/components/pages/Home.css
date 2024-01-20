@@ -1,8 +1,38 @@
-body {
-    background-image: url("../../public/home_background_image.png");
-}
-
 .Home-container {
-    padding: 0 35%;
+    background-image: url("../../public/home_background_image.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    height: 100vh; /* Ensure the background covers the entire viewport height */
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
+.Home-content {
+    position: absolute;
+    text-align: left;
+    color: #FFFDFB;
+    left: 10%;
+    top: 15%;
+    font-size: 80px;
+    font-family: 'Courier New', Courier, monospace;
+  }
+
+.Home-subtitle {
+    position: absolute;
+    text-align: left;
+    color: #FFFDFB;
+    left: 10%;
+    top: 60%;
+    font-size: 60px;
+  }
+
+.Home-container2 {
+    padding: 4% 4%;
+    background-color: #FFFDFB;
+  }
+
+.Home-icon1 {
+    transform: scale(2);
+}

@@ -7,6 +7,8 @@ import {
 } from "@react-oauth/google";
 
 import "./Home.css";
+import { FaChartColumn } from "react-icons/fa6";
+import { IconContext } from "react-icons";
 
 //TODO(weblab student): REPLACE WITH YOUR OWN CLIENT_ID
 const GOOGLE_CLIENT_ID = "924135144483-a4h7ghgqcej244vnv4312rdkd4lovc95.apps.googleusercontent.com";
@@ -35,8 +37,20 @@ const Home = (props: Props) => {
       )}
       
       <div className="Home-container">
-        <h1>This is the home page</h1>
+        <div className="Home-content">
+            <h1>book <br /> blendr</h1>
+            
+        </div>
+        <div className="u-subheader Home-subtitle">
+            <h4>blend and send to a frend</h4>
+        </div>
       </div>
+      <div className="Home-container2">
+        <FaChartColumn />
+      </div>
+      
+        
+     
     </GoogleOAuthProvider>
   );
 };
