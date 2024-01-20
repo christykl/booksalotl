@@ -32,18 +32,24 @@ const NavBar = (props: NavBarProps) => {
           <Link to="/profile/" className="NavBar-link">
             profile
           </Link>
-          {/* {props.userId && (
-            <Link to={`/profile/${props.userId}`} className="NavBar-link">
-              Profile
-            </Link>
-          )} */}
           <Link to="/friends/" className="NavBar-link">
             friends
           </Link>
           <Link to="/blends/" className="NavBar-link">
             blends
           </Link>
-          <Link to="/" className="NavBar-link">
+          {/* <button
+            onClick={() => {
+              googleLogout();
+              handleLogout();
+            }}
+          >
+            sign out
+          </button> */}
+          <Link to="/" className="NavBar-link" onClick={() => {
+            googleLogout();
+            handleLogout();
+          }}>
             sign out
           </Link>
         </div>

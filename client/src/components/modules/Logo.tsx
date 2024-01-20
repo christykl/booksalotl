@@ -4,7 +4,7 @@ import logo from "../../public/logo.png"
 
 const Logo = () => {
   return (
-    <Link to="/">
+    <Link to="/profile/">
       <img 
         src={logo}
         alt="Logo" 
