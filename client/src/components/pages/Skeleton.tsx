@@ -12,27 +12,26 @@ import "./Skeleton.css";
 const GOOGLE_CLIENT_ID = "924135144483-a4h7ghgqcej244vnv4312rdkd4lovc95.apps.googleusercontent.com";
 
 type Props = {
-  userId?: string;
-  handleLogin: (credentialResponse: CredentialResponse) => void;
-  handleLogout: () => void;
+  args: string;
 };
 const Skeleton = (props: Props) => {
-  const { handleLogin, handleLogout } = props;
+  // const { handleLogin, handleLogout } = props;
 
   return (
-    <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
-      {props.userId ? (
-        <button
-          onClick={() => {
-            googleLogout();
-            handleLogout();
-          }}
-        >
-          Logout
-        </button>
-      ) : (
-        <GoogleLogin onSuccess={handleLogin} onError={() => console.log("Error Logging in")} />
-      )}
+    // <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
+    //   {props.userId ? (
+    //     <button
+    //       onClick={() => {
+    //         googleLogout();
+    //         handleLogout();
+    //       }}
+    //     >
+    //       Logout
+    //     </button>
+    //   ) : (
+    //     <GoogleLogin onSuccess={handleLogin} onError={() => console.log("Error Logging in")} />
+    //   )}
+    <>
       <h1>Good luck on your project :)</h1>
       <h2> What we provide in this skeleton</h2>
       <ul>
@@ -50,7 +49,8 @@ const Skeleton = (props: Props) => {
         <li>Add a favicon to your website at the path client/dist/favicon.ico</li>
         <li>Update website title in client/dist/index.html</li>
       </ul>
-    </GoogleOAuthProvider>
+    </>
+    // </GoogleOAuthProvider>
   );
 };
 
