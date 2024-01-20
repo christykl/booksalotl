@@ -14,5 +14,25 @@
     text-align: left;
     color: #FFFDFB;
     left: 10%;
-    font-size: 90px;
+    top: 15%;
+    font-size: 80px;
+    font-family: 'Courier New', Courier, monospace;
   }
+
+.Home-subtitle {
+    position: absolute;
+    text-align: left;
+    color: #FFFDFB;
+    left: 10%;
+    top: 60%;
+    font-size: 60px;
+  }
+
+.Home-container2 {
+    padding: 4% 4%;
+    background-color: #FFFDFB;
+  }
+
+.Home-icon1 {
+    transform: scale(5);
+}
