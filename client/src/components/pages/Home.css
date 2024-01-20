@@ -1,0 +1,8 @@
+body {
+    background-image: url("../../public/home_background_image.png");
+}
+
+.Home-container {
+    padding: 0 35%;
+}
+
