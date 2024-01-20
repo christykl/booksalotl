@@ -35,8 +35,13 @@ const Home = (props: Props) => {
       )}
       
       <div className="Home-container">
-        <h1>This is the home page</h1>
+        <div className="Home-content">
+            <h1>book <br /> blendr</h1>
+        </div>
       </div>
+        
+        
+     
     </GoogleOAuthProvider>
   );
 };
