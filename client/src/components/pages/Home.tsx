@@ -8,6 +8,7 @@ import {
 
 import "./Home.css";
 import { FaChartColumn } from "react-icons/fa6";
+import { IconContext } from "react-icons";
 
 //TODO(weblab student): REPLACE WITH YOUR OWN CLIENT_ID
 const GOOGLE_CLIENT_ID = "924135144483-a4h7ghgqcej244vnv4312rdkd4lovc95.apps.googleusercontent.com";
@@ -46,9 +47,6 @@ const Home = (props: Props) => {
       </div>
       <div className="Home-container2">
         <FaChartColumn />
-        {/* <div className="Home-icon1">
-            <FaChartColumn />
-        </div> */}
       </div>
       
         
