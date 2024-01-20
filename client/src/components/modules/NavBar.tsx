@@ -7,6 +7,7 @@ import {
   CredentialResponse,
 } from "@react-oauth/google";
 import "./NavBar.css";
+import Logo from "./Logo";
 
 // This identifies your web application to Google's authentication service
 const GOOGLE_CLIENT_ID = "924135144483-a4h7ghgqcej244vnv4312rdkd4lovc95.apps.googleusercontent.com";
@@ -26,31 +27,25 @@ const NavBar = (props: NavBarProps) => {
   return (
     <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
       <nav className="NavBar-container">
-        <div className="NavBar-title u-inlineBlock">Catbook</div>
-        <div className="NavBar-linkContainer u-inlineBlock">
-          <Link to="/" className="NavBar-link">
-            Home
+        <Logo />
+        <div className="NavBar-title NavBar-linkContainer u-inlineBlock">
+          <Link to="/profile/" className="NavBar-link">
+            profile
           </Link>
-          {props.userId && (
+          {/* {props.userId && (
             <Link to={`/profile/${props.userId}`} className="NavBar-link">
               Profile
             </Link>
-          )}
-          <Link to="/chat/" className="NavBar-link">
-            Chat
+          )} */}
+          <Link to="/friends/" className="NavBar-link">
+            friends
           </Link>
-          {props.userId ? (
-            <button
-              onClick={() => {
-                googleLogout();
-                handleLogout();
-              }}
-            >
-              Logout
-            </button>
-          ) : (
-            <GoogleLogin onSuccess={handleLogin} onError={() => console.log("Error Logging in")} />
-          )}
+          <Link to="/blends/" className="NavBar-link">
+            blends
+          </Link>
+          <Link to="/" className="NavBar-link">
+            sign out
+          </Link>
         </div>
       </nav>
     </GoogleOAuthProvider>

@@ -52,7 +52,7 @@ const App = () => {
       <NavBar handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} />
       <div>
         <Routes>
-          <Route path="/" element={<Home args={'hi'}/>} />
+          <Route path="/" element={<Home handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>

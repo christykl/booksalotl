@@ -19,7 +19,10 @@
 @import url("https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&display=swap");
 
 :root {
-  --primary: #DAA5A4;;
+  --primary: #DAA5A4;
+  --primary--dim: #B88988;
+  --white: #FFFDFB;
+  --black: #1F1F1F;
   /* --primary--dim: #6987db;
   --darkgrey: #d4d4d4;
   --medgrey: #e0e0e0;
