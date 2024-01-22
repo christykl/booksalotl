@@ -11,7 +11,10 @@ import Profile from "./pages/Profile";
 import { socket } from "../client-socket";
 import User from "../../../shared/User";
 import "../utilities.css";
-import Skeleton from "./pages/Skeleton";
+import Friends from "./pages/Friends";
+import { MantineProvider, createTheme } from "@mantine/core";
+// import '@mantine/core/styles.css'; // Import Mantine styles
+import Books from "./pages/Books";
 
 const App = () => {
   const [userId, setUserId] = useState<string | undefined>(undefined);
@@ -46,9 +49,15 @@ const App = () => {
     post("/api/logout");
   };
 
+
+  // const theme = createTheme({
+  //   fontFamily: 'Courier Prime sans-serif'
+  // });
+
   // NOTE:
   // All the pages need to have the props extended via RouteComponentProps for @reach/router to work properly. Please use the Skeleton as an example.
   return (
+    <MantineProvider>
     <BrowserRouter>
       {
         !userId ? (
@@ -60,6 +69,8 @@ const App = () => {
               <Routes>
                 {/* <Route path="/" element={} /> */}
                 <Route path="/profile/" element={<Profile />} />
+                <Route path="/friends/" element={<Friends userId="hi"/>} />
+                <Route path="/blends/" element={<Books userId="hi"/>} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </div>
@@ -67,6 +78,7 @@ const App = () => {
         )
       }
     </BrowserRouter>
+    </MantineProvider>
   );
 };
 

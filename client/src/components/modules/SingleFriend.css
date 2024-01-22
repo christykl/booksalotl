@@ -1,0 +1,20 @@
+.SingleFriend-container {
+  background-color: var(--green);
+  width: 80%;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  margin-top: 40px;
+  margin-left: 10px;
+  margin-right: 10px;
+};
+
+.grid-container {
+  flex: 1; 
+  flex-direction: horizontal;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
