@@ -12,6 +12,8 @@ import User from "../../../shared/User";
 import "../utilities.css";
 import Friends from "./pages/Friends";
 import { MantineProvider, createTheme } from "@mantine/core";
+// import '@mantine/core/styles.css'; // Import Mantine styles
+import Books from "./pages/Books";
 
 const App = () => {
   const [userId, setUserId] = useState<string | undefined>(undefined);
@@ -66,6 +68,7 @@ const App = () => {
               <Routes>
                 {/* <Route path="/" element={} /> */}
                 <Route path="/friends/" element={<Friends userId="hi"/>} />
+                <Route path="/blends/" element={<Books userId="hi"/>} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </div>
