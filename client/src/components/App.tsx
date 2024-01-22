@@ -7,6 +7,7 @@ import { get, post } from "../utilities";
 import NotFound from "./pages/NotFound";
 import Home from "./pages/Home";
 import NavBar from "./modules/NavBar";
+import Profile from "./pages/Profile";
 import { socket } from "../client-socket";
 import User from "../../../shared/User";
 import "../utilities.css";
@@ -58,7 +59,7 @@ const App = () => {
             <div>
               <Routes>
                 {/* <Route path="/" element={} /> */}
-                {/* <Route path="/friends/" element={<Friends />} /> */}
+                <Route path="/profile/" element={<Profile />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </div>

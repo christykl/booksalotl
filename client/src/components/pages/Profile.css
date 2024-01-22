@@ -1,0 +1,48 @@
+.Profile-bioContainer {
+    padding: 40px 40px;
+    width: var(--biowidth);
+    height: auto;
+  }
+  
+.Profile-image {
+    width: var(--biowidth);
+    height: var(--biowidth);
+    border-radius: 50%;
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    background-image: url("../../public/axolotl.png");
+  }
+  
+.Profile-name {
+    font-size: 32px;
+    font-weight: bold;
+    position: relative;
+    text-align: center;
+  }
+
+.Profile-nameContainer {
+    padding: 0;
+    margin: 0;
+  }
+
+.Profile-content {
+    font-size: 20px;
+    position: relative;
+    text-align: left;
+    margin: 0;
+}
+
+.Profile-subhead {
+    font-size: 15px;
+    position: relative;
+    text-align: left;
+    color: --grey;
+    margin: 0;
+}
+
+.Profile-subContainer {
+    padding: 0;
+    margin: 15px;
+  }
+  
