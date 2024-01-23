@@ -27,7 +27,7 @@ const SingleFriend = (props: SingleFriendProps) => {
         </Grid.Col>
         <Grid.Col span={3}>
           <Button className="SingleFriend-button">
-            <p className="SingleFriend-p">Create Blend </p>
+            <p> ~~Blend~~ </p>
           </Button>
         </Grid.Col>
       </Grid>

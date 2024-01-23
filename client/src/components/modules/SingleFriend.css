@@ -19,13 +19,24 @@
   justify-content: center;
 }
 
-.SingleFriend-p {
+.SingleFriend-button {
   font-family: "Courier Prime";
   font-style: italic;
-  color: var(--primary--dim);
+  color: var(--white);
+  border-width: 2px;
+  border-color: var(--green);
+  border-style: dotted;
+  border-radius: 10px;
+  background-color: var(--green);
 }
 
-.SingleFriend-button {
-  border-width: 0;
+.SingleFriend-button:hover {
+  font-family: "Courier Prime";
+  font-style: italic;
+  color: var(--white);
+  border-width: 2px;
+  border-color: var(--white);
+  border-style: dotted;
   border-radius: 10px;
+  background-color: var(--green);
 }
