@@ -1,28 +1,35 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FileButton, Button, Group, Text } from '@mantine/core';
+import { post } from '../../utilities';
 
 const FileUpload = () => {
   const [file, setFile] = useState<File | null>(null);
 
-  const handleFileChange = (files: File[]) => {
-    const selectedFile = files[0];
-
-    if (selectedFile) {
+  const handleFileChange = (file: File | null) => {
+    if (file) {
       // Check if the selected file has a CSV extension
-      if (selectedFile.name.endsWith('.csv')) {
+      if (file.name.endsWith('.csv')) {
         // Set the file if it's a CSV file
-        setFile(selectedFile);
+        setFile(file);
       } else {
         // Alert the user that only CSV files are allowed
-        alert('Please select a CSV file.');
+        alert('Please select a CSV.');
       }
     }
   };
-  
+
+  useEffect(() => {
+    if (file) {
+      post("/api/upload-csv", file).then(() => {
+        console.log("file uploaded");
+      })
+    }
+  }, [file]);
+
   return (
     <>
       <Group justify="center">
-        <FileButton onChange={setFile} accept=".csv">
+        <FileButton onChange={handleFileChange} accept=".csv">
           {(props) => <Button {...props}>Upload CSV</Button>}
         </FileButton>
       </Group>
