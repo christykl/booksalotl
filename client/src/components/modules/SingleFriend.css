@@ -9,12 +9,23 @@
   margin-top: 40px;
   margin-left: 10px;
   margin-right: 10px;
-};
+}
 
 .grid-container {
-  flex: 1; 
+  flex: 1;
   flex-direction: horizontal;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.SingleFriend-p {
+  font-family: "Courier Prime";
+  font-style: italic;
+  color: var(--primary--dim);
+}
+
+.SingleFriend-button {
+  border-width: 0;
+  border-radius: 10px;
 }

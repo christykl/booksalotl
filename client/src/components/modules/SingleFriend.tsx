@@ -8,7 +8,7 @@ type SingleFriendProps = {
   userId: string;
   profileImage?: string;
   userName: string;
-}
+};
 
 const SingleFriend = (props: SingleFriendProps) => {
   return (
@@ -23,12 +23,12 @@ const SingleFriend = (props: SingleFriendProps) => {
           <Avatar src={props.profileImage} alt={props.userName} radius="xl" />
         </Grid.Col>
         <Grid.Col span={6}>
-          <Text size="lg">
-            {props.userName}
-          </Text>
+          <Text size="lg">{props.userName}</Text>
         </Grid.Col>
         <Grid.Col span={3}>
-          <Button>Create Blend</Button>
+          <Button className="SingleFriend-button">
+            <p className="SingleFriend-p">Create Blend </p>
+          </Button>
         </Grid.Col>
       </Grid>
     </Container>
