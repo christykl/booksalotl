@@ -23,6 +23,7 @@ export interface Book extends Document {
   dateread: Date;
   rating: number;
   reader: User;
+  _id: string;
 }
 
 const BookModel = model<Book>("Book", BookSchema);
