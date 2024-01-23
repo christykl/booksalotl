@@ -55,13 +55,13 @@ const Books = (props: BooksProps) => {
     );
   };
 
-  useEffect(() => {
-    if (library) {
-      post("/api/books", library).then(() => {
-        console.log("file uploaded");
-      })
-    }
-  }, [library]);
+  // useEffect(() => {
+  //   if (library) {
+  //     post("/api/books", library).then(() => {
+  //       console.log("file uploaded");
+  //     })
+  //   }
+  // }, [library]);
 
   // useEffect(() => {
   //   get("api/books").then((books: Book[]) => {
