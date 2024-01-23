@@ -24,6 +24,7 @@
   --primary--dim: #B88988;
   --white: #FFFDFB;
   --black: #1F1F1F;
+  --grey: #939393;
   --green: #AFC8AD;
   --lavender: #E6E6FA;
   --blue: #B0E0E6;
@@ -37,18 +38,20 @@
   --s: 8px;
   --m: 16px;
   --l: 24px;
+
+  --biowidth: 280px;
 }
 
 body {
   margin: 0;
   padding: 0;
   font-family: "Courier Prime", sans-serif;
-  font-weight: 700;
+  font-weight: bold;
 }
 
 .u-subheader {
   font-family: "Open Sans", sans-serif;
-  font-weight: 50;
+  font-weight: normal;
 }
 
 form {
