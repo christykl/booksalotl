@@ -63,11 +63,11 @@ const Books = (props: BooksProps) => {
     }
   }, [library]);
 
-  useEffect(() => {
-    get("api/books").then((books: Book[]) => {
-      setLibrary(books);
-    })
-  }, []);
+  // useEffect(() => {
+  //   get("api/books").then((books: Book[]) => {
+  //     setLibrary(books);
+  //   })
+  // }, []);
 
   return (
     <div>
