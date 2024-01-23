@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Chart as ChartJS, registerables } from "chart.js";
 import { Chart, Pie, Doughnut, Line, Bar } from "react-chartjs-2";
 ChartJS.register(...registerables);
 import "../../utilities.css";
 import "./Profile.css";
+import { Book } from "./Books";
+import Books from "./Books";
+import SingleBook from "../modules/SingleBook";
 
 const primaryColor = getComputedStyle(document.documentElement).getPropertyValue("--primary");
 const primaryDimColor = getComputedStyle(document.documentElement).getPropertyValue(
@@ -12,19 +15,50 @@ const primaryDimColor = getComputedStyle(document.documentElement).getPropertyVa
 const greyColor = getComputedStyle(document.documentElement).getPropertyValue("--grey");
 
 const Profile = () => {
+  const [bookData, setBookData] = useState<Book[]>([]);
+
   /* Placeholder data */
+  const loadBooks = () => {
+    setBookData([
+      { _id: "1", title: "1984", author: "George Orwell", genre: "Fiction", pageCount: 284 },
+      {
+        _id: "2",
+        title: "Pride and Prejudice",
+        author: "Jane Austen",
+        genre: "Fiction",
+        pageCount: 312,
+      },
+      {
+        _id: "3",
+        title: "Thinking, Fast and Slow",
+        author: "Daniel Kahneman",
+        genre: "Nonfiction",
+        pageCount: 144,
+      },
+    ]);
+  };
+
+  useEffect(loadBooks, []);
+
+  /* Fiction vs. Nonfiction Pie Chart */
+  const fictionCount = bookData.filter((bookObj) => bookObj.genre === "Fiction").length;
+  const nonficCount = bookData.filter((bookObj) => bookObj.genre === "Nonfiction").length;
+  const otherCount = bookData.filter(
+    (bookObj) => bookObj.genre !== "Fiction" && bookObj.genre !== "Nonfiction"
+  ).length;
+
   const ficData = {
-    labels: ["Fiction", "Nonfiction", "Gossip"],
+    labels: ["Fiction", "Nonfiction", "Other"],
     datasets: [
       {
-        /* label: "My First Dataset", */
-        data: [300, 50, 100],
+        data: [fictionCount, nonficCount, otherCount],
         backgroundColor: [primaryColor, primaryDimColor, greyColor],
         hoverOffset: 4,
       },
     ],
   };
 
+  /* Total Pages Read Line Graph */
   const pagesData = {
     labels: ["January", "February", "March", "April", "May", "June"],
     datasets: [
@@ -56,7 +90,12 @@ const Profile = () => {
         </div>
         <div className="Profile-subContainer">
           <p className="Profile-subhead u-subheader">Currently Reading</p>
-          <p className="Profile-content u-subheader">*Insert SingleBook object*</p>
+          <p className="Profile-content u-subheader Profile-bookContainer">
+            <SingleBook
+              userId={" Anonymous "}
+              book={{ _id: "3", title: "Thinking, Fast and Slow", author: "Daniel Kahneman" }}
+            />
+          </p>
         </div>
       </div>
       <div className="Profile-chartContainer">
