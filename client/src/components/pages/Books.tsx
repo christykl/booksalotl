@@ -8,6 +8,9 @@ export type Book = {
   author: string;
   bookCover?: string;
   rating?: number;
+  pageCount?: number;
+  genre?: string;
+  dateRead?: Date;
 };
 
 type BooksProps = {
@@ -19,21 +22,22 @@ const Books = (props: BooksProps) => {
 
   const loadBooks = () => {
     setBookData([
-      {_id: "1", title: "1984", author: "George Orwell"},
-      {_id: "2", title: "Pride and Prejudice", author: "Jane Austen"},
-      {_id: "3", title: "Thinking, Fast and Slow", author: "Daniel Kahneman"},
+      { _id: "1", title: "1984", author: "George Orwell" },
+      { _id: "2", title: "Pride and Prejudice", author: "Jane Austen" },
+      { _id: "3", title: "Thinking, Fast and Slow", author: "Daniel Kahneman" },
     ]);
-  }
+  };
 
   useEffect(loadBooks, []);
 
-  return <>
-    <FileUpload />
-    {bookData.map((item) => {
-      return <SingleBook key={item._id} userId={props.userId} book={item}/>
-    })}  
-  </>
-
+  return (
+    <>
+      <FileUpload />
+      {bookData.map((item) => {
+        return <SingleBook key={item._id} userId={props.userId} book={item} />;
+      })}
+    </>
+  );
 };
 
 export default Books;
