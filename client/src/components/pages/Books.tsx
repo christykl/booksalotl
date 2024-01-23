@@ -3,6 +3,7 @@ import SingleBook from "../modules/SingleBook";
 import FileUpload from "../modules/FileUpload";
 import axios from "axios";
 import Card from "../modules/Card";
+import "./Books.css"
 
 export type Book = {
   _id: string;
@@ -17,47 +18,59 @@ type BooksProps = {
 };
 
 const Books = (props: BooksProps) => {
-  const [bookData, setBookData] = useState<Book[]>([]);
-  const [search,setSearch]=useState<string>("");
-  const searchBook=(evt)=>{
-    if(evt.key==="Enter")
-    {
-        axios.get('https://www.googleapis.com/books/v1/volumes?q='+search+'&key=AIzaSyDjnJHbxfCAqhtxJr1YYzleaQGQB8MdbEA'+'&maxResults=10')
-        .then(res=>setBookData(res.data.items))
-        .catch(err=>console.log(err))
+  const [searchResults, setSearchResults] = useState<Book[]>([]);
+  const [library, setLibrary] = useState<Book[]>([]);
+  const [search, setSearch] = useState<string>("");
+  const [showDropdown, setShowDropdown] = useState<boolean>(false);
+
+  const searchBook = (evt) => {
+    if (evt.key === "Enter") {
+      axios.get('https://www.googleapis.com/books/v1/volumes?q=' + search + '&key=AIzaSyDjnJHbxfCAqhtxJr1YYzleaQGQB8MdbEA&maxResults=10')
+        .then(res => {
+          setSearchResults(res.data.items);
+          setShowDropdown(true); // Show the dropdown
+        })
+        .catch(err => console.log(err));
     }
-}
+  };
 
-  // const loadBooks = () => {
-  //   setBookData([
-  //     {_id: "1", title: "1984", author: "George Orwell"},
-  //     {_id: "2", title: "Pride and Prejudice", author: "Jane Austen"},
-  //     {_id: "3", title: "Thinking, Fast and Slow", author: "Daniel Kahneman"},
-  //   ]);
-  // }
+  const addBookToLibrary = (book) => {
+    setLibrary([...library, book]);
+    setShowDropdown(false); // Optionally close the dropdown after adding a book
+  };
 
-  // useEffect(loadBooks, []);
+  const renderDropdown = () => {
+    if (!showDropdown) return null;
+
+    return (
+      <div className="dropdown">
+        {searchResults.map((book, index) => (
+          <div key={index} onClick={() => addBookToLibrary(book)}>
+            <Card book={book} />
+          </div>
+        ))}
+      </div>
+    );
+  };
 
   return (
     <div>
       <div className="Books-searchContainer">
-        <input type="text" placeholder="Search..." value={search} onChange={e=>setSearch(e.target.value)} onKeyUp={searchBook} />
+        <input type="text" placeholder="Search..." value={search} onChange={e => setSearch(e.target.value)} onKeyUp={searchBook} />
         <button type="button">Search</button>
       </div>
-      <div className="Books-searchContainer">
+      {renderDropdown()} {/* Render the dropdown here */}
+      {/* <div className="Books-searchContainer">
         <FileUpload />
+      </div> */}
+      <div className="library-container">
+        <h3>Your Library</h3>
+        {library.map((book, index) => (
+          <Card book={book}/>
+        ))}
       </div>
-      <div className="container">
-              {
-                    <Card book={bookData}/>
-              }  
-            </div>
-      {/* {bookData.map((item) => {
-        return <SingleBook key={item._id} userId={props.userId} book={item}/>
-      })}   */}
     </div>
   );
-
 };
 
 export default Books;
