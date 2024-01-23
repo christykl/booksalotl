@@ -4,6 +4,8 @@ import FileUpload from "../modules/FileUpload";
 import axios from "axios";
 import Card from "../modules/Card";
 import "./Books.css"
+import {  post } from "../../utilities";
+import { get } from "mongoose";
 
 export type Book = {
   _id: string;
@@ -52,6 +54,20 @@ const Books = (props: BooksProps) => {
       </div>
     );
   };
+
+  useEffect(() => {
+    if (library) {
+      post("/api/books", library).then(() => {
+        console.log("file uploaded");
+      })
+    }
+  }, [library]);
+
+  useEffect(() => {
+    get("api/books").then((books: Book[]) => {
+      setLibrary(books);
+    })
+  }, []);
 
   return (
     <div>
