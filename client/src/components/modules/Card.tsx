@@ -23,7 +23,6 @@ const Card = ({ book }) => {
             <h3 className="title">{book.volumeInfo.authors}</h3>
           </div>
         </div>
-        <Modal show={show} item={bookItem} onClose={() => setShow(false)} />
       </div>
     );
   } else {
