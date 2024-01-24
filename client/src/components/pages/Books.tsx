@@ -63,12 +63,16 @@ const Books = (props: BooksProps) => {
     console.log(book)
     post("/api/books", {
       title: book.volumeInfo.title,
-      author: book.volumeInfo.author,
+      authors: book.volumeInfo.authors,
       isbn: book.volumeInfo.isbn,
       pages: book.volumeInfo.pageCount,
       dateread: "1/22",
       cover: book.volumeInfo.imageLinks.smallThumbnail,
       rating: 5,
+      publisher: book.volumeInfo.publisher,
+      published_date: book.volumeInfo.publishedDate,
+      preview_link: book.volumeInfo.previewLink,
+      description: book.volumeInfo.description,
     }).then((newBook) => {
       setLibrary([...library, newBook]);
       console.log("file uploaded");
