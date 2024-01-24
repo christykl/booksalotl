@@ -1,0 +1,16 @@
+.single-book-card {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  margin: 10px;
+}
+
+.book-cover {
+  margin-right: 10px;
+  max-width: 100px;
+  max-height: 150px;
+}
+
+.book-details {
+  flex-grow: 1;
+}
