@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Modal from "./Modal";
 import "./Modal.css";
+// import "./Card.css";
 
 const LibraryCard = ({ book, userId }) => {
   const [show, setShow] = useState<boolean>(false);
@@ -9,7 +10,7 @@ const LibraryCard = ({ book, userId }) => {
   let thumbnail = book.cover;
   if (thumbnail != undefined) {
     return (
-      <div>
+      <div className="card">
         <div
           className="card"
           onClick={() => {
@@ -20,7 +21,7 @@ const LibraryCard = ({ book, userId }) => {
           <img src={thumbnail} alt="" />
           <div className="bottom">
             <h3 className="title">{book.title}</h3>
-            <h3 className="subtitle">{book.authors}</h3>
+            <h4 className="subtitle">{book.authors}</h4>
           </div>
         </div>
         <Modal userId={userId} show={show} item={bookItem} onClose={() => setShow(false)} />

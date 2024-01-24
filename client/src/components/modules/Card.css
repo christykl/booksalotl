@@ -25,12 +25,6 @@
   font-size: 14px;
   margin-bottom: 32px;
 }
-
-.card .bottom .subtitle {
-  font-size: 11px;
-  margin-bottom: 32px;
-}
-
 .card .bottom .amount {
   position: absolute;
   bottom: 10px;
