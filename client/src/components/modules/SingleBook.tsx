@@ -1,5 +1,5 @@
 import React from "react";
-import { Book } from "../pages/Books";
+import { Book } from "../pages/Profile";
 import { Card, Image, Title, Text } from '@mantine/core';
 
 import "./SingleBook.css";

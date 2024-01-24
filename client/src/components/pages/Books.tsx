@@ -6,17 +6,31 @@ import Card from "../modules/Card";
 import "./Books.css";
 import { get, post } from "../../utilities";
 import LibraryCard from "../modules/LibraryCard";
+import {Book} from "../../../../server/models/Book";
 
-export type Book = {
-  _id: string;
-  title: string;
-  author: string;
-  bookCover?: string;
-  rating?: number;
-  pageCount?: number;
-  genre?: string;
-  dateRead?: Date;
-};
+// export type Book = {
+//   _id: string;
+//   title: string;
+//   author: string;
+//   bookCover?: string;
+//   rating?: number;
+//   pageCount?: number;
+//   genre?: string;
+//   dateRead?: Date;
+//   readerId?: string;
+// };
+
+// export type Book = {
+//   title: string;
+//   author: string;
+//   isbn: string;
+//   pages: number;
+//   dateread: Date;
+//   rating: number;
+//   cover: string;
+//   reader_id: string;
+//   _id: string;
+// }
 
 type BooksProps = {
   userId: string;
@@ -76,14 +90,6 @@ const Books = (props: BooksProps) => {
     );
   };
 
-  // useEffect(() => {
-  //   if (library) {
-  //     post("/api/books", library).then(() => {
-  //       console.log("file uploaded");
-  //     });
-  //   }
-  // }, [library]);
-
   useEffect(() => {
     get("/api/books").then((books: Book[]) => {
       setLibrary(books);
@@ -110,7 +116,12 @@ const Books = (props: BooksProps) => {
         <h3>Your Library</h3>
         {library.map((book, index) => {
           console.log(book);
-          return <LibraryCard book={book} key={index} />;
+          console.log("book ID")
+          console.log(book.reader_id)
+          console.log("prop ID")
+          console.log(props.userId)
+          if (book.reader_id && book.reader_id == props.userId)
+            return <LibraryCard book={book} key={index} />;
         })}
       </div>
     </div>

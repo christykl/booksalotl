@@ -4,7 +4,7 @@ import { Chart, Pie, Doughnut, Line, Bar } from "react-chartjs-2";
 ChartJS.register(...registerables);
 import "../../utilities.css";
 import "./Profile.css";
-import { Book } from "./Books";
+// import { Book } from "./Books";
 import Books from "./Books";
 import SingleBook from "../modules/SingleBook";
 
@@ -13,6 +13,18 @@ const primaryDimColor = getComputedStyle(document.documentElement).getPropertyVa
   "--primary--dim"
 );
 const greyColor = getComputedStyle(document.documentElement).getPropertyValue("--grey");
+
+export type Book = {
+  _id: string;
+  title: string;
+  author: string;
+  bookCover?: string;
+  rating?: number;
+  pageCount?: number;
+  genre?: string;
+  dateRead?: Date;
+  readerId?: string;
+};
 
 const Profile = () => {
   const [bookData, setBookData] = useState<Book[]>([]);

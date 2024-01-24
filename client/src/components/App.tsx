@@ -68,8 +68,8 @@ const App = () => {
               <Routes>
                 {/* <Route path="/" element={} /> */}
                 <Route path="/profile/" element={<Profile />} />
-                <Route path="/friends/" element={<Friends userId="hi" />} />
-                <Route path="/blends/" element={<Books userId="hi" />} />
+                <Route path="/friends/" element={<Friends userId={userId} />} />
+                <Route path="/blends/" element={<Books userId={userId} />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </div>
