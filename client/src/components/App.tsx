@@ -18,7 +18,7 @@ import Books from "./pages/Books";
 
 const App = () => {
   const [userId, setUserId] = useState<string | undefined>(undefined);
-  const [googleid, setGoogleid] = useState<string | undefined>(undefined);
+  const [googleid, setGoogleid] = useState<string>("");
 
   useEffect(() => {
     get("/api/whoami")
