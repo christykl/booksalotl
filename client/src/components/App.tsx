@@ -26,7 +26,6 @@ const App = () => {
         if (user._id) {
           // TRhey are registed in the database and currently logged in.
           setUserId(user._id);
-          setGoogleid(user.googleid);
         }
       })
       .then(() =>
@@ -69,10 +68,10 @@ const App = () => {
             <div>
               <Routes>
                 {/* <Route path="/" element={} /> */}
-                <Route path="/profile/" element={<Profile userId={userId} googleid={googleid} />} />
+                <Route path="/profile/" element={<Profile userId={userId} />} />
                 <Route path="/my-books/" element={<Books userId={userId} />} />
                 <Route path="/friends/" element={<Friends userId={userId} />} />
-                <Route path="/" element={<Profile userId={userId} googleid={googleid} />} />
+                <Route path="/" element={<Profile userId={userId} />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </div>

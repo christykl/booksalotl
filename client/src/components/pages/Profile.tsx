@@ -34,17 +34,20 @@ export type Book = {
 
 type ProfileProps = {
   userId: string;
-  googleid: string;
 };
 
 const Profile = (props: ProfileProps) => {
   const [bookData, setBookData] = useState<Book[]>([]);
   const [username, setUsername] = useState<string>("Janelle Cai");
 
-  // useEffect(() => {
-  //   // document.title = "Profile Page";
-  //   get("/api/user", { googleid: props.googleid }).then((userObj) => setUsername(userObj.name));
-  // }, []);
+  useEffect(() => {
+    get("/api/whoami")
+      .then((user: User) => {
+        if (user._id) {
+          setUsername(user.name);
+        }
+      })
+  }, []);
 
   /* Placeholder data */
   const loadBooks = () => {
