@@ -1,6 +1,6 @@
 .SingleFriend-container {
   background-color: var(--green);
-  width: 80%;
+  width: 25%;
   padding: 20px;
   display: flex;
   align-items: center;
@@ -9,12 +9,34 @@
   margin-top: 40px;
   margin-left: 10px;
   margin-right: 10px;
-};
+}
 
 .grid-container {
-  flex: 1; 
+  flex: 1;
   flex-direction: horizontal;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.SingleFriend-button {
+  font-family: "Courier Prime";
+  font-style: italic;
+  color: var(--white);
+  border-width: 2px;
+  border-color: var(--green);
+  border-style: dotted;
+  border-radius: 10px;
+  background-color: var(--green);
+}
+
+.SingleFriend-button:hover {
+  font-family: "Courier Prime";
+  font-style: italic;
+  color: var(--white);
+  border-width: 2px;
+  border-color: var(--white);
+  border-style: dotted;
+  border-radius: 32px;
+  background-color: var(--green);
 }
