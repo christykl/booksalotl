@@ -84,6 +84,10 @@ router.post("/books", auth.ensureLoggedIn, (req, res) => {
   newBook.save().then((book) => res.send(book));
 });
 
+router.delete("/books", auth.ensureLoggedIn, (req, res) => {
+  Book.findByIdAndRemove(req.body.id).then(() => res.send({}));
+});
+
 // router.post("/createuser", (req, res) => {
 //   console.log(User);
 //   User.find({ user_id: req.user?._id }).then((users) => {

@@ -55,3 +55,17 @@ export const post = (endpoint: string, params: object = {}) => {
       throw `POST request to ${endpoint} failed with error:\n${error}`;
     });
 };
+
+
+export const remove = (endpoint: string, params: object = {}) => { 
+  return fetch(endpoint, {
+    method: "delete",
+    headers: { "Content-type": "application/json" },
+    body: JSON.stringify(params),
+  })
+    .then(convertToJSON) // convert result to JSON object
+    .catch((error) => {
+      // give a useful error message
+      throw `DELETE request to ${endpoint} failed with error:\n${error}`;
+    });
+}

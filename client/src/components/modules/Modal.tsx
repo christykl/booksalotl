@@ -1,5 +1,7 @@
 import React from 'react';
-const Modal=({show,item,onClose})=>{
+const Modal=({show,item,onClose, userId})=>{
+
+    
     if(!show)
     {
         return null;
@@ -17,7 +19,7 @@ const Modal=({show,item,onClose})=>{
                             <h3>{item.authors}</h3>
                             <h4>{item.publisher}<span>{item.published_date}</span></h4><br/>
                             <a href={item.preview_link}><button>More</button></a>
-                        </div>
+                         </div>
                     </div>
                     <h4 className="description">{item.description}</h4>
                 </div>

@@ -7,30 +7,7 @@ import "./Books.css";
 import { get, post } from "../../utilities";
 import LibraryCard from "../modules/LibraryCard";
 import {Book} from "../../../../server/models/Book";
-
-// export type Book = {
-//   _id: string;
-//   title: string;
-//   author: string;
-//   bookCover?: string;
-//   rating?: number;
-//   pageCount?: number;
-//   genre?: string;
-//   dateRead?: Date;
-//   readerId?: string;
-// };
-
-// export type Book = {
-//   title: string;
-//   author: string;
-//   isbn: string;
-//   pages: number;
-//   dateread: Date;
-//   rating: number;
-//   cover: string;
-//   reader_id: string;
-//   _id: string;
-// }
+import { remove } from "../../utilities";
 
 type BooksProps = {
   userId: string;
@@ -41,6 +18,7 @@ const Books = (props: BooksProps) => {
   const [library, setLibrary] = useState<Book[]>([]);
   const [search, setSearch] = useState<string>("");
   const [showDropdown, setShowDropdown] = useState<boolean>(false);
+  const [toRemove, setToRemove] = useState<Book[]>([]);
   
   const searchBook = (evt) => {
     if (evt.key === "Enter") {
@@ -58,26 +36,44 @@ const Books = (props: BooksProps) => {
     }
   };
 
+  const checkLibrary = (book) => {
+    if (library.length > 0) {
+      for (let i = 0; i < library.length; i++) {
+        if (library[i].title == book.volumeInfo.title && library[i].reader_id == props.userId) {
+          return true;
+        }
+      }
+    }
+    return false;
+  };
+
   const addBookToLibrary = (book) => {
     // setLibrary([...library, book]);
-    console.log(book)
-    post("/api/books", {
-      title: book.volumeInfo.title,
-      authors: book.volumeInfo.authors,
-      isbn: book.volumeInfo.isbn,
-      pages: book.volumeInfo.pageCount,
-      dateread: "1/22",
-      cover: book.volumeInfo.imageLinks.smallThumbnail,
-      rating: 5,
-      publisher: book.volumeInfo.publisher,
-      published_date: book.volumeInfo.publishedDate,
-      preview_link: book.volumeInfo.previewLink,
-      description: book.volumeInfo.description,
-    }).then((newBook) => {
-      setLibrary([...library, newBook]);
-      console.log("file uploaded");
-    });
-    setShowDropdown(false); // Optionally close the dropdown after adding a book
+    if (checkLibrary(book)) {
+      // error message popup
+      alert("Book already in library");
+      return;
+    }
+    else {
+      console.log(book)
+      post("/api/books", {
+        title: book.volumeInfo.title,
+        authors: book.volumeInfo.authors,
+        isbn: book.volumeInfo.isbn,
+        pages: book.volumeInfo.pageCount,
+        dateread: "1/22",
+        cover: book.volumeInfo.imageLinks.smallThumbnail,
+        rating: 5,
+        publisher: book.volumeInfo.publisher,
+        published_date: book.volumeInfo.publishedDate,
+        preview_link: book.volumeInfo.previewLink,
+        description: book.volumeInfo.description,
+      }).then((newBook) => {
+        setLibrary([...library, newBook]);
+        console.log("file uploaded");
+      });
+      setShowDropdown(false); // Optionally close the dropdown after adding a book
+    }
   };
 
   const renderDropdown = () => {
@@ -99,6 +95,14 @@ const Books = (props: BooksProps) => {
       setLibrary(books);
     });
   }, []);
+
+  const removeBook = (item) => {
+    console.log(item._id);
+    remove("/api/books/", {id: item._id}).then((books: Book[]) => {
+      toRemove.push(item);
+    });
+    console.log("removed from library");
+  }
 
   return (
     <div>
@@ -125,8 +129,18 @@ const Books = (props: BooksProps) => {
           console.log("prop ID")
           console.log(props.userId)
           if (book.reader_id && book.reader_id == props.userId)
-            return <LibraryCard book={book} key={index} />;
-        })}
+            if (!toRemove.includes(book)) {
+              return (
+                <>
+                  <LibraryCard userId={props.userId} book={book} key={book._id} />
+                  <button onClick={() => {
+                    removeBook(book);
+                  }}>Remove</button>
+                </>
+              );
+            }
+          }
+        )}
       </div>
     </div>
   );
