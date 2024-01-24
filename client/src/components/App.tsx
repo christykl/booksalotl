@@ -61,7 +61,7 @@ const App = () => {
   return (
     <MantineProvider>
       <BrowserRouter>
-        {!userId || !googleid ? (
+        {!userId ? (
           <Home handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} />
         ) : (
           <>
