@@ -1,38 +1,59 @@
 .Home-container {
-    background-image: url("../../public/home_background_image.png");
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center center;
-    height: 100vh; /* Ensure the background covers the entire viewport height */
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  background-image: url("../../public/home_background_image.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  height: 100vh; /* Ensure the background covers the entire viewport height */
+  display: flex;
+  flex-flow: row wrap;
+  /* align-items: center; */
+  /* justify-content: center; */
+}
+
+.Home-flexContainer {
+  display: flex;
+  flex-flow: column;
 }
 
 .Home-content {
-    position: absolute;
-    text-align: left;
-    color: #FFFDFB;
-    left: 10%;
-    top: 15%;
-    font-size: 80px;
-    font-family: 'Courier New', Courier, monospace;
-  }
+  order: 1;
+  /*position: absolute; */
+  text-align: left;
+  color: #fffdfb;
+  margin-left: 16%;
+  margin-top: 24%;
+  font-size: 64px;
+  font-family: "Courier New", Courier, monospace;
+}
 
 .Home-subtitle {
-    position: absolute;
-    text-align: left;
-    color: #FFFDFB;
-    left: 10%;
-    top: 60%;
-    font-size: 60px;
-  }
+  /* position: absolute;*/
+  text-align: left;
+  color: #fffdfb;
+  left: 10%;
+  top: 60%;
+  font-size: 48px;
+}
 
 .Home-container2 {
-    padding: 4% 4%;
-    background-color: #FFFDFB;
-  }
+  order: 3;
+  padding: 4% 4%;
+  background-color: #fffdfb;
+}
 
 .Home-icon1 {
-    transform: scale(2);
+  transform: scale(2);
+}
+
+.Home-loginContainer {
+  order: 2;
+  flex: right;
+  padding: 16%;
+}
+
+.Home-loginButton {
+  font-family: "Courier Prime", sans-serif;
+  text-align: left;
+  color: #fffdfb;
+  font-size: 60px;
 }

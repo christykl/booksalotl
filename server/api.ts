@@ -79,24 +79,6 @@ router.post("/books", auth.ensureLoggedIn, (req, res) => {
 
   newBook.save().then((book) => res.send(book));
 });
-
-// router.post("/createuser", (req, res) => {
-//   console.log(User);
-//   User.find({ user_id: req.user?._id }).then((users) => {
-//     if (!users.length && users.length === 0) {
-//       const newUser = new User({
-//         name: req.user?.name,
-//         googleid: req.user?.googleid,
-//         user_id: req.user?._id,
-//       });
-
-//       newUser.save().then((users) => res.send(users));
-//     } else {
-//       res.send(users);
-//     }
-//   });
-// });
-
 // anything else falls to this "not found" case
 router.all("*", (req, res) => {
   const msg = `Api route not found: ${req.method} ${req.url}`;
