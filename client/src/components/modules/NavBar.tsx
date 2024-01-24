@@ -32,11 +32,11 @@ const NavBar = (props: NavBarProps) => {
           <Link to="/profile/" className="NavBar-link">
             profile
           </Link>
+          <Link to="/my-books/" className="NavBar-link">
+            my books
+          </Link>
           <Link to="/friends/" className="NavBar-link">
             friends
-          </Link>
-          <Link to="/blends/" className="NavBar-link">
-            blends
           </Link>
           {/* <button
             onClick={() => {
