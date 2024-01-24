@@ -18,7 +18,6 @@ const Books = (props: BooksProps) => {
   const [library, setLibrary] = useState<Book[]>([]);
   const [search, setSearch] = useState<string>("");
   const [showDropdown, setShowDropdown] = useState<boolean>(false);
-  const [toRemove, setToRemove] = useState<Book[]>([]);
   
   const searchBook = (evt) => {
     if (evt.key === "Enter") {
@@ -98,10 +97,17 @@ const Books = (props: BooksProps) => {
 
   const removeBook = (item) => {
     console.log(item._id);
-    remove("/api/books/", {id: item._id}).then((books: Book[]) => {
-      toRemove.push(item);
+    console.log("before");
+    console.log(library.map((book) => (book._id)));
+    remove("/api/books/", {id: item._id}).then(() => {
+      const newLibrary = library.filter((book) => {
+        book._id !== item._id
+      });
+      setLibrary(newLibrary);
     });
-    console.log("removed from library");
+    console.log("after");
+    console.log(library.map((book) => (book._id)));
+    console.log("removed book");
   }
 
   return (
@@ -124,21 +130,15 @@ const Books = (props: BooksProps) => {
         <h3>Your Library</h3>
         {library.map((book, index) => {
           console.log(book);
-          console.log("book ID")
-          console.log(book.reader_id)
-          console.log("prop ID")
-          console.log(props.userId)
           if (book.reader_id && book.reader_id == props.userId)
-            if (!toRemove.includes(book)) {
-              return (
-                <>
-                  <LibraryCard userId={props.userId} book={book} key={book._id} />
-                  <button onClick={() => {
-                    removeBook(book);
-                  }}>Remove</button>
-                </>
-              );
-            }
+            return (
+              <> 
+                <LibraryCard userId={props.userId} book={book} key={book._id} />
+                <button onClick={() => {
+                  removeBook(book);
+                }}>Remove</button>
+              </>
+            );
           }
         )}
       </div>
