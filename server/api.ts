@@ -1,6 +1,9 @@
-import express from "express";
+import express, { Express } from "express";
 import auth from "./auth";
 import socketManager from "./server-socket";
+import multer from "multer";
+import csvParser from "csv-parser";
+
 const router = express.Router();
 
 router.post("/login", auth.login);
@@ -24,6 +27,75 @@ router.post("/initsocket", (req, res) => {
 // |------------------------------|
 // | write your API methods below!|
 // |------------------------------|
+
+// importing models
+import Book from "./models/Book";
+// const User = require("./models/User");
+import User from "./models/User";
+const CsvFile = require("./models/CsvFile");
+
+const storage = multer.memoryStorage();
+const upload = multer();
+
+router.post("/upload-csv", upload.single("file"), (req, res) => {
+  const multerFile: Express.Multer.File | undefined = req.file;
+  console.log("reached here 1");
+  if (multerFile) {
+    console.log("reached here 2");
+    const originalname = multerFile.originalname;
+    const buffer = multerFile.buffer;
+
+    const newCsvFile = new CsvFile({
+      filename: originalname,
+      content: buffer.toString(),
+    });
+
+    newCsvFile.save().then((file) => {
+      res.send(file);
+      console.log("file saved");
+    });
+  } else {
+    res.json({ message: "no file uploaded" });
+  }
+});
+
+router.get("/books", (req, res) => {
+  // empty selector means get all documents
+  Book.find({}).then((books) => res.send(books));
+});
+
+router.post("/books", auth.ensureLoggedIn, (req, res) => {
+  console.log(req.body);
+  const newBook = new Book({
+    title: req.body.title,
+    author: req.body.author,
+    isbn: req.body.isbn,
+    pages: req.body.pages,
+    dateread: req.body.dateread,
+    rating: req.body.rating,
+    cover: req.body.cover,
+    reader_id: req.user?._id,
+  });
+
+  newBook.save().then((book) => res.send(book));
+});
+
+// router.post("/createuser", (req, res) => {
+//   console.log(User);
+//   User.find({ user_id: req.user?._id }).then((users) => {
+//     if (!users.length && users.length === 0) {
+//       const newUser = new User({
+//         name: req.user?.name,
+//         googleid: req.user?.googleid,
+//         user_id: req.user?._id,
+//       });
+
+//       newUser.save().then((users) => res.send(users));
+//     } else {
+//       res.send(users);
+//     }
+//   });
+// });
 
 // anything else falls to this "not found" case
 router.all("*", (req, res) => {

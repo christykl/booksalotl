@@ -41,6 +41,7 @@ const App = () => {
     post("/api/login", { token: userToken }).then((user) => {
       setUserId(user._id);
       post("/api/initsocket", { socketid: socket.id });
+      // post("/api/createuser", );
     });
   };
 
@@ -48,7 +49,6 @@ const App = () => {
     setUserId(undefined);
     post("/api/logout");
   };
-
 
   // const theme = createTheme({
   //   fontFamily: 'Courier Prime sans-serif'
@@ -58,9 +58,8 @@ const App = () => {
   // All the pages need to have the props extended via RouteComponentProps for @reach/router to work properly. Please use the Skeleton as an example.
   return (
     <MantineProvider>
-    <BrowserRouter>
-      {
-        !userId ? (
+      <BrowserRouter>
+        {!userId ? (
           <Home handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} />
         ) : (
           <>
@@ -69,15 +68,14 @@ const App = () => {
               <Routes>
                 {/* <Route path="/" element={} /> */}
                 <Route path="/profile/" element={<Profile />} />
-                <Route path="/friends/" element={<Friends userId="hi"/>} />
-                <Route path="/blends/" element={<Books userId="hi"/>} />
+                <Route path="/friends/" element={<Friends userId="hi" />} />
+                <Route path="/blends/" element={<Books userId="hi" />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </div>
           </>
-        )
-      }
-    </BrowserRouter>
+        )}
+      </BrowserRouter>
     </MantineProvider>
   );
 };
