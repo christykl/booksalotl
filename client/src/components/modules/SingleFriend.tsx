@@ -23,7 +23,9 @@ const SingleFriend = (props: SingleFriendProps) => {
           <Avatar src={props.profileImage} alt={props.userName} radius="xl" />
         </Grid.Col>
         <Grid.Col span={6}>
-          <Text size="lg">{props.userName}</Text>
+          <Text className="u-textCenter" size="lg">
+            {props.userName}
+          </Text>
         </Grid.Col>
         <Grid.Col span={3}>
           <Button className="SingleFriend-button">
