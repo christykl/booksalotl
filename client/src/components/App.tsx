@@ -18,6 +18,7 @@ import Books from "./pages/Books";
 
 const App = () => {
   const [userId, setUserId] = useState<string | undefined>(undefined);
+  const [googleid, setGoogleid] = useState<string | undefined>(undefined);
 
   useEffect(() => {
     get("/api/whoami")
@@ -25,6 +26,7 @@ const App = () => {
         if (user._id) {
           // TRhey are registed in the database and currently logged in.
           setUserId(user._id);
+          setGoogleid(user.googleid);
         }
       })
       .then(() =>
@@ -59,7 +61,7 @@ const App = () => {
   return (
     <MantineProvider>
       <BrowserRouter>
-        {!userId ? (
+        {!userId || !googleid ? (
           <Home handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} />
         ) : (
           <>
@@ -67,9 +69,10 @@ const App = () => {
             <div>
               <Routes>
                 {/* <Route path="/" element={} /> */}
-                <Route path="/profile/" element={<Profile />} />
+                <Route path="/profile/" element={<Profile userId={userId} googleid={googleid} />} />
+                <Route path="/my-books/" element={<Books userId={userId} />} />
                 <Route path="/friends/" element={<Friends userId={userId} />} />
-                <Route path="/blends/" element={<Books userId={userId} />} />
+                <Route path="/" element={<Profile userId={userId} googleid={googleid} />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </div>

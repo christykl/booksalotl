@@ -7,6 +7,8 @@ import "./Profile.css";
 // import { Book } from "./Books";
 import Books from "./Books";
 import SingleBook from "../modules/SingleBook";
+import { User } from "../../../../server/models/User";
+import { get } from "../../utilities";
 
 const primaryColor = getComputedStyle(document.documentElement).getPropertyValue("--primary");
 const primaryDimColor = getComputedStyle(document.documentElement).getPropertyValue(
@@ -30,8 +32,19 @@ export type Book = {
   description?: string;
 };
 
-const Profile = () => {
+type ProfileProps = {
+  userId: string;
+  googleid: string;
+};
+
+const Profile = (props: ProfileProps) => {
   const [bookData, setBookData] = useState<Book[]>([]);
+  const [username, setUsername] = useState<string>("Janelle Cai");
+
+  // useEffect(() => {
+  //   // document.title = "Profile Page";
+  //   get("/api/user", { googleid: props.googleid }).then((userObj) => setUsername(userObj.name));
+  // }, []);
 
   /* Placeholder data */
   const loadBooks = () => {
@@ -94,7 +107,7 @@ const Profile = () => {
       <div className="Profile-bioContainer">
         <div className="Profile-image" />
         <div className="Profile-nameContainer">
-          <h1 className="Profile-name">Janelle Cai</h1>
+          <h1 className="Profile-name">{username}</h1>
         </div>
         <div className="Profile-subContainer">
           <p className="Profile-subhead u-subheader">Friends</p>
