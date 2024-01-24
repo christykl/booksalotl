@@ -23,34 +23,36 @@ const Home = (props: Props) => {
 
   return (
     <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
-      {props.userId ? (
-        <button
-          onClick={() => {
-            googleLogout();
-            handleLogout();
-          }}
-        >
-          Logout
-        </button>
-      ) : (
-        <GoogleLogin onSuccess={handleLogin} onError={() => console.log("Error Logging in")} />
-      )}
-      
       <div className="Home-container">
-        <div className="Home-content">
-            <h1>book <br /> blendr</h1>
-            
+        <div className="Home-flexContainer">
+          <div className="Home-content">
+            <h1>
+              book <br /> blendr
+            </h1>
+            <div className="u-subheader Home-subtitle">
+              <h4>blend and send to a frend</h4>
+            </div>
+          </div>
         </div>
-        <div className="u-subheader Home-subtitle">
-            <h4>blend and send to a frend</h4>
+        <div className="Home-loginContainer">
+          {props.userId ? (
+            <button
+              className="Home-loginButton"
+              onClick={() => {
+                googleLogout();
+                handleLogout();
+              }}
+            >
+              Logout
+            </button>
+          ) : (
+            <GoogleLogin onSuccess={handleLogin} onError={() => console.log("Error Logging in")} />
+          )}
         </div>
       </div>
       <div className="Home-container2">
         <FaChartColumn />
       </div>
-      
-        
-     
     </GoogleOAuthProvider>
   );
 };
