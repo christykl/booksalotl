@@ -3,24 +3,32 @@ import { User } from "./User";
 
 const BookSchema = new Schema({
   title: String,
-  author: String,
+  authors: [String],
   isbn: String,
   pages: Number,
   dateread: Date,
   rating: Number,
   cover: String,
   reader_id: String,
+  publisher: String,
+  published_date: String,
+  preview_link: String,
+  description: String,
 });
 
 export interface Book extends Document {
   title: string;
-  author: string;
+  authors: [string];
   isbn: string;
   pages: number;
   dateread: Date;
   rating: number;
   cover: string;
   reader_id: string;
+  publisher: string;
+  published_date: string;
+  preview_link: string;
+  description: string;
   _id: string;
 }
 

@@ -6,17 +6,8 @@ import Card from "../modules/Card";
 import "./Books.css";
 import { get, post } from "../../utilities";
 import LibraryCard from "../modules/LibraryCard";
-
-export type Book = {
-  _id: string;
-  title: string;
-  author: string;
-  bookCover?: string;
-  rating?: number;
-  pageCount?: number;
-  genre?: string;
-  dateRead?: Date;
-};
+import {Book} from "../../../../server/models/Book";
+import { remove } from "../../utilities";
 
 type BooksProps = {
   userId: string;
@@ -44,22 +35,44 @@ const Books = (props: BooksProps) => {
     }
   };
 
+  const checkLibrary = (book) => {
+    if (library.length > 0) {
+      for (let i = 0; i < library.length; i++) {
+        if (library[i].title == book.volumeInfo.title && library[i].reader_id == props.userId) {
+          return true;
+        }
+      }
+    }
+    return false;
+  };
+
   const addBookToLibrary = (book) => {
     // setLibrary([...library, book]);
-    console.log(book)
-    post("/api/books", {
-      title: book.volumeInfo.title,
-      author: book.volumeInfo.author,
-      isbn: book.volumeInfo.isbn,
-      pages: book.volumeInfo.pageCount,
-      dateread: "1/22",
-      cover: book.volumeInfo.imageLinks.smallThumbnail,
-      rating: 5,
-    }).then((newBook) => {
-      setLibrary([...library, newBook]);
-      console.log("file uploaded");
-    });
-    setShowDropdown(false); // Optionally close the dropdown after adding a book
+    if (checkLibrary(book)) {
+      // error message popup
+      alert("Book already in library");
+      return;
+    }
+    else {
+      console.log(book)
+      post("/api/books", {
+        title: book.volumeInfo.title,
+        authors: book.volumeInfo.authors,
+        isbn: book.volumeInfo.isbn,
+        pages: book.volumeInfo.pageCount,
+        dateread: "1/22",
+        cover: book.volumeInfo.imageLinks.smallThumbnail,
+        rating: 5,
+        publisher: book.volumeInfo.publisher,
+        published_date: book.volumeInfo.publishedDate,
+        preview_link: book.volumeInfo.previewLink,
+        description: book.volumeInfo.description,
+      }).then((newBook) => {
+        setLibrary([...library, newBook]);
+        console.log("file uploaded");
+      });
+      setShowDropdown(false); // Optionally close the dropdown after adding a book
+    }
   };
 
   const renderDropdown = () => {
@@ -76,19 +89,26 @@ const Books = (props: BooksProps) => {
     );
   };
 
-  // useEffect(() => {
-  //   if (library) {
-  //     post("/api/books", library).then(() => {
-  //       console.log("file uploaded");
-  //     });
-  //   }
-  // }, [library]);
-
   useEffect(() => {
     get("/api/books").then((books: Book[]) => {
       setLibrary(books);
     });
   }, []);
+
+  const removeBook = (item) => {
+    console.log(item._id);
+    console.log("before");
+    console.log(library.map((book) => (book._id)));
+    remove("/api/books/", {id: item._id}).then(() => {
+      const newLibrary = library.filter((book) => {
+        book._id !== item._id
+      });
+      setLibrary(newLibrary);
+    });
+    console.log("after");
+    console.log(library.map((book) => (book._id)));
+    console.log("removed book");
+  }
 
   return (
     <div>
@@ -110,8 +130,17 @@ const Books = (props: BooksProps) => {
         <h3>Your Library</h3>
         {library.map((book, index) => {
           console.log(book);
-          return <LibraryCard book={book} key={index} />;
-        })}
+          if (book.reader_id && book.reader_id == props.userId)
+            return (
+              <> 
+                <LibraryCard userId={props.userId} book={book} key={book._id} />
+                <button onClick={() => {
+                  removeBook(book);
+                }}>Remove</button>
+              </>
+            );
+          }
+        )}
       </div>
     </div>
   );

@@ -1,5 +1,5 @@
 import React from "react";
-import { Book } from "../pages/Books";
+import { Book } from "../pages/Profile";
 import { Card, Image, Title, Text } from '@mantine/core';
 
 import "./SingleBook.css";
@@ -17,7 +17,7 @@ const SingleBook = (props: SingleBookProps) => {
       {book.bookCover && <Image src={book.bookCover} alt={book.title} className="book-cover" />}
       <div className="book-details">
         <Title order={3}>{book.title}</Title>
-        <Text>Author: {book.author}</Text>
+        <Text>Author: {book.authors}</Text>
         {book.rating && <Text>Rating: {book.rating}</Text>}
       </div>
     </Card>

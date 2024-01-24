@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import Modal from "./Modal";
 import "./Modal.css";
-const LibraryCard = ({ book }) => {
+
+
+const LibraryCard = ({ book, userId }) => {
   const [show, setShow] = useState<boolean>(false);
   const [bookItem, setItem] = useState();
 
@@ -23,7 +25,7 @@ const LibraryCard = ({ book }) => {
             <h3 className="title">{book.authors}</h3>
           </div>
         </div>
-        <Modal show={show} item={bookItem} onClose={() => setShow(false)} />
+        <Modal userId={userId} show={show} item={bookItem} onClose={() => setShow(false)} />
       </div>
     );
   } else {

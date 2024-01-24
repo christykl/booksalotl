@@ -4,7 +4,7 @@ import { Chart, Pie, Doughnut, Line, Bar } from "react-chartjs-2";
 ChartJS.register(...registerables);
 import "../../utilities.css";
 import "./Profile.css";
-import { Book } from "./Books";
+// import { Book } from "./Books";
 import Books from "./Books";
 import SingleBook from "../modules/SingleBook";
 
@@ -14,24 +14,40 @@ const primaryDimColor = getComputedStyle(document.documentElement).getPropertyVa
 );
 const greyColor = getComputedStyle(document.documentElement).getPropertyValue("--grey");
 
+export type Book = {
+  _id: string;
+  title: string;
+  authors: [string];
+  bookCover?: string;
+  rating?: number;
+  pageCount?: number;
+  genre?: string;
+  dateRead?: Date;
+  readerId?: string;
+  publisher?: string;
+  published_date?: string;
+  preview_link?: string;
+  description?: string;
+};
+
 const Profile = () => {
   const [bookData, setBookData] = useState<Book[]>([]);
 
   /* Placeholder data */
   const loadBooks = () => {
     setBookData([
-      { _id: "1", title: "1984", author: "George Orwell", genre: "Fiction", pageCount: 284 },
+      { _id: "1", title: "1984", authors: ["George Orwell"], genre: "Fiction", pageCount: 284 },
       {
         _id: "2",
         title: "Pride and Prejudice",
-        author: "Jane Austen",
+        authors: ["Jane Austen"],
         genre: "Fiction",
         pageCount: 312,
       },
       {
         _id: "3",
         title: "Thinking, Fast and Slow",
-        author: "Daniel Kahneman",
+        authors: ["Daniel Kahneman"],
         genre: "Nonfiction",
         pageCount: 144,
       },
@@ -93,7 +109,7 @@ const Profile = () => {
           <p className="Profile-content u-subheader Profile-bookContainer">
             <SingleBook
               userId={" Anonymous "}
-              book={{ _id: "3", title: "Thinking, Fast and Slow", author: "Daniel Kahneman" }}
+              book={{ _id: "3", title: "Thinking, Fast and Slow", authors: ["Daniel Kahneman"] }}
             />
           </p>
         </div>

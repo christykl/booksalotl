@@ -68,17 +68,26 @@ router.post("/books", auth.ensureLoggedIn, (req, res) => {
   console.log(req.body);
   const newBook = new Book({
     title: req.body.title,
-    author: req.body.author,
+    authors: req.body.authors,
     isbn: req.body.isbn,
     pages: req.body.pages,
     dateread: req.body.dateread,
     rating: req.body.rating,
     cover: req.body.cover,
     reader_id: req.user?._id,
+    publisher: req.body.publisher,
+    published_date: req.body.published_date,
+    preview_link: req.body.preview_link,
+    description: req.body.description,
   });
 
   newBook.save().then((book) => res.send(book));
 });
+
+router.delete("/books", auth.ensureLoggedIn, (req, res) => {
+  Book.findByIdAndRemove(req.body.id).then(() => res.send({}));
+});
+
 // anything else falls to this "not found" case
 router.all("*", (req, res) => {
   const msg = `Api route not found: ${req.method} ${req.url}`;

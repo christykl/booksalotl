@@ -1,10 +1,12 @@
 import React from 'react';
-const Modal=({show,item,onClose})=>{
+const Modal=({show,item,onClose, userId})=>{
+
+    
     if(!show)
     {
         return null;
     }
-    let thumbnail=item.volumeInfo.imageLinks && item.volumeInfo.imageLinks.smallThumbnail;
+    let thumbnail=item.cover;
     return(
         <div>
             <div className="overlay">
@@ -13,13 +15,13 @@ const Modal=({show,item,onClose})=>{
                     <div className="inner-box">
                         <img src={thumbnail} alt="" />
                         <div className="info">
-                            <h1>{item.volumeInfo.title}</h1>
-                            <h3>{item.volumeInfo.authors}</h3>
-                            <h4>{item.volumeInfo.publisher}<span>{item.volumeInfo.publishedDate}</span></h4><br/>
-                            <a href={item.volumeInfo.previewLink}><button>More</button></a>
-                        </div>
+                            <h1>{item.title}</h1>
+                            <h3>{item.authors}</h3>
+                            <h4>{item.publisher}<span>{item.published_date}</span></h4><br/>
+                            <a href={item.preview_link}><button>More</button></a>
+                         </div>
                     </div>
-                    <h4 className="description">{item.volumeInfo.description}</h4>
+                    <h4 className="description">{item.description}</h4>
                 </div>
             </div>
         </div>
