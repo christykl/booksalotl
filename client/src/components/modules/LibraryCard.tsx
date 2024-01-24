@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import Modal from "./Modal";
 import "./Modal.css";
-const Card = ({ book }) => {
+const LibraryCard = ({ book }) => {
   const [show, setShow] = useState<boolean>(false);
   const [bookItem, setItem] = useState();
 
   let thumbnail =
-    book.volumeInfo && book.volumeInfo.imageLinks && book.volumeInfo.imageLinks.smallThumbnail;
+    book.cover;
   if (thumbnail != undefined) {
     return (
       <div>
@@ -19,8 +19,8 @@ const Card = ({ book }) => {
         >
           <img src={thumbnail} alt="" />
           <div className="bottom">
-            <h3 className="title">{book.volumeInfo.title}</h3>
-            <h3 className="title">{book.volumeInfo.authors}</h3>
+            <h3 className="title">{book.title}</h3>
+            <h3 className="title">{book.authors}</h3>
           </div>
         </div>
         <Modal show={show} item={bookItem} onClose={() => setShow(false)} />
@@ -30,4 +30,4 @@ const Card = ({ book }) => {
     return <div>no thumbnail</div>;
   }
 };
-export default Card;
+export default LibraryCard;

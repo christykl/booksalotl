@@ -8,12 +8,9 @@ const BookSchema = new Schema({
   pages: Number,
   dateread: Date,
   rating: Number,
-  reader: {
-    _id: String,
-    name: String,
-    googleid: String,
-  }
-})
+  cover: String,
+  reader_id: String,
+});
 
 export interface Book extends Document {
   title: string;
@@ -22,10 +19,11 @@ export interface Book extends Document {
   pages: number;
   dateread: Date;
   rating: number;
-  reader: User;
+  cover: string;
+  reader_id: string;
   _id: string;
 }
 
 const BookModel = model<Book>("Book", BookSchema);
 
-export default BookModel
+export default BookModel;
