@@ -8,6 +8,7 @@ import { get, post } from "../../utilities";
 import LibraryCard from "../modules/LibraryCard";
 import { Book } from "../../../../server/models/Book";
 import { remove } from "../../utilities";
+import BookInfo from "../modules/BookInfo";
 
 type BooksProps = {
   userId: string;
@@ -18,6 +19,8 @@ const Books = (props: BooksProps) => {
   const [library, setLibrary] = useState<Book[]>([]);
   const [search, setSearch] = useState<string>("");
   const [showDropdown, setShowDropdown] = useState<boolean>(false);
+  // const [showBookInfo, setShowBookInfo] = useState<boolean>(false); 
+  const [toShow, setToShow] = useState<Book | null>(null); 
 
   const searchBook = (evt) => {
     if (evt.key === "Enter") {
@@ -48,11 +51,12 @@ const Books = (props: BooksProps) => {
 
   const addBookToLibrary = (book) => {
     // setLibrary([...library, book]);
+
     if (checkLibrary(book)) {
       // error message popup
       alert("Book already in library");
       return;
-    } else {
+    } else {      
       console.log(book);
       post("/api/books", {
         title: book.volumeInfo.title,
@@ -69,10 +73,19 @@ const Books = (props: BooksProps) => {
       }).then((newBook) => {
         setLibrary([...library, newBook]);
         console.log("file uploaded");
+        // setShowBookInfo(true);
+        setToShow(newBook);
+        console.log("show book info");
       });
       setShowDropdown(false); // Optionally close the dropdown after adding a book
     }
   };
+
+  const closeBookInfo = () => { 
+    console.log("close book info");
+    setToShow(null);
+    // setShowBookInfo(false);
+  }
 
   const renderDropdown = () => {
     if (!showDropdown) return null;
@@ -147,6 +160,7 @@ const Books = (props: BooksProps) => {
                 </div>
               );
           })}
+          {toShow && <BookInfo onClose={closeBookInfo} item={toShow} />}
         </div>
       </div>
     </div>
