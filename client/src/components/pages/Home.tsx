@@ -30,7 +30,7 @@ const Home = (props: Props) => {
               book <br /> blendr
             </h1>
             <div className="u-subheader Home-subtitle">
-              <h4>blend and send to a frend</h4>
+              <h4>blend and send to a friend</h4>
             </div>
           </div>
         </div>
@@ -50,9 +50,7 @@ const Home = (props: Props) => {
           )}
         </div>
       </div>
-      <div className="Home-container2">
-        <FaChartColumn />
-      </div>
+      <div className="Home-container2"></div>
     </GoogleOAuthProvider>
   );
 };

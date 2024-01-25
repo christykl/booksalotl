@@ -1,5 +1,8 @@
 .Home-container {
   background-image: url("../../public/home_background_image.png");
+  border: solid;
+  border-width: 8px;
+  border-color: var(--white);
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
@@ -32,7 +35,22 @@
   color: #fffdfb;
   left: 10%;
   top: 60%;
-  font-size: 48px;
+  font-size: 26px;
+}
+
+.Home-subtitle h4 {
+  overflow: hidden;
+  white-space: nowrap;
+  animation: typing 4s forwards;
+}
+
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
 }
 
 .Home-container2 {
