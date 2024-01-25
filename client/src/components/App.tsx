@@ -1,17 +1,24 @@
 import React, { useState, useEffect } from "react";
-import { Routes, Route } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import { CredentialResponse } from "@react-oauth/google";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import { get, post } from "../utilities";
 import NotFound from "./pages/NotFound";
-import Skeleton from "./pages/Skeleton";
+import Home from "./pages/Home";
+import NavBar from "./modules/NavBar";
+import Profile from "./pages/Profile";
 import { socket } from "../client-socket";
 import User from "../../../shared/User";
 import "../utilities.css";
+import Friends from "./pages/Friends";
+import { MantineProvider, createTheme } from "@mantine/core";
+// import '@mantine/core/styles.css'; // Import Mantine styles
+import Books from "./pages/Books";
 
 const App = () => {
   const [userId, setUserId] = useState<string | undefined>(undefined);
+  const [googleid, setGoogleid] = useState<string>("");
 
   useEffect(() => {
     get("/api/whoami")
@@ -35,6 +42,7 @@ const App = () => {
     post("/api/login", { token: userToken }).then((user) => {
       setUserId(user._id);
       post("/api/initsocket", { socketid: socket.id });
+      // post("/api/createuser", );
     });
   };
 
@@ -43,23 +51,34 @@ const App = () => {
     post("/api/logout");
   };
 
+  // const theme = createTheme({
+  //   fontFamily: 'Courier Prime sans-serif'
+  // });
+
   // NOTE:
   // All the pages need to have the props extended via RouteComponentProps for @reach/router to work properly. Please use the Skeleton as an example.
   return (
-    <Routes>
-      <Route
-        path="/"
-        element={
-          <Skeleton
-            path="/"
-            handleLogin={handleLogin}
-            handleLogout={handleLogout}
-            userId={userId}
-          />
-        }
-      />
-      <Route path="*" element={<NotFound />} />
-    </Routes>
+    <MantineProvider>
+      <BrowserRouter>
+        {!userId ? (
+          <Home handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} />
+        ) : (
+          <>
+            <NavBar handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} />
+            <div>
+              <Routes>
+                {/* <Route path="/" element={} /> */}
+                <Route path="/profile/" element={<Profile userId={userId} />} />
+                <Route path="/my-books/" element={<Books userId={userId} />} />
+                <Route path="/friends/" element={<Friends userId={userId} />} />
+                <Route path="/" element={<Profile userId={userId} />} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </div>
+          </>
+        )}
+      </BrowserRouter>
+    </MantineProvider>
   );
 };
 

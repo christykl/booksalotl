@@ -1,59 +1,60 @@
 import React from "react";
-import { Link } from "@reach/router";
-import GoogleLogin, { GoogleLogout } from "react-google-login";
-
+import { Link } from "react-router-dom";
+import {
+  GoogleOAuthProvider,
+  GoogleLogin,
+  googleLogout,
+  CredentialResponse,
+} from "@react-oauth/google";
 import "./NavBar.css";
+import Logo from "./Logo";
 
 // This identifies your web application to Google's authentication service
-const GOOGLE_CLIENT_ID = "395785444978-7b9v7l0ap2h3308528vu1ddnt3rqftjc.apps.googleusercontent.com";
+const GOOGLE_CLIENT_ID = "924135144483-a4h7ghgqcej244vnv4312rdkd4lovc95.apps.googleusercontent.com";
+
+type NavBarProps = {
+  userId: string | undefined;
+  handleLogin: (response: CredentialResponse) => void;
+  handleLogout: () => void;
+};
 
 /**
- * The navigation bar at the top of all pages. Takes no props.
+ * The navigation bar at the top of all pages.
  */
-const NavBar = (props) => {
+const NavBar = (props: NavBarProps) => {
+  const { handleLogin, handleLogout } = props;
+
   return (
-    <nav className="NavBar-container">
-      <div className="NavBar-title u-inlineBlock">Catbook</div>
-      <div className="NavBar-title u-inlineBlock">|</div>
-      <div className="NavBar-title-red u-inlineBlock">Game</div>
-      <div className="NavBar-title u-inlineBlock">book</div>
-      <div className="NavBar-linkContainer u-inlineBlock">
-        <Link to="/" className="NavBar-link">
-          Home
-        </Link>
-        {props.userId && (
-          <Link to={`/profile/${props.userId}`} className="NavBar-link">
-            Profile
+    <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
+      <nav className="NavBar-container">
+        <Logo />
+        <div className="NavBar-title NavBar-linkContainer u-inlineBlock">
+          <Link to="/profile/" className="NavBar-link">
+            profile
           </Link>
-        )}
-        <Link to="/chat/" className="NavBar-link">
-          Chat
-        </Link>
-        <Link to="/game/" className="NavBar-link">
-          Game
-        </Link>
-        <Link to="/llm/" className="NavBar-link">
-          LLM
-        </Link>
-        {props.userId ? (
-          <GoogleLogout
-            clientId={GOOGLE_CLIENT_ID}
-            buttonText="Logout"
-            onLogoutSuccess={props.handleLogout}
-            onFailure={(err) => console.log(err)}
-            className="NavBar-link NavBar-login"
-          />
-        ) : (
-          <GoogleLogin
-            clientId={GOOGLE_CLIENT_ID}
-            buttonText="Login"
-            onSuccess={props.handleLogin}
-            onFailure={(err) => console.log(err)}
-            className="NavBar-link NavBar-login"
-          />
-        )}
-      </div>
-    </nav>
+          <Link to="/my-books/" className="NavBar-link">
+            my books
+          </Link>
+          <Link to="/friends/" className="NavBar-link">
+            friends
+          </Link>
+          {/* <button
+            onClick={() => {
+              googleLogout();
+              handleLogout();
+            }}
+          >
+            sign out
+          </button> */}
+          <Link to="/" className="NavBar-link" onClick={() => {
+            googleLogout();
+            handleLogout();
+          }}>
+            sign out
+          </Link>
+        </div>
+      </nav>
+    </GoogleOAuthProvider>
   );
 };
 

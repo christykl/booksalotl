@@ -1,1 +1,8 @@
-/* Fill me in :) */
+body {
+    background-image: url("../../public/home_background_image.png");
+}
+
+.Skeleton-container {
+    padding: 0 35%;
+}
+
