@@ -6,7 +6,7 @@ import Card from "../modules/Card";
 import "./Books.css";
 import { get, post } from "../../utilities";
 import LibraryCard from "../modules/LibraryCard";
-import {Book} from "../../../../server/models/Book";
+import { Book } from "../../../../server/models/Book";
 import { remove } from "../../utilities";
 
 type BooksProps = {
@@ -18,7 +18,7 @@ const Books = (props: BooksProps) => {
   const [library, setLibrary] = useState<Book[]>([]);
   const [search, setSearch] = useState<string>("");
   const [showDropdown, setShowDropdown] = useState<boolean>(false);
-  
+
   const searchBook = (evt) => {
     if (evt.key === "Enter") {
       axios
@@ -52,9 +52,8 @@ const Books = (props: BooksProps) => {
       // error message popup
       alert("Book already in library");
       return;
-    }
-    else {
-      console.log(book)
+    } else {
+      console.log(book);
       post("/api/books", {
         title: book.volumeInfo.title,
         authors: book.volumeInfo.authors,
@@ -98,17 +97,17 @@ const Books = (props: BooksProps) => {
   const removeBook = (item) => {
     console.log(item._id);
     console.log("before");
-    console.log(library.map((book) => (book._id)));
-    remove("/api/books/", {id: item._id}).then(() => {
+    console.log(library.map((book) => book._id));
+    remove("/api/books/", { id: item._id }).then(() => {
       const newLibrary = library.filter((book) => {
-        book._id !== item._id
+        book._id !== item._id;
       });
       setLibrary(newLibrary);
     });
     console.log("after");
-    console.log(library.map((book) => (book._id)));
+    console.log(library.map((book) => book._id));
     console.log("removed book");
-  }
+  };
 
   return (
     <div>
@@ -119,28 +118,36 @@ const Books = (props: BooksProps) => {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           onKeyUp={searchBook}
+          className="Books-input"
         />
-        <button type="button">Search</button>
       </div>
       {renderDropdown()} {/* Render the dropdown here */}
       {/* <div className="Books-searchContainer">
         <FileUpload />
       </div> */}
-      <div className="library-container">
-        <h3>Your Library</h3>
-        {library.map((book, index) => {
-          console.log(book);
-          if (book.reader_id && book.reader_id == props.userId)
-            return (
-              <> 
-                <LibraryCard userId={props.userId} book={book} key={book._id} />
-                <button onClick={() => {
-                  removeBook(book);
-                }}>Remove</button>
-              </>
-            );
-          }
-        )}
+      <div className="">
+        <div className="u-textCenter">
+          <h3>Your Library</h3>
+        </div>
+        <div className="library-container">
+          {library.map((book, index) => {
+            console.log(book);
+            if (book.reader_id && book.reader_id == props.userId)
+              return (
+                <div className="Books-card">
+                  <LibraryCard userId={props.userId} book={book} key={book._id} />
+                  <button
+                    className="Books-button"
+                    onClick={() => {
+                      removeBook(book);
+                    }}
+                  >
+                    Remove
+                  </button>
+                </div>
+              );
+          })}
+        </div>
       </div>
     </div>
   );

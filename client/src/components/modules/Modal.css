@@ -1,64 +1,137 @@
-.overlay{
-    min-height: 100vh;
-    width: 100%;
-    position: fixed;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    background: linear-gradient(rgba(0,0,0,0.2),rgba(0,0,0,0.2));
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.overlay {
+  min-height: 100vh;
+  width: 100%;
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.overlay-inner{
-    background: white;
-    width: 700px;
-    height: 550px;
-    padding: 1.5rem;
-    position: relative;
-    box-sizing: border-box;
-    overflow: hidden;
-    font-size: 1.3rem;
+.overlay-inner {
+  border-radius: 1rem;
+  background: white;
+  width: 700px;
+  height: 550px;
+  padding: 1.5rem;
+  position: relative;
+  box-sizing: border-box;
+  overflow: hidden;
+  font-size: 1.3rem;
+  overflow-y: auto;
 }
-.overlay-inner .close{
-    position: absolute;
-    top:1rem;
-    right: 1rem;
-    outline: none;
-    border: none;
-    font-size: 17px;
-    background-color: transparent;
+.overlay-inner::-webkit-scrollbar {
+  display: none;
 }
-.overlay-inner .inner-box{
-    margin-top: 30px;
-    display: flex;
-    justify-content: center;
+
+.overlay-inner .close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  outline: none;
+  border: none;
+  font-size: 17px;
+  font-family: "Courier New", Courier, monospace;
+  color: var(--grey);
+  background-color: transparent;
 }
-.overlay-inner .inner-box img{
-    margin-right: 20px;
-    width: 150px;
-    height: 200px;
+.overlay-inner .inner-box {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
 }
-.overlay-inner .inner-box h3{
-    margin-top: 10px;
-    color: green;
+
+.overlay-inner .inner-box .info {
+  padding: 16px;
 }
-.overlay-inner .inner-box h4{
-    color: blue;
+.overlay-inner .inner-box img {
+  margin-right: 24px;
+  width: 150px;
+  height: 200px;
 }
-.overlay-inner .inner-box button{
-    outline: none;
-    border: none;
-    width: 100px;
-    border-radius: 5px;
-    background-color: #24a0ed;
-    color: white;
-    font-weight: bold;
-    padding: 0.3rem 0.5rem;
+.overlay-inner .inner-box h3 {
+  margin-top: 10px;
+  color: var(--black);
 }
-.overlay-inner .description{
-    margin-top: 2rem;
-    text-align: justify;
-    font-size: 13px;
+.overlay-inner .inner-box h5 {
+  color: var(--grey);
+  margin: 0;
+}
+.overlay-inner .inner-box button {
+  width: 100px;
+  font-weight: bold;
+  padding: 0.3rem 0.5rem;
+  font-family: monospace;
+  color: var(--white);
+  border-width: 2px;
+  border-color: var(--green);
+  border-style: dotted;
+  border-radius: 10px;
+  background-color: var(--green);
+}
+.overlay-inner .inner-box button:hover {
+  width: 100px;
+  font-weight: bold;
+  padding: 0.3rem 0.5rem;
+  font-family: monospace;
+  color: var(--white);
+  color: var(--white);
+  border-width: 2px;
+  border-color: var(--white);
+  border-style: dotted;
+  border-radius: 10px;
+  background-color: var(--green);
+}
+.overlay-inner .description {
+  margin-top: 2rem;
+  text-align: justify;
+  font-size: 13px;
+  font-family: monospace;
+  font-weight: lighter;
+}
+
+.Modal-button:hover {
+  font-family: monospace;
+  font-style: italic;
+  color: var(--white);
+  border-width: 2px;
+  border-color: var(--white);
+  border-style: dotted;
+  border-radius: 10px;
+  background-color: var(--green);
+}
+
+.card {
+  padding: 16px;
+}
+.card img {
+  height: 200px;
+}
+.card .bottom {
+  display: flex;
+  flex-direction: column;
+}
+.card .bottom .title {
+  font-size: 14px;
+  margin-bottom: 16px;
+}
+
+.card .bottom .subtitle {
+  font-size: 11px;
+  margin-bottom: 16px;
+}
+
+.card .bottom .amount {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  right: 10px;
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+  font-size: 13px;
+  font-weight: bold;
+  padding: 0.2rem;
 }
