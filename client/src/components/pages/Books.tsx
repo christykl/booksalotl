@@ -8,6 +8,7 @@ import { get, post } from "../../utilities";
 import LibraryCard from "../modules/LibraryCard";
 import { Book } from "../../../../server/models/Book";
 import { remove } from "../../utilities";
+import BookInfo from "../modules/BookInfo";
 
 type BooksProps = {
   userId: string;
@@ -18,6 +19,22 @@ const Books = (props: BooksProps) => {
   const [library, setLibrary] = useState<Book[]>([]);
   const [search, setSearch] = useState<string>("");
   const [showDropdown, setShowDropdown] = useState<boolean>(false);
+  const [toShow, setToShow] = useState<Book | null>(null); 
+  const [genre, setGenre] = useState<string>("");
+  const [date, setDate] = useState<Date>(new Date());
+  const [rating, setRating] = useState<number>(0);
+
+  const genreCallback = (genreval) => {
+    setGenre(genreval);
+  }
+
+  const dateCallback = (dateval) => { 
+    setDate(dateval);
+  }
+
+  const ratingCallback = (ratingval) => { 
+    setRating(ratingval);
+  } 
 
   const searchBook = (evt) => {
     if (evt.key === "Enter") {
@@ -48,31 +65,41 @@ const Books = (props: BooksProps) => {
 
   const addBookToLibrary = (book) => {
     // setLibrary([...library, book]);
+    console.log("adding book to library");
     if (checkLibrary(book)) {
       // error message popup
-      alert("Book already in library");
+      alert("already in library");
       return;
-    } else {
+    } else {      
       console.log(book);
       post("/api/books", {
         title: book.volumeInfo.title,
         authors: book.volumeInfo.authors,
         isbn: book.volumeInfo.isbn,
         pages: book.volumeInfo.pageCount,
-        dateread: "1/22",
+        dateread: date,
         cover: book.volumeInfo.imageLinks.smallThumbnail,
-        rating: 5,
+        rating: rating,
+        genre: genre,
         publisher: book.volumeInfo.publisher,
         published_date: book.volumeInfo.publishedDate,
         preview_link: book.volumeInfo.previewLink,
         description: book.volumeInfo.description,
       }).then((newBook) => {
         setLibrary([...library, newBook]);
-        console.log("file uploaded");
+        // setShowBookInfo(true);
+        // setToShow(newBook);
+        // console.log("show book info");
       });
       setShowDropdown(false); // Optionally close the dropdown after adding a book
     }
   };
+
+  const closeBookInfo = () => { 
+    console.log("close book info");
+    setToShow(null);
+    // setShowBookInfo(false);
+  }
 
   const renderDropdown = () => {
     if (!showDropdown) return null;
@@ -80,13 +107,17 @@ const Books = (props: BooksProps) => {
     return (
       <div className="dropdown">
         {searchResults.map((book, index) => (
-          <div key={index} onClick={() => addBookToLibrary(book)}>
+          <div key={index} onClick={() => bookInfoPopup(book)}>
             <Card book={book} />
           </div>
         ))}
       </div>
     );
   };
+
+  const bookInfoPopup = (book) => {
+    setToShow(book);
+  }
 
   useEffect(() => {
     get("/api/books").then((books: Book[]) => {
@@ -107,6 +138,11 @@ const Books = (props: BooksProps) => {
     console.log(library.map((book) => book._id));
     console.log("removed book");
   };
+
+  const noDropdown = () => { 
+    setToShow(null);
+    setShowDropdown(false);
+  }
 
   return (
     <div>
@@ -146,6 +182,11 @@ const Books = (props: BooksProps) => {
                 </div>
               );
           })}
+          {toShow && 
+            <div className="overlay">
+              <BookInfo onClose={closeBookInfo} item={toShow} datecb={dateCallback} ratingcb={ratingCallback} genrecb={genreCallback} addbook={addBookToLibrary} dropdowncb={noDropdown} />
+            </div>  
+          }
         </div>
       </div>
     </div>
