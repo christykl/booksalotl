@@ -11,6 +11,7 @@
   flex-flow: row wrap;
   /* align-items: center; */
   /* justify-content: center; */
+  background-position: fixed;
 }
 
 .Home-flexContainer {

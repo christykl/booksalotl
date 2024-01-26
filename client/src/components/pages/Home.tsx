@@ -9,6 +9,7 @@ import {
 import "./Home.css";
 import { FaChartColumn } from "react-icons/fa6";
 import { IconContext } from "react-icons";
+import { FooterSimple } from "../modules/Footer";
 
 //TODO(weblab student): REPLACE WITH YOUR OWN CLIENT_ID
 const GOOGLE_CLIENT_ID = "924135144483-a4h7ghgqcej244vnv4312rdkd4lovc95.apps.googleusercontent.com";
@@ -50,7 +51,7 @@ const Home = (props: Props) => {
           )}
         </div>
       </div>
-      <div className="Home-container2"></div>
+      <FooterSimple />
     </GoogleOAuthProvider>
   );
 };
