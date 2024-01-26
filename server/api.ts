@@ -79,6 +79,7 @@ router.post("/books", auth.ensureLoggedIn, (req, res) => {
     published_date: req.body.published_date,
     preview_link: req.body.preview_link,
     description: req.body.description,
+    genre: req.body.genre,
   });
 
   newBook.save().then((book) => res.send(book));

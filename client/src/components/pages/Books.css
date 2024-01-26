@@ -83,3 +83,7 @@
   border-radius: 10px;
   background-color: var(--green);
 }
+
+.overlay {
+  z-index: 100;
+}
