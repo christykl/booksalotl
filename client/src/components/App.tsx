@@ -13,8 +13,27 @@ import User from "../../../shared/User";
 import "../utilities.css";
 import Friends from "./pages/Friends";
 import { MantineProvider, createTheme } from "@mantine/core";
-// import '@mantine/core/styles.css'; // Import Mantine styles
+import "@mantine/core/styles.css"; // Import Mantine styles
 import Books from "./pages/Books";
+
+const theme = createTheme({
+  colors: {
+    fadedpink: [
+      "#DAA5A4",
+      "#B88988",
+      "#DAA5A4",
+      "#DAA5A4",
+      "#DAA5A4",
+      "#DAA5A4",
+      "#DAA5A4",
+      "#DAA5A4",
+      "#DAA5A4",
+      "#DAA5A4",
+    ],
+  },
+  fontFamily: "Courier Prime, Open Sans, sans-serif",
+  primaryColor: "fadedpink",
+});
 
 const App = () => {
   const [userId, setUserId] = useState<string | undefined>(undefined);
@@ -58,7 +77,7 @@ const App = () => {
   // NOTE:
   // All the pages need to have the props extended via RouteComponentProps for @reach/router to work properly. Please use the Skeleton as an example.
   return (
-    <MantineProvider>
+    <MantineProvider theme={theme}>
       <BrowserRouter>
         {!userId ? (
           <Home handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} />
