@@ -1,8 +1,8 @@
 import express, { Express } from "express";
 import auth from "./auth";
 import socketManager from "./server-socket";
-import multer from "multer";
-import csvParser from "csv-parser";
+// import multer from "multer";
+// import csvParser from "csv-parser";
 
 const router = express.Router();
 
@@ -32,32 +32,32 @@ router.post("/initsocket", (req, res) => {
 import Book from "./models/Book";
 // const User = require("./models/User");
 import User from "./models/User";
-const CsvFile = require("./models/CsvFile");
+// const CsvFile = require("./models/CsvFile");
 
-const storage = multer.memoryStorage();
-const upload = multer();
+// const storage = multer.memoryStorage();
+// const upload = multer();
 
-router.post("/upload-csv", upload.single("file"), (req, res) => {
-  const multerFile: Express.Multer.File | undefined = req.file;
-  console.log("reached here 1");
-  if (multerFile) {
-    console.log("reached here 2");
-    const originalname = multerFile.originalname;
-    const buffer = multerFile.buffer;
+// router.post("/upload-csv", upload.single("file"), (req, res) => {
+//   const multerFile: Express.Multer.File | undefined = req.file;
+//   console.log("reached here 1");
+//   if (multerFile) {
+//     console.log("reached here 2");
+//     const originalname = multerFile.originalname;
+//     const buffer = multerFile.buffer;
 
-    const newCsvFile = new CsvFile({
-      filename: originalname,
-      content: buffer.toString(),
-    });
+//     const newCsvFile = new CsvFile({
+//       filename: originalname,
+//       content: buffer.toString(),
+//     });
 
-    newCsvFile.save().then((file) => {
-      res.send(file);
-      console.log("file saved");
-    });
-  } else {
-    res.json({ message: "no file uploaded" });
-  }
-});
+//     newCsvFile.save().then((file) => {
+//       res.send(file);
+//       console.log("file saved");
+//     });
+//   } else {
+//     res.json({ message: "no file uploaded" });
+//   }
+// });
 
 router.get("/books", (req, res) => {
   // empty selector means get all documents

@@ -99,10 +99,9 @@ const Books = (props: BooksProps) => {
     console.log("before");
     console.log(library.map((book) => book._id));
     remove("/api/books/", { id: item._id }).then(() => {
-      const newLibrary = library.filter((book) => {
-        book._id !== item._id;
-      });
+      const newLibrary = library.filter((book) => (book._id !== item._id));
       setLibrary(newLibrary);
+      console.log(newLibrary);
     });
     console.log("after");
     console.log(library.map((book) => book._id));
@@ -131,7 +130,7 @@ const Books = (props: BooksProps) => {
         </div>
         <div className="library-container">
           {library.map((book, index) => {
-            console.log(book);
+            // console.log(book);
             if (book.reader_id && book.reader_id == props.userId)
               return (
                 <div className="Books-card">
