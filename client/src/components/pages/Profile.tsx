@@ -179,12 +179,12 @@ const Profile = (props: ProfileProps) => {
           options={{
             maintainAspectRatio: true,
             scales: {
-              x: {
-                type: 'time',
-                time: {
-                  unit: 'month',
-                }
-              },
+              // x: {
+              //   type: 'time',
+              //   time: {
+              //     unit: 'month',
+              //   }
+              // },
               y: {
                 beginAtZero: true,
               }
