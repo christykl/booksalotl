@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from "react";
-import SingleBook from "../modules/SingleBook";
-import FileUpload from "../modules/FileUpload";
 import axios from "axios";
 import Card from "../modules/Card";
 import "./Books.css";

@@ -6,9 +6,11 @@ import "../../utilities.css";
 import "./Profile.css";
 // import { Book } from "./Books";
 import Books from "./Books";
-import SingleBook from "../modules/SingleBook";
+// import SingleBook from "../modules/SingleBook";
 import { User } from "../../../../server/models/User";
 import { get } from "../../utilities";
+import { Book } from "../../../../server/models/Book";
+import LibraryCard from "../modules/LibraryCard";
 
 const primaryColor = getComputedStyle(document.documentElement).getPropertyValue("--primary");
 const primaryDimColor = getComputedStyle(document.documentElement).getPropertyValue(
@@ -16,21 +18,21 @@ const primaryDimColor = getComputedStyle(document.documentElement).getPropertyVa
 );
 const greyColor = getComputedStyle(document.documentElement).getPropertyValue("--grey");
 
-export type Book = {
-  _id: string;
-  title: string;
-  authors: [string];
-  bookCover?: string;
-  rating?: number;
-  pageCount?: number;
-  genre?: string;
-  dateRead?: Date;
-  readerId?: string;
-  publisher?: string;
-  published_date?: string;
-  preview_link?: string;
-  description?: string;
-};
+// export type Book = {
+//   _id: string;
+//   title: string;
+//   authors: [string];
+//   bookCover?: string;
+//   rating?: number;
+//   pageCount?: number;
+//   genre?: string;
+//   dateRead?: Date;
+//   readerId?: string;
+//   publisher?: string;
+//   published_date?: string;
+//   preview_link?: string;
+//   description?: string;
+// };
 
 type ProfileProps = {
   userId: string;
@@ -39,6 +41,8 @@ type ProfileProps = {
 const Profile = (props: ProfileProps) => {
   const [bookData, setBookData] = useState<Book[]>([]);
   const [username, setUsername] = useState<string>("Janelle Cai");
+  const [library, setLibrary] = useState<Book[]>([]); 
+  const [currentBook, setCurrentBook] = useState<Book | null>(null);
 
   useEffect(() => {
     get("/api/whoami")
@@ -49,34 +53,48 @@ const Profile = (props: ProfileProps) => {
       })
   }, []);
 
+  useEffect(() => {
+    get("/api/books").then((books: Book[]) => {
+      setLibrary(books);
+    });
+  }, []);
+
+
   /* Placeholder data */
   const loadBooks = () => {
-    setBookData([
-      { _id: "1", title: "1984", authors: ["George Orwell"], genre: "Fiction", pageCount: 284 },
-      {
-        _id: "2",
-        title: "Pride and Prejudice",
-        authors: ["Jane Austen"],
-        genre: "Fiction",
-        pageCount: 312,
-      },
-      {
-        _id: "3",
-        title: "Thinking, Fast and Slow",
-        authors: ["Daniel Kahneman"],
-        genre: "Nonfiction",
-        pageCount: 144,
-      },
-    ]);
+    library.map((book) => {
+      if (book.reader_id && book.reader_id == props.userId) {
+        setBookData((prev) => [...prev, book]);
+      }
+    });
   };
 
-  useEffect(loadBooks, []);
+  //   setBookData([
+  //     { _id: "1", title: "1984", authors: ["George Orwell"], genre: "Fiction", pageCount: 284 },
+  //     {
+  //       _id: "2",
+  //       title: "Pride and Prejudice",
+  //       authors: ["Jane Austen"],
+  //       genre: "Fiction",
+  //       pageCount: 312,
+  //     },
+  //     {
+  //       _id: "3",
+  //       title: "Thinking, Fast and Slow",
+  //       authors: ["Daniel Kahneman"],
+  //       genre: "Nonfiction",
+  //       pageCount: 144,
+  //     },
+  //   ]);
+  // };
+
+  useEffect(loadBooks, [library]);
 
   /* Fiction vs. Nonfiction Pie Chart */
-  const fictionCount = bookData.filter((bookObj) => bookObj.genre === "Fiction").length;
-  const nonficCount = bookData.filter((bookObj) => bookObj.genre === "Nonfiction").length;
+  const fictionCount = bookData.filter((bookObj) => bookObj.genre === "fiction").length;
+  const nonficCount = bookData.filter((bookObj) => bookObj.genre === "non-fiction").length;
   const otherCount = bookData.filter(
-    (bookObj) => bookObj.genre !== "Fiction" && bookObj.genre !== "Nonfiction"
+    (bookObj) => bookObj.genre !== "fiction" && bookObj.genre !== "non-fiction"
   ).length;
 
   const ficData = {
@@ -123,10 +141,13 @@ const Profile = (props: ProfileProps) => {
         <div className="Profile-subContainer">
           <p className="Profile-subhead u-subheader">Currently Reading</p>
           <p className="Profile-content u-subheader Profile-bookContainer">
-            <SingleBook
-              userId={" Anonymous "}
-              book={{ _id: "3", title: "Thinking, Fast and Slow", authors: ["Daniel Kahneman"] }}
-            />
+            {currentBook ? (
+              <LibraryCard
+                userId={" Anonymous "}
+                book={{ _id: "3", title: "Thinking, Fast and Slow", authors: ["Daniel Kahneman"] }}
+              />
+            ) : (<p>nothing</p>)
+            }
           </p>
         </div>
       </div>
