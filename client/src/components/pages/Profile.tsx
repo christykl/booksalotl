@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Chart as ChartJS, registerables } from "chart.js";
-import { Chart, Pie, Doughnut, Line, Bar } from "react-chartjs-2";
 ChartJS.register(...registerables);
+// import 'chartjs-adapter-date-fns';
+// import 'date-fns';
+import { Chart, Pie, Doughnut, Line, Bar } from "react-chartjs-2";
 import "../../utilities.css";
 import "./Profile.css";
 // import { Book } from "./Books";
-import Books from "./Books";
+// import Books from "./Books";
 // import SingleBook from "../modules/SingleBook";
 import { User } from "../../../../server/models/User";
 import { get } from "../../utilities";
@@ -69,25 +71,6 @@ const Profile = (props: ProfileProps) => {
     });
   };
 
-  //   setBookData([
-  //     { _id: "1", title: "1984", authors: ["George Orwell"], genre: "Fiction", pageCount: 284 },
-  //     {
-  //       _id: "2",
-  //       title: "Pride and Prejudice",
-  //       authors: ["Jane Austen"],
-  //       genre: "Fiction",
-  //       pageCount: 312,
-  //     },
-  //     {
-  //       _id: "3",
-  //       title: "Thinking, Fast and Slow",
-  //       authors: ["Daniel Kahneman"],
-  //       genre: "Nonfiction",
-  //       pageCount: 144,
-  //     },
-  //   ]);
-  // };
-
   useEffect(loadBooks, [library]);
 
   /* Fiction vs. Nonfiction Pie Chart */
@@ -107,22 +90,51 @@ const Profile = (props: ProfileProps) => {
       },
     ],
   };
-
-  /* Total Pages Read Line Graph */
-  const pagesData = {
-    labels: ["January", "February", "March", "April", "May", "June"],
-    datasets: [
-      {
-        label: "Number of Pages",
-        data: [0, 59, 80, 81, 140, 2000],
-        yAxisID: "Total Pages Read",
-        fill: false,
-        borderColor: greyColor,
-        tension: 0.1,
-      },
-    ],
+  
+  const createPagesData = () => {
+    /* Total Pages Read Line Graph */
+    const bookCopy: Book[] = bookData.slice();
+    bookCopy.sort((a, b) => (a.dateread > b.dateread) ? 1 : -1);
+    
+    const pagesRead: number[] = bookCopy.map((book) => book.pages);
+    const cumPagesRead: number[] = [];
+    let total = 0;
+  
+    for (let pages of pagesRead) {
+      total += pages;
+      cumPagesRead.push(total);
+    }
+  
+    const datesRead: Date[] = bookCopy.map((book) => book.dateread);
+    
+    type Coord = {
+      x: Date;
+      y: number;
+    };
+  
+    const coords: Coord[] = cumPagesRead.map((cumulative, index) => ({
+      x: datesRead[index],
+      y: cumulative
+    }));
+  
+    console.log(coords);
+    const pagesData = {
+      labels: datesRead,
+      datasets: [
+        {
+          label: "Number of Pages",
+          data: cumPagesRead,
+          yAxisID: "Total Pages Read",
+          fill: false,
+          borderColor: greyColor,
+          tension: 0.1,
+        },
+      ],
+    };
+    return pagesData;
   };
 
+  
   return (
     <div className="Profile-flexContainer">
       <div className="Profile-bioContainer">
@@ -159,13 +171,24 @@ const Profile = (props: ProfileProps) => {
         <p className="Profile-chartHeader u-subheader">Pages Read</p>
         <Line
           className="Profile-chartSubContainer"
-          data={pagesData}
+          data={createPagesData()}
           style={{
             width: 650,
             height: 2000,
           }}
           options={{
             maintainAspectRatio: true,
+            scales: {
+              x: {
+                type: 'time',
+                time: {
+                  unit: 'month',
+                }
+              },
+              y: {
+                beginAtZero: true,
+              }
+            }
           }}
         />
       </div>
