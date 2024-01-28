@@ -39,12 +39,14 @@ type ProfileProps = {
 const Profile = (props: ProfileProps) => {
   const [bookData, setBookData] = useState<Book[]>([]);
   const [username, setUsername] = useState<string>("Janelle Cai");
+  const [id, setId] = useState<string>("Janelle Cai");
 
   useEffect(() => {
     get("/api/whoami")
       .then((user: User) => {
         if (user._id) {
           setUsername(user.name);
+          setId(user._id);
         }
       })
   }, []);
@@ -105,12 +107,17 @@ const Profile = (props: ProfileProps) => {
     ],
   };
 
+  const link = "https://bookblendr-7aw5.onrender.com/blends/" + id
+
   return (
     <div className="Profile-flexContainer">
       <div className="Profile-bioContainer">
         <div className="Profile-image" />
         <div className="Profile-nameContainer">
           <h1 className="Profile-name">{username}</h1>
+        </div>
+        <div className="Profile-subContainer">
+          <button onClick={() => {navigator.clipboard.writeText(link);}}>Copy custom blend link</button>
         </div>
         <div className="Profile-subContainer">
           <p className="Profile-subhead u-subheader">Friends</p>
