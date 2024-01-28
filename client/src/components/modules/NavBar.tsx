@@ -35,8 +35,8 @@ const NavBar = (props: NavBarProps) => {
           <Link to="/my-books/" className="NavBar-link">
             my books
           </Link>
-          <Link to="/friends/" className="NavBar-link">
-            friends
+          <Link to="/blends/" className="NavBar-link">
+            blends
           </Link>
           {/* <button
             onClick={() => {

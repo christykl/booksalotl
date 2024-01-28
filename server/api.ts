@@ -85,6 +85,11 @@ router.post("/books", auth.ensureLoggedIn, (req, res) => {
   newBook.save().then((book) => res.send(book));
 });
 
+router.get("/users", (req, res) => {
+  // empty selector means get all documents
+  User.find({}).then((users) => res.send(users));
+});
+
 router.delete("/books", auth.ensureLoggedIn, (req, res) => {
   Book.findByIdAndRemove(req.body.id).then(() => res.send({}));
 });
