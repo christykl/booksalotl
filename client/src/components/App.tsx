@@ -17,6 +17,7 @@ import { MantineProvider, createTheme } from "@mantine/core";
 // import '@mantine/core/styles.css'; // Import Mantine styles
 import Books from "./pages/Books";
 import { User } from "../../../server/models/User";
+import BlendsRoute from "./BlendsRoute";
 
 const App = () => {
   const [userId, setUserId] = useState<string | undefined>(undefined);
@@ -51,37 +52,6 @@ const App = () => {
   const handleLogout = () => {
     setUserId(undefined);
     post("/api/logout");
-  };
-
-  const BlendsRoute = ({ userId }) => {
-    const [ids, setIds] = useState<string[]>([]);
-    const { id } = useParams();
-
-    useEffect(() => {
-      get("/api/users").then((users: User[]) => {
-        setIds(users.map((user) => user._id));
-      });
-    }, []);
-
-    const checkId = () => {
-      for (let i=0; i<ids.length; i++) {
-        if (ids[i] === id) {
-          return true;
-        }
-      }
-      return false;
-    }
-    
-
-    if (!checkId()) {
-      return <NotFound />;
-    } 
-    else if (userId === id) {
-      return <Profile userId={userId} />;
-    }
-    else {
-      return <Blends userId={userId} />;
-    }
   };
 
   // const theme = createTheme({

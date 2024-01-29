@@ -7,27 +7,24 @@ import { User } from "../../../../server/models/User";
 import { Book } from "../../../../server/models/Book";
 import "./Books.css";
 
-type Blend = {
-  _id: string;
-  userName: string;
-}
-
 type BlendsProps = {
   userId: string;
 }
 
 const Blends = (props: BlendsProps) => {
   const { id } = useParams();
-  const [username, setUsername] = useState<string>("Janelle Cai");
+  const [username, setUsername] = useState<string>("");
   const [userLibrary, setUserLibrary] = useState<User[]>([]);
+  const [blendsList, setBlendsList] = useState<string[]>([]);
   const [library, setLibrary] = useState<Book[]>([]);
-  const [username2, setUsername2] = useState<string>("Janelle Cai");
+  const [username2, setUsername2] = useState<string>("");
 
   useEffect(() => {
     get("/api/whoami")
       .then((user: User) => {
         if (user._id) {
           setUsername(user.name);
+          setBlendsList(user.blends);
         }
       })
   }, []);
@@ -44,9 +41,9 @@ const Blends = (props: BlendsProps) => {
     });
   }, []);
 
-  const getUsername2 = (id2) => {
+  const getUsername2 = () => {
     for (let i = 0; i < userLibrary.length; i++) {
-      if (userLibrary[i]._id === id2) {
+      if (userLibrary[i]._id === id) {
         setUsername2(userLibrary[i].name);
       }
     }

@@ -94,6 +94,21 @@ router.delete("/books", auth.ensureLoggedIn, (req, res) => {
   Book.findByIdAndRemove(req.body.id).then(() => res.send({}));
 });
 
+router.post("/updateUsers", (req, res) => {
+  console.log(req.body.passedId);
+  if (!req.user) {
+    res.status(400);
+    res.send({ message: "error not logged in" });
+    return;
+  }
+  const user = req.user;
+  User.updateOne({ _id: req.user._id }, { $addToSet: { blends: req.body.passedId } }).then(
+     () => {
+      res.send({});
+    }
+  );
+});
+
 // anything else falls to this "not found" case
 router.all("*", (req, res) => {
   const msg = `Api route not found: ${req.method} ${req.url}`;
