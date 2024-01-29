@@ -25,7 +25,7 @@ const BookInfo = ({ item, onClose, datecb, ratingcb, genrecb, addbook, dropdownc
     }}, [submit]); 
 
   useEffect(() => {
-    datecb(Date.parse(date));
+    datecb(new Date(date));
   }, [date]);
 
   useEffect(() => {

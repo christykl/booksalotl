@@ -67,6 +67,7 @@ const Profile = (props: ProfileProps) => {
     library.map((book) => {
       if (book.reader_id && book.reader_id == props.userId) {
         setBookData((prev) => [...prev, book]);
+        console.log(" in load book book: ", book);
       }
     });
   };
@@ -93,37 +94,55 @@ const Profile = (props: ProfileProps) => {
   
   const createPagesData = () => {
     /* Total Pages Read Line Graph */
-    const bookCopy: Book[] = bookData.slice();
-    bookCopy.sort((a, b) => (a.dateread > b.dateread) ? 1 : -1);
+    // const bookCopy: Book[] = bookData.slice();
+    // bookCopy.sort((a, b) => (a.dateread > b.dateread) ? 1 : -1);
     
-    const pagesRead: number[] = bookCopy.map((book) => book.pages);
-    const cumPagesRead: number[] = [];
-    let total = 0;
-  
-    for (let pages of pagesRead) {
-      total += pages;
-      cumPagesRead.push(total);
+    const pagesRead: number[] = bookData.map((book) => book.pages);
+
+    const today = new Date();
+    const startDate = new Date(today.getFullYear() - 1, today.getMonth(), today.getDate());
+    const endDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+
+    const monthData: string[] = [];
+    const pageData: number[] = [];
+    for (let i = 0; i < 13; i++) {
+      pageData.push(0);
     }
-  
-    const datesRead: Date[] = bookCopy.map((book) => book.dateread);
+
+    let currDate = startDate;
+    while (currDate <= endDate) {
+      monthData.push(currDate.getMonth().toString() + "/" + currDate.getFullYear().toString());
+      currDate = new Date(currDate.getFullYear(), currDate.getMonth() + 1, currDate.getDate());
+    }
+
+    const convertDate = (month: number, year: number) => {
+      let val: number;
+      if (year == today.getFullYear() - 1) {
+        val = month - today.getMonth();
+      }
+      else {
+        val = month + 12 - today.getMonth()
+      }
+      if (val >= 0 && val <= 12) {
+        return val;
+      }
+      return -1;
+    }
     
-    type Coord = {
-      x: Date;
-      y: number;
-    };
-  
-    const coords: Coord[] = cumPagesRead.map((cumulative, index) => ({
-      x: datesRead[index],
-      y: cumulative
-    }));
-  
-    console.log(coords);
+    for (let bk of bookData) {
+      const newDate = new Date(bk.dateread);
+      let convert = convertDate(newDate.getMonth(), newDate.getFullYear());
+      if (convert != -1) {
+        pageData[convert] += bk.pages;
+      }
+    }
+
     const pagesData = {
-      labels: datesRead,
+      labels: monthData,
       datasets: [
         {
           label: "Number of Pages",
-          data: cumPagesRead,
+          data: pageData,
           yAxisID: "Total Pages Read",
           fill: false,
           borderColor: greyColor,
@@ -169,7 +188,7 @@ const Profile = (props: ProfileProps) => {
       </div>
       <div className="Profile-chartContainer">
         <p className="Profile-chartHeader u-subheader">Pages Read</p>
-        <Line
+        <Bar
           className="Profile-chartSubContainer"
           data={createPagesData()}
           style={{
