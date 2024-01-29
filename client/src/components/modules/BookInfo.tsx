@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import Genre from "./Genre";
 
 
-const BookInfo = ({ item, onClose, datecb, ratingcb, genrecb, addbook, dropdowncb }) => {
+const BookInfo = ({ item, onClose, datecb, ratingcb, genrecb, addbook, dropdowncb, currentcb }) => {
   let thumbnail =
     item.volumeInfo && item.volumeInfo.imageLinks && item.volumeInfo.imageLinks.smallThumbnail;
   let today = new Date();
@@ -12,6 +12,7 @@ const BookInfo = ({ item, onClose, datecb, ratingcb, genrecb, addbook, dropdownc
   const [date, setDate] = useState<string>(today.toString());
   const [rating, setRating] = useState<number>(0);
   const [submit, setSubmit] = useState<boolean>(false); 
+  const [current, setCurrent] = useState<boolean>(false);
 
   const handleSubmit = (event) => {
     event.preventDefault(); // Prevent default form submission behavior
@@ -40,6 +41,10 @@ const BookInfo = ({ item, onClose, datecb, ratingcb, genrecb, addbook, dropdownc
     setGenre(event.target.value);
   };
 
+  useEffect(() => {
+    currentcb(current);
+  }, [current]);
+
   return (
     <div>
       <div className="overlay">
@@ -57,9 +62,21 @@ const BookInfo = ({ item, onClose, datecb, ratingcb, genrecb, addbook, dropdownc
                <br />
               {/* ... Other info elements ... */}
               <form onSubmit={handleSubmit}>
-                <input type="date" min="1900-01-01" id="date" name="date" value={date.toString()} onChange={(e) => setDate(e.target.value)}/>
+                {!current && (
+                  <>
+                    <label htmlFor="date">Date Completed:</label>
+                    <input type="date" min="1900-01-01" id="date" name="date" value={date.toString()} onChange={(e) => setDate(e.target.value)}/>
+                  </>
+                )}
+                <label htmlFor="current">Currently Reading:</label>
+                <input type="checkbox" id="current" name="current" checked={current} onChange={(e) => setCurrent(e.target.checked)}/>
+                <br/>
+                <label htmlFor="genre">Genre:</label>
                 <Genre onChange={handleGenreChange} value={genre} />
+                <br/>
+                <label htmlFor="rating">Rating:</label>
                 <input type="number" id="rating" name="rating" placeholder="Rating" value={rating} onChange={(e) => setRating(Number(e.target.value))}/>  
+                <br/>
                 <button type="submit">Add Book</button>
               </form>
             </div>

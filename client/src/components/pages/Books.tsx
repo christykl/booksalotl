@@ -21,6 +21,7 @@ const Books = (props: BooksProps) => {
   const [genre, setGenre] = useState<string>("");
   const [date, setDate] = useState<Date>(new Date());
   const [rating, setRating] = useState<number>(0);
+  const [current, setCurrent] = useState<boolean>(false);
 
   const genreCallback = (genreval) => {
     setGenre(genreval);
@@ -33,6 +34,11 @@ const Books = (props: BooksProps) => {
   const ratingCallback = (ratingval) => { 
     setRating(ratingval);
   } 
+
+  const currentCallback = (currentval) => {
+    console.log(currentval);
+    setCurrent(currentval);
+  }
 
   const searchBook = (evt) => {
     if (evt.key === "Enter") {
@@ -70,6 +76,7 @@ const Books = (props: BooksProps) => {
       return;
     } else {      
       console.log(book);
+      console.log("adding lib,", current);
       post("/api/books", {
         title: book.volumeInfo.title,
         authors: book.volumeInfo.authors,
@@ -83,6 +90,7 @@ const Books = (props: BooksProps) => {
         published_date: book.volumeInfo.publishedDate,
         preview_link: book.volumeInfo.previewLink,
         description: book.volumeInfo.description,
+        current: current,
       }).then((newBook) => {
         setLibrary([...library, newBook]);
         // setShowBookInfo(true);
@@ -182,7 +190,15 @@ const Books = (props: BooksProps) => {
           })}
           {toShow && 
             <div className="overlay">
-              <BookInfo onClose={closeBookInfo} item={toShow} datecb={dateCallback} ratingcb={ratingCallback} genrecb={genreCallback} addbook={addBookToLibrary} dropdowncb={noDropdown} />
+              <BookInfo 
+                onClose={closeBookInfo} 
+                item={toShow} 
+                datecb={dateCallback} 
+                ratingcb={ratingCallback} 
+                genrecb={genreCallback} 
+                addbook={addBookToLibrary} 
+                dropdowncb={noDropdown} 
+                currentcb={currentCallback}/>
             </div>  
           }
         </div>

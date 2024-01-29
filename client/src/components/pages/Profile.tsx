@@ -20,22 +20,6 @@ const primaryDimColor = getComputedStyle(document.documentElement).getPropertyVa
 );
 const greyColor = getComputedStyle(document.documentElement).getPropertyValue("--grey");
 
-// export type Book = {
-//   _id: string;
-//   title: string;
-//   authors: [string];
-//   bookCover?: string;
-//   rating?: number;
-//   pageCount?: number;
-//   genre?: string;
-//   dateRead?: Date;
-//   readerId?: string;
-//   publisher?: string;
-//   published_date?: string;
-//   preview_link?: string;
-//   description?: string;
-// };
-
 type ProfileProps = {
   userId: string;
 };
@@ -44,7 +28,9 @@ const Profile = (props: ProfileProps) => {
   const [bookData, setBookData] = useState<Book[]>([]);
   const [username, setUsername] = useState<string>("Janelle Cai");
   const [library, setLibrary] = useState<Book[]>([]); 
-  const [currentBook, setCurrentBook] = useState<Book | null>(null);
+  const [currentBook, setCurrentBook] = useState<Book[]>([]);
+  const [lifetimePages, setLifetimePages] = useState<number>(0);
+
 
   useEffect(() => {
     get("/api/whoami")
@@ -111,7 +97,7 @@ const Profile = (props: ProfileProps) => {
 
     let currDate = startDate;
     while (currDate <= endDate) {
-      monthData.push(currDate.getMonth().toString() + "/" + currDate.getFullYear().toString());
+      monthData.push((currDate.getMonth() + 1).toString() + "/" + currDate.getFullYear().toString());
       currDate = new Date(currDate.getFullYear(), currDate.getMonth() + 1, currDate.getDate());
     }
 
@@ -153,6 +139,25 @@ const Profile = (props: ProfileProps) => {
     return pagesData;
   };
 
+  useEffect(() => {
+    for (let bk of bookData) {
+      setLifetimePages((prev) => {
+        if (bk.pages == undefined || bk?.current) {  
+          return prev;
+        }
+        return prev + bk.pages
+      });
+    }
+  }, [bookData]);
+
+  useEffect(() => {
+    for (let bk of bookData) {
+      if (bk != undefined && bk?.current) {
+        setCurrentBook((prev) => [...prev, bk]);
+      }
+    }
+  }, [bookData]);
+
   
   return (
     <div className="Profile-flexContainer">
@@ -167,18 +172,26 @@ const Profile = (props: ProfileProps) => {
         </div>
         <div className="Profile-subContainer">
           <p className="Profile-subhead u-subheader">Lifetime Pages Read</p>
-          <p className="Profile-content u-subheader">0</p>
+          <p className="Profile-content u-subheader">{lifetimePages}</p>
         </div>
         <div className="Profile-subContainer">
           <p className="Profile-subhead u-subheader">Currently Reading</p>
           <p className="Profile-content u-subheader Profile-bookContainer">
-            {currentBook ? (
+            { currentBook.length > 0 ? (
+              currentBook.map((book) => (
+                <LibraryCard
+                  userId={props.userId}
+                  book={book}
+                />
+              ))) : (<p>nothing</p>)
+            }
+            {/* {currentBook ? (
               <LibraryCard
-                userId={" Anonymous "}
-                book={{ _id: "3", title: "Thinking, Fast and Slow", authors: ["Daniel Kahneman"] }}
+                userId={props.userId}
+                book={currentBook}
               />
             ) : (<p>nothing</p>)
-            }
+            } */}
           </p>
         </div>
       </div>
