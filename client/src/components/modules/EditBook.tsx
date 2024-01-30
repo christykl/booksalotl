@@ -4,9 +4,9 @@ import React, { useEffect, useState } from "react";
 import Genre from "./Genre";
 
 
-const BookInfo = ({ item, onClose, datecb, ratingcb, genrecb, addbook, dropdowncb, currentcb }) => {
-  let thumbnail =
-    item.volumeInfo && item.volumeInfo.imageLinks && item.volumeInfo.imageLinks.smallThumbnail;
+const EditBook = ({ item, onClose, datecb, ratingcb, genrecb, addbook, currentcb }) => {
+  let thumbnail = item.cover;
+    // item.volumeInfo && item.volumeInfo.imageLinks && item.volumeInfo.imageLinks.smallThumbnail;
   let today = new Date();
   const [genre, setGenre] = useState<string>(""); 
   const [date, setDate] = useState<string>(today.toString());
@@ -21,7 +21,6 @@ const BookInfo = ({ item, onClose, datecb, ratingcb, genrecb, addbook, dropdownc
 
   useEffect(() => {
     if (submit) {
-      dropdowncb(); // Close the dropdown
       addbook(item); // Add the book to the library
     }}, [submit]); 
 
@@ -53,11 +52,11 @@ const BookInfo = ({ item, onClose, datecb, ratingcb, genrecb, addbook, dropdownc
           <div className="inner-box">
             <img src={thumbnail} alt="" />
             <div className="info">
-            <h1>{item.volumeInfo.title}</h1>
-               <h3>{item.volumeInfo.authors}</h3>
+            <h1>{item.title}</h1>
+               <h3>{item.authors}</h3>
                <h5>
-                 {item.volumeInfo.publisher + ' '}
-                 <span>{item.volumeInfo.published_date}</span>
+                 {item.publisher + ' '}
+                 <span>{item.published_date}</span>
                </h5>
                <br />
               <form onSubmit={handleSubmit}>
@@ -76,12 +75,12 @@ const BookInfo = ({ item, onClose, datecb, ratingcb, genrecb, addbook, dropdownc
                 <label htmlFor="rating">Rating:</label>
                 <input type="number" id="rating" name="rating" placeholder="Rating" value={rating} onChange={(e) => setRating(Number(e.target.value))}/>  
                 <br/>
-                <button type="submit">Add Book</button>
+                <button type="submit">Update Book</button>
               </form>
             </div>
           </div>
           <div className="description">
-            <h4 className="description">{item.volumeInfo.description}</h4>
+            <h4 className="description">{item.description}</h4>
           </div>
         </div>
       </div>
@@ -89,4 +88,4 @@ const BookInfo = ({ item, onClose, datecb, ratingcb, genrecb, addbook, dropdownc
   )
 };
 
-export default BookInfo;
+export default EditBook;

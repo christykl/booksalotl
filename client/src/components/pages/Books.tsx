@@ -7,6 +7,7 @@ import LibraryCard from "../modules/LibraryCard";
 import { Book } from "../../../../server/models/Book";
 import { remove } from "../../utilities";
 import BookInfo from "../modules/BookInfo";
+import EditBook from "../modules/EditBook";
 
 type BooksProps = {
   userId: string;
@@ -22,6 +23,7 @@ const Books = (props: BooksProps) => {
   const [date, setDate] = useState<Date>(new Date());
   const [rating, setRating] = useState<number>(0);
   const [current, setCurrent] = useState<boolean>(false);
+  const [editBook, setEditBook] = useState<Book | null>(null);
 
   const genreCallback = (genreval) => {
     setGenre(genreval);
@@ -185,6 +187,14 @@ const Books = (props: BooksProps) => {
                   >
                     Remove
                   </button>
+                  <button
+                    className="Books-button"
+                    onClick={() => {
+                      setEditBook(book);
+                    }}
+                  >
+                    Edit
+                  </button>
                 </div>
               );
           })}
@@ -200,6 +210,18 @@ const Books = (props: BooksProps) => {
                 dropdowncb={noDropdown} 
                 currentcb={currentCallback}/>
             </div>  
+          }
+          {editBook &&
+            <div className="overlay">
+              <EditBook 
+                onClose={closeBookInfo} 
+                item={editBook} 
+                datecb={dateCallback} 
+                ratingcb={ratingCallback} 
+                genrecb={genreCallback} 
+                addbook={addBookToLibrary} 
+                currentcb={currentCallback}/>
+            </div>
           }
         </div>
       </div>
