@@ -24,19 +24,19 @@ const mockdata = [
   {
     title: "analyze your stats",
     description:
-      "This dust is actually a powerful poison that will even make a pro wrestler sick, Regice cloaks itself with frigid air of -328 degrees Fahrenheit",
+      "Most New Year's resolutions don't go as planned ... keep yourself accountable by logging your progress and achieving your reading milestones.",
     icon: IconChartLine,
   },
   {
     title: "discover new books",
     description:
-      "People say it can run at the same speed as lightning striking, Its icy body is so cold, it will not melt even if it is immersed in magma",
+      "Bored? bookblendr can recommend you a book that you'll love to diversify your knowledge and spark your creativity.",
     icon: IconSearch,
   },
   {
     title: "create blends",
     description:
-      "They’re popular, but they’re rare. Trainers who show them off recklessly may be targeted by thieves",
+      "Get the best of both worlds when you blend with a friend. Find where your interests intersect and work towards your reading goals together.",
     icon: IconFriends,
   },
 ];
@@ -63,12 +63,12 @@ export function FeaturesCards() {
       </Group>
 
       <Title order={2} className="Feature-title" ta="center" mt="sm">
-        Track your favorite books and blend your tastes with friends
+        track your favorite books and blend your tastes with friends
       </Title>
 
       <Text c="dimmed" className="Feature-description" ta="center" mt="md">
-        Every once in a while, you’ll see a Golbat that’s missing some fangs. This happens when
-        hunger drives it to try biting a Steel-type Pokémon.
+        Every once in a while, you’ll find a book that deserves to be read, reread, and shared. Use
+        bookblendr to keep a history of your media, from classics to fresh finds.
       </Text>
 
       <SimpleGrid cols={{ base: 1, md: 3 }} spacing="xl" mt={50}>

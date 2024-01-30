@@ -2,12 +2,7 @@ import React from "react";
 import { Container, Group, Anchor } from "@mantine/core";
 import "./Footer.css";
 
-const links = [
-  { link: "#", label: "contact      " },
-  { link: "#", label: "privacy      " },
-  { link: "#", label: "blog      " },
-  { link: "#", label: "careers" },
-];
+const links = [{ link: "mailto:grac@mit.edu", label: "contact the team behind bookblendr!      " }];
 
 export function FooterSimple() {
   const items = links.map((link) => (
