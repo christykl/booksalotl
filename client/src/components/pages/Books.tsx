@@ -133,7 +133,7 @@ const Books = (props: BooksProps) => {
     setToShow(null);
   };
 
-  const closeBookInfo = () => { 
+  const closeBookInfo = () => {
     console.log("close book info");
     setToShow(null);
     // setShowBookInfo(false);
@@ -141,21 +141,7 @@ const Books = (props: BooksProps) => {
 
   const closeEditBook = () => {
     setEditBook(null);
-  }
-
-  const renderDropdown = () => {
-    if (!showDropdown) return null;
-
-  //   return (
-  //     <div className="dropdown">
-  //       {searchResults.map((book, index) => (
-  //         <div key={index} onClick={() => bookInfoPopup(book)}>
-  //           <Card book={book} />
-  //         </div>
-  //       ))}
-  //     </div>
-  //   );
-  // };
+  };
 
   const bookInfoPopup = (book) => {
     setToShow(book);
@@ -187,7 +173,7 @@ const Books = (props: BooksProps) => {
   };
 
   const dropdownRef = useRef(null);
-  
+
   useOutsideClick(dropdownRef, () => {
     if (toShow === null) {
       setShowDropdown(false);
@@ -211,11 +197,11 @@ const Books = (props: BooksProps) => {
   const updateBook = (item) => {
     removeBook(item);
     addFromEdit(item);
-  }
+  };
 
-  const handleEditBook = (book) => { 
+  const handleEditBook = (book) => {
     setEditBook(book);
-  }
+  };
 
   return (
     <div>
@@ -244,6 +230,7 @@ const Books = (props: BooksProps) => {
               return (
                 <div className="Books-card">
                   <LibraryCard userId={props.userId} book={book} key={book._id} />
+                  <div></div>
                   <button
                     className="Books-button"
                     onClick={() => {
@@ -265,29 +252,31 @@ const Books = (props: BooksProps) => {
           })}
           {toShow && (
             <div className="overlay">
-              <BookInfo 
-                onClose={closeBookInfo} 
-                item={toShow} 
-                datecb={dateCallback} 
-                ratingcb={ratingCallback} 
-                genrecb={genreCallback} 
-                addbook={addBookToLibrary} 
-                dropdowncb={noDropdown} 
-                currentcb={currentCallback}/>
-            </div>  
-          }
-          {editBook &&
-            <div className="overlay">
-              <EditBook 
-                onClose={closeEditBook} 
-                item={editBook} 
-                datecb={dateCallback} 
-                ratingcb={ratingCallback} 
-                genrecb={genreCallback} 
-                updatebook={updateBook} 
-                currentcb={currentCallback}/>
+              <BookInfo
+                onClose={closeBookInfo}
+                item={toShow}
+                datecb={dateCallback}
+                ratingcb={ratingCallback}
+                genrecb={genreCallback}
+                addbook={addBookToLibrary}
+                dropdowncb={noDropdown}
+                currentcb={currentCallback}
+              />
             </div>
-          }
+          )}
+          {editBook && (
+            <div className="overlay">
+              <EditBook
+                onClose={closeEditBook}
+                item={editBook}
+                datecb={dateCallback}
+                ratingcb={ratingCallback}
+                genrecb={genreCallback}
+                updatebook={updateBook}
+                currentcb={currentCallback}
+              />
+            </div>
+          )}
         </div>
       </div>
     </div>

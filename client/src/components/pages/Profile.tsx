@@ -29,21 +29,20 @@ const Profile = (props: ProfileProps) => {
   const [bookData, setBookData] = useState<Book[]>([]);
   const [username, setUsername] = useState<string>("Janelle Cai");
   const [numBlends, setNumBlends] = useState<number>(0);
-  const [library, setLibrary] = useState<Book[]>([]); 
+  const [library, setLibrary] = useState<Book[]>([]);
   const [currentBook, setCurrentBook] = useState<Book[]>([]);
   const [lifetimePages, setLifetimePages] = useState<number>(0);
 
   const [id, setId] = useState<string>("Janelle Cai");
 
   useEffect(() => {
-    get("/api/whoami")
-      .then((user: User) => {
-        if (user._id) {
-          setUsername(user.name);
-          setId(user._id);
-          setNumBlends(user.blends.length);
-        }
-      })
+    get("/api/whoami").then((user: User) => {
+      if (user._id) {
+        setUsername(user.name);
+        setId(user._id);
+        setNumBlends(user.blends.length);
+      }
+    });
   }, []);
 
   useEffect(() => {
@@ -165,13 +164,11 @@ const Profile = (props: ProfileProps) => {
 
   const link = "https://bookblendr-7aw5.onrender.com/blends/" + id;
 
-
   const navigate = useNavigate();
 
   const handleEditClick = () => {
-  
     // For React Router v6
-    navigate('/my-books');
+    navigate("/my-books");
   };
 
   return (
@@ -183,11 +180,12 @@ const Profile = (props: ProfileProps) => {
         </div>
         <div className="Profile-subContainer">
           <button
+            className="Profile-button"
             onClick={() => {
               navigator.clipboard.writeText(link);
             }}
           >
-            Copy custom blend link
+            custom blend link
           </button>
         </div>
         <div className="Profile-subContainer">
@@ -198,21 +196,20 @@ const Profile = (props: ProfileProps) => {
           <p className="Profile-subhead u-subheader">Lifetime Pages Read</p>
           <p className="Profile-content u-subheader">{lifetimePages}</p>
         </div>
-        <div className="Profile-subContainer">
-          <p className="Profile-subhead u-subheader">Currently Reading</p>
-          <p className="Profile-content u-subheader Profile-bookContainer">
-            <button onClick={handleEditClick}>Edit</button>
-            { currentBook.length > 0 ? (
-              currentBook.map((book) => (
-                <LibraryCard
-                  userId={props.userId}
-                  book={book}
-                />
-              ))) : (<p>nothing</p>)
-            }
-          </p>
-        </div>
       </div>
+      <div className="Profile-subContainer">
+        <button className="Profile-button" onClick={handleEditClick}>
+          currently reading
+        </button>
+        <p className="Profile-content u-subheader Profile-bookContainer">
+          {currentBook.length > 0 ? (
+            currentBook.map((book) => <LibraryCard userId={props.userId} book={book} />)
+          ) : (
+            <p>nothing</p>
+          )}
+        </p>
+      </div>
+
       <div className="Profile-chartContainer">
         <p className="Profile-chartHeader u-subheader">Fiction vs. Nonfiction</p>
         <Pie className="Profile-chartSubContainer" data={ficData} />
@@ -223,8 +220,8 @@ const Profile = (props: ProfileProps) => {
           className="Profile-chartSubContainer"
           data={createPagesData()}
           style={{
-            width: 650,
-            height: 2000,
+            width: 325,
+            height: 1800,
           }}
           options={{
             maintainAspectRatio: true,

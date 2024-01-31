@@ -75,3 +75,25 @@
   border-color: var(--primary);
   margin-top: 8px;
 }
+
+.Profile-button {
+  font-family: "Courier Prime";
+  font-style: italic;
+  color: var(--white);
+  border-width: 2px;
+  border-color: var(--green);
+  border-style: dotted;
+  border-radius: 10px;
+  background-color: var(--green);
+}
+
+.Profile-button:hover {
+  font-family: "Courier Prime";
+  font-style: italic;
+  color: var(--white);
+  border-width: 2px;
+  border-color: var(--white);
+  border-style: dotted;
+  border-radius: 10px;
+  background-color: var(--green);
+}
