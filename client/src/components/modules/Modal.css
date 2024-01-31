@@ -45,7 +45,7 @@
 }
 
 .overlay-inner .inner-box .info {
-  padding: 16px;
+  padding: 0 16px 16px 16px;
 }
 .overlay-inner .inner-box img {
   margin-right: 24px;
@@ -115,8 +115,8 @@
   flex-direction: column;
 }
 .card .bottom .title {
-  font-size: 14px;
-  margin-bottom: 16px;
+  font-size: 18px;
+  margin-bottom: 8px;
 }
 
 .card .bottom .subtitle {

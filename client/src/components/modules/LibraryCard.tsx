@@ -20,7 +20,7 @@ const LibraryCard = ({ book, userId }) => {
         >
           <img src={thumbnail} alt="" />
           <div className="bottom">
-            <h4 className="title">{book.title}</h4>
+            <h2 className="title">{book.title}</h2>
             <h5 className="subtitle">{book.authors}</h5>
           </div>
         </div>
