@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Chart as ChartJS, registerables } from "chart.js";
 ChartJS.register(...registerables);
 // import 'chartjs-adapter-date-fns';
@@ -163,6 +164,15 @@ const Profile = (props: ProfileProps) => {
   
   const link = "https://bookblendr-7aw5.onrender.com/blends/" + id
 
+
+  const navigate = useNavigate();
+
+  const handleEditClick = () => {
+  
+    // For React Router v6
+    navigate('/my-books');
+  };
+
   return (
     <div className="Profile-flexContainer">
       <div className="Profile-bioContainer">
@@ -184,6 +194,7 @@ const Profile = (props: ProfileProps) => {
         <div className="Profile-subContainer">
           <p className="Profile-subhead u-subheader">Currently Reading</p>
           <p className="Profile-content u-subheader Profile-bookContainer">
+            <button onClick={handleEditClick}>Edit</button>
             { currentBook.length > 0 ? (
               currentBook.map((book) => (
                 <LibraryCard
