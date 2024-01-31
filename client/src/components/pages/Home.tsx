@@ -11,6 +11,7 @@ import { FaChartColumn } from "react-icons/fa6";
 import { IconContext } from "react-icons";
 import { FooterSimple } from "../modules/Footer";
 import { FeaturesCards } from "../modules/FeatureCard";
+import mascot from '../../public/mascot.png';
 
 //TODO(weblab student): REPLACE WITH YOUR OWN CLIENT_ID
 const GOOGLE_CLIENT_ID = "924135144483-a4h7ghgqcej244vnv4312rdkd4lovc95.apps.googleusercontent.com";
@@ -28,9 +29,9 @@ const Home = (props: Props) => {
       <div className="Home-container">
         <div className="Home-flexContainer">
           <div className="Home-content">
-            <h1>bookblendr</h1>
+            <h1>booksalotl</h1>
             <div className="u-subheader Home-subtitle">
-              <h4>blend and send to a friend</h4>
+              <h4>read booksalotl. share booksalotl.</h4>
             </div>
             <div className="u-subheader Home-loginContainer">
               {props.userId ? (
@@ -51,6 +52,9 @@ const Home = (props: Props) => {
               )}
             </div>
           </div>
+        </div>
+        <div className="Home-imageContainer">
+          <img src={mascot} alt="mascot" />
         </div>
         <div className="Home-loginContainer"></div>
       </div>

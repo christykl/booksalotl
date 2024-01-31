@@ -10,7 +10,7 @@
   height: 70vh; /* Ensure the background covers the entire viewport height */
   display: flex;
   flex-flow: row wrap;
-  /* align-items: center; */
+  align-items: center;
   /* justify-content: center; */
   background-position: fixed;
 }
@@ -18,7 +18,23 @@
 .Home-flexContainer {
   display: flex;
   flex-flow: column;
+  width: 55%;
 }
+
+.Home-imageContainer {
+  display: flex;
+  flex-flow: column;
+  width: 30%;
+  height: 65vh;
+}
+
+/* .Home-contentContainer { */
+  /* background-position: center center; */
+  /* height: 70vh; Ensure the background covers the entire viewport height */
+  /* width: 40%; */
+  /* display: flex; */
+  /* flex-flow: row wrap; */
+/* } */
 
 .Home-content {
   order: 1;
@@ -74,4 +90,11 @@
   text-align: left;
   color: #fffdfb;
   font-size: 60px;
+}
+
+.Home-image {
+  height: 110px;
+  width: 110px;
+  margin-left: 5%;
+  display: inline-block;
 }
