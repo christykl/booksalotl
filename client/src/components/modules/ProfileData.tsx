@@ -143,7 +143,7 @@ const ProfileData = (props: ProfileProps) => {
   useEffect(() => {
     for (let bk of bookData) {
       setLifetimePages((prev) => {
-        if (bk.pages == undefined || bk?.current) {
+        if (bk.pages == undefined || bk.status === "currently reading") {
           return prev;
         }
         return prev + bk.pages;
@@ -153,7 +153,7 @@ const ProfileData = (props: ProfileProps) => {
 
   useEffect(() => {
     for (let bk of bookData) {
-      if (bk != undefined && bk?.current) {
+      if (bk != undefined && bk.status === "currently reading") {
         setCurrentBook((prev) => [...prev, bk]);
       }
     }
