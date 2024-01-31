@@ -27,20 +27,19 @@ type ProfileProps = {
 const Profile = (props: ProfileProps) => {
   const [bookData, setBookData] = useState<Book[]>([]);
   const [username, setUsername] = useState<string>("Janelle Cai");
-  const [library, setLibrary] = useState<Book[]>([]); 
+  const [library, setLibrary] = useState<Book[]>([]);
   const [currentBook, setCurrentBook] = useState<Book[]>([]);
   const [lifetimePages, setLifetimePages] = useState<number>(0);
 
   const [id, setId] = useState<string>("Janelle Cai");
 
   useEffect(() => {
-    get("/api/whoami")
-      .then((user: User) => {
-        if (user._id) {
-          setUsername(user.name);
-          setId(user._id);
-        }
-      })
+    get("/api/whoami").then((user: User) => {
+      if (user._id) {
+        setUsername(user.name);
+        setId(user._id);
+      }
+    });
   }, []);
 
   useEffect(() => {
@@ -48,7 +47,6 @@ const Profile = (props: ProfileProps) => {
       setLibrary(books);
     });
   }, []);
-
 
   /* Placeholder data */
   const loadBooks = () => {
@@ -79,12 +77,12 @@ const Profile = (props: ProfileProps) => {
       },
     ],
   };
-  
+
   const createPagesData = () => {
     /* Total Pages Read Line Graph */
     // const bookCopy: Book[] = bookData.slice();
     // bookCopy.sort((a, b) => (a.dateread > b.dateread) ? 1 : -1);
-    
+
     const pagesRead: number[] = bookData.map((book) => book.pages);
 
     const today = new Date();
@@ -99,7 +97,9 @@ const Profile = (props: ProfileProps) => {
 
     let currDate = startDate;
     while (currDate <= endDate) {
-      monthData.push((currDate.getMonth() + 1).toString() + "/" + currDate.getFullYear().toString());
+      monthData.push(
+        (currDate.getMonth() + 1).toString() + "/" + currDate.getFullYear().toString()
+      );
       currDate = new Date(currDate.getFullYear(), currDate.getMonth() + 1, currDate.getDate());
     }
 
@@ -107,16 +107,15 @@ const Profile = (props: ProfileProps) => {
       let val: number;
       if (year == today.getFullYear() - 1) {
         val = month - today.getMonth();
-      }
-      else {
-        val = month + 12 - today.getMonth()
+      } else {
+        val = month + 12 - today.getMonth();
       }
       if (val >= 0 && val <= 12) {
         return val;
       }
       return -1;
-    }
-    
+    };
+
     for (let bk of bookData) {
       const newDate = new Date(bk.dateread);
       let convert = convertDate(newDate.getMonth(), newDate.getFullYear());
@@ -144,10 +143,10 @@ const Profile = (props: ProfileProps) => {
   useEffect(() => {
     for (let bk of bookData) {
       setLifetimePages((prev) => {
-        if (bk.pages == undefined || bk?.current) {  
+        if (bk.pages == undefined || bk?.current) {
           return prev;
         }
-        return prev + bk.pages
+        return prev + bk.pages;
       });
     }
   }, [bookData]);
@@ -160,8 +159,7 @@ const Profile = (props: ProfileProps) => {
     }
   }, [bookData]);
 
-  
-  const link = "https://bookblendr-7aw5.onrender.com/blends/" + id
+  const link = "https://bookblendr-7aw5.onrender.com/blends/" + id;
 
   return (
     <div className="Profile-flexContainer">
@@ -171,7 +169,13 @@ const Profile = (props: ProfileProps) => {
           <h1 className="Profile-name">{username}</h1>
         </div>
         <div className="Profile-subContainer">
-          <button onClick={() => {navigator.clipboard.writeText(link);}}>Copy custom blend link</button>
+          <button
+            onClick={() => {
+              navigator.clipboard.writeText(link);
+            }}
+          >
+            Copy custom blend link
+          </button>
         </div>
         <div className="Profile-subContainer">
           <p className="Profile-subhead u-subheader">Friends</p>
@@ -184,14 +188,11 @@ const Profile = (props: ProfileProps) => {
         <div className="Profile-subContainer">
           <p className="Profile-subhead u-subheader">Currently Reading</p>
           <p className="Profile-content u-subheader Profile-bookContainer">
-            { currentBook.length > 0 ? (
-              currentBook.map((book) => (
-                <LibraryCard
-                  userId={props.userId}
-                  book={book}
-                />
-              ))) : (<p>nothing</p>)
-            }
+            {currentBook.length > 0 ? (
+              currentBook.map((book) => <LibraryCard userId={props.userId} book={book} />)
+            ) : (
+              <p>nothing</p>
+            )}
           </p>
         </div>
       </div>
@@ -219,8 +220,8 @@ const Profile = (props: ProfileProps) => {
               // },
               y: {
                 beginAtZero: true,
-              }
-            }
+              },
+            },
           }}
         />
       </div>
