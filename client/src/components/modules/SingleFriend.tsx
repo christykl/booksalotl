@@ -8,6 +8,7 @@ type SingleFriendProps = {
   userId: string;
   profileImage?: string;
   userName: string;
+  url: string;
 };
 
 const SingleFriend = (props: SingleFriendProps) => {
@@ -28,9 +29,12 @@ const SingleFriend = (props: SingleFriendProps) => {
           </Text>
         </Grid.Col>
         <Grid.Col span={3}>
-          <Button className="SingleFriend-button">
-            <p> ~~Blend~~ </p>
-          </Button>
+          <a href={props.url}>
+            <button className="SingleFriend-button">
+              <p> ~~View Blend~~ </p>
+            </button>
+          </a>
+          
         </Grid.Col>
       </Grid>
     </Container>
