@@ -28,7 +28,7 @@
   background-color: #f1f1f1;
 }
 
-.library-container {
+/* .library-container {
   min-height: 70vh;
   padding: 24px;
   display: flex;
@@ -36,11 +36,31 @@
   align-items: center;
   justify-content: left;
   gap: 10px;
+  background: #eee; 
+} */
+
+.library-container {
+  min-height: 70vh;
+  padding: 24px;
+  display: grid; /* Use grid layout */
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Create flexible columns */
+  grid-gap: 10px; /* Adjust the gap between items */
   background: #eee; /* Background for the user's library */
 }
 
+
+.Books-container {
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  background-color: var(--white);
+  align-items: center;
+  justify-content: center;
+}
+
 .Books-card {
-  width: 25%;
+  width: 30%; /* Adjust the width to make the item wider */
+  height: auto; /* Let the height adjust proportionally based on the content */
   padding: 20px;
   display: flex;
   align-items: center;
@@ -50,7 +70,10 @@
   margin-top: 40px;
   margin-left: 10px;
   margin-right: 10px;
+  position: relative;
+  padding-top: 20px;
 }
+
 
 .Books-input[type="text"] {
   width: 64%;
@@ -61,6 +84,25 @@
   font-family: "Courier New", Courier, monospace;
   color: var(--grey);
 }
+
+/* Apply CSS styles to the button container */
+.button-container {
+  display: flex; /* Make the buttons inside the container flex items */
+  align-items: center; /* Vertically align the buttons */
+  justify-content: space-between; /* Add space between buttons */
+}
+
+
+.delete-button {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: grey;
+}
+
 
 .Books-button {
   width: 80px;
@@ -73,7 +115,12 @@
   border-radius: 10px;
   background-color: var(--green);
   margin: 4px;
+  position: absolute;
+  bottom: 10px;
+  left: 20px; 
 }
+
+
 
 .Books-button:hover {
   font-family: "Courier Prime";

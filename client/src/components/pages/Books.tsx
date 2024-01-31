@@ -9,6 +9,8 @@ import { remove } from "../../utilities";
 import BookInfo from "../modules/BookInfo";
 import EditBook from "../modules/EditBook";
 import useOutsideClick from "../modules/OutsideClick";
+import { FaTrashAlt } from "react-icons/fa";
+
 
 type BooksProps = {
   userId: string;
@@ -220,21 +222,23 @@ const Books = (props: BooksProps) => {
         {lib.map((book, index) => {
           if (book.reader_id && book.reader_id === props.userId && book.status === statusFilter) {
             return (
-              <div className="Books-card" key={book._id}>
-                <LibraryCard userId={props.userId} book={book} />
-                <div>
-                  <button
-                    className="Books-button"
-                    onClick={() => removeBook(book)}
-                  >
-                    Remove
-                  </button>
-                  <button
-                    className="Books-button"
-                    onClick={() => setEditBook(book)}
-                  >
-                    Edit
-                  </button>
+              <div className="Books-container">
+                <div className="Books-card" key={book._id}>
+                  <LibraryCard userId={props.userId} book={book} />
+                  <div className="button-container">
+                    <button
+                      className="delete-button"
+                      onClick={() => removeBook(book)}
+                    >
+                      <FaTrashAlt />
+                    </button>
+                    <button
+                      className="Books-button"
+                      onClick={() => setEditBook(book)}
+                    >
+                      Edit
+                    </button>
+                  </div>
                 </div>
               </div>
             );
@@ -269,66 +273,6 @@ const Books = (props: BooksProps) => {
       </div>
     );
   }
-
-//   const LibrarySection = (lib: Book[]) => {
-//     console.log("library section", lib);
-//     return (
-//         <div className="library-container">
-//           {lib.map((book, index) => {
-//             // console.log(book);
-//             if (book.reader_id && book.reader_id == props.userId && book.status === status)
-//               return (
-//                 <div className="Books-card">
-//                   <LibraryCard userId={props.userId} book={book} key={book._id} />
-//                   <div>
-//                     <button
-//                       className="Books-button"
-//                       onClick={() => {
-//                         removeBook(book);
-//                       }}
-//                     >
-//                       Remove
-//                     </button>
-//                     <button
-//                       className="Books-button"
-//                       onClick={() => {
-//                         setEditBook(book);
-//                       }}
-//                     >
-//                       Edit
-//                     </button>
-//                   </div>
-//                 </div>
-//               );
-//           })}
-//           {toShow && (
-//             <div className="overlay">
-//               <BookInfo 
-//                 onClose={closeBookInfo} 
-//                 item={toShow} 
-//                 datecb={dateCallback} 
-//                 ratingcb={ratingCallback} 
-//                 genrecb={genreCallback} 
-//                 addbook={addBookToLibrary} 
-//                 dropdowncb={noDropdown} 
-//                 statuscb={statusCallback}/>
-//             </div>  
-//           )}
-//           {editBook && (
-//             <div className="overlay">
-//               <EditBook 
-//                 onClose={closeEditBook} 
-//                 item={editBook} 
-//                 datecb={dateCallback} 
-//                 ratingcb={ratingCallback} 
-//                 genrecb={genreCallback} 
-//                 updatebook={updateBook} 
-//                 statuscb={statusCallback}/>
-//             </div>
-//           )}
-//         </div>
-//     );
-// }
 
 const sectionnames = ["Currently Reading", "Want to Read", "Read"];
 

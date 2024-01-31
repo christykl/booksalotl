@@ -96,20 +96,27 @@ const Blends = (props: BlendsProps) => {
 
   return (
     <div>
-      <div className="u-textCenter">
-        <h3>{username}'s Profile</h3>
-      </div>
-      <div className="library-container">
-        {isLoading ? <div>Loading...</div> : <ProfileData userId={selfid} />}
-      </div>
-      <div className="u-textCenter">
-        <h3>{username2}'s Profile</h3>
-      </div>
-      <div className="library-container">
-        <ProfileData userId={id!} />
-      </div>
-      <Bookshelf userId={id!} title="Books you both enjoyed" books={bothBooks} />
       <Bookshelf userId={id!} title="Books you both want to read" books={bothWantBooks} />
+      <Bookshelf userId={id!} title="Books you both enjoyed" books={bothBooks} />
+      <div className="Blend-split-container">
+        <div>
+        <div className="u-textCenter">
+          <h3>{username}'s Profile</h3>
+        </div>
+        <div className="library-container">
+          {isLoading ? <div>Loading...</div> : <ProfileData userId={selfid} />}
+        </div>
+        </div>
+        <div>
+        <div className="u-textCenter">
+          <h3>{username2}'s Profile</h3>
+        </div>
+        <div className="library-container">
+          <ProfileData userId={id!} />
+        </div>
+        </div>
+      </div>
+      
     </div>
   );
 };
