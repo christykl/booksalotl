@@ -14,6 +14,7 @@ import { User } from "../../../../server/models/User";
 import { get } from "../../utilities";
 import { Book } from "../../../../server/models/Book";
 import LibraryCard from "../modules/LibraryCard";
+import GenreGraph from "../modules/GenreGraph";
 
 const primaryColor = getComputedStyle(document.documentElement).getPropertyValue("--primary");
 const primaryDimColor = getComputedStyle(document.documentElement).getPropertyValue(
@@ -252,8 +253,8 @@ const Profile = (props: ProfileProps) => {
 
         <div className="Profile-horizontalContainer">
           <div className="Profile-chartContainer">
-            <p className="Profile-chartHeader u-subheader">Fiction vs. Nonfiction</p>
-            <Doughnut className="Profile-chartSubContainer" data={ficData} />
+            <p className="Profile-chartHeader u-subheader">Your Top Genres</p>
+            <GenreGraph bookData={bookData}/>
           </div>
 
           <div className="Profile-chartContainer">

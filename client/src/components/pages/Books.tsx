@@ -29,7 +29,7 @@ const Books = (props: BooksProps) => {
   // const [curLib, setCurLib] = useState<Book[]>([]);
   // const [wantLib, setWantLib] = useState<Book[]>([]);
   // const [readLib, setReadLib] = useState<Book[]>([]);
-
+  
   const genreCallback = (genreval) => {
     setGenre(genreval);
   };
@@ -54,6 +54,7 @@ const Books = (props: BooksProps) => {
     }
   };
 
+
   const searchBook = () => {
     axios
       .get(`https://www.googleapis.com/books/v1/volumes?q=${search}&key=AIzaSyDjnJHbxfCAqhtxJr1YYzleaQGQB8MdbEA&maxResults=10`)
@@ -70,6 +71,10 @@ const Books = (props: BooksProps) => {
     searchBook(); // Directly call the search function
   };  
 
+
+  useEffect(() => {
+    if (searchSubmit) searchBook(search);
+  }, [searchSubmit]);
 
   const checkLibrary = (book) => {
     if (library.length > 0) {
@@ -212,6 +217,7 @@ const Books = (props: BooksProps) => {
     remove("/api/books/", { id: updatedBook._id });
   }
 
+
   useEffect(() => {
     setThreeLib([
       library.filter((book) => book.status === "currently reading"),
@@ -231,7 +237,7 @@ const Books = (props: BooksProps) => {
         <div className="library-container">
           {lib.map((book, index) => {
             // console.log(book);
-            if (book.reader_id && book.reader_id == props.userId)
+            if (book.reader_id && book.reader_id == props.userId && book.status === status)
               return (
                 <div className="Books-card">
                   <LibraryCard userId={props.userId} book={book} key={book._id} />
