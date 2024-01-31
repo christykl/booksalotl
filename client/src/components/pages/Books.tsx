@@ -54,21 +54,37 @@ const Books = (props: BooksProps) => {
     }
   };
 
-  const searchBook = (evt) => {
-    if (evt.key === "Enter") {
-      axios
-        .get(
-          "https://www.googleapis.com/books/v1/volumes?q=" +
-            search +
-            "&key=AIzaSyDjnJHbxfCAqhtxJr1YYzleaQGQB8MdbEA&maxResults=10"
-        )
-        .then((res) => {
-          setSearchResults(res.data.items.filter(hasThumbnail));
-          setShowDropdown(true); // Show the dropdown
-        })
-        .catch((err) => console.log(err));
-    }
+  // const searchBook = (evt) => {
+  //   if (evt.key === "Enter") {
+  //     axios
+  //       .get(
+  //         "https://www.googleapis.com/books/v1/volumes?q=" +
+  //           search +
+  //           "&key=AIzaSyDjnJHbxfCAqhtxJr1YYzleaQGQB8MdbEA&maxResults=10"
+  //       )
+  //       .then((res) => {
+  //         setSearchResults(res.data.items.filter(hasThumbnail));
+  //         setShowDropdown(true); // Show the dropdown
+  //       })
+  //       .catch((err) => console.log(err));
+  //   }
+  // };
+
+  const searchBook = () => {
+    axios
+      .get(`https://www.googleapis.com/books/v1/volumes?q=${search}&key=AIzaSyDjnJHbxfCAqhtxJr1YYzleaQGQB8MdbEA&maxResults=10`)
+      .then((res) => {
+        setSearchResults(res.data.items.filter(hasThumbnail));
+        setShowDropdown(true);
+      })
+      .catch((err) => console.log(err));
   };
+
+  const handleFormSubmit = (event) => {
+    event.preventDefault(); // Prevents the default form submit action
+    searchBook(); // Directly call the search function
+  };  
+
 
   const checkLibrary = (book) => {
     if (library.length > 0) {
@@ -280,14 +296,19 @@ const sectionnames = ["Read", "Currently Reading", "Want to Read"];
   return (
     <div>
       <div className="Books-searchContainer">
-        <input
-          type="text"
-          placeholder="Search..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          onKeyUp={searchBook}
-          className="Books-input"
-        />
+        <form onSubmit={handleFormSubmit}>
+          <input
+            type="text"
+            placeholder="Search..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            onKeyUp={searchBook}
+            className="Books-input"
+          />
+          <button className="Books-button" type="submit">
+            search
+          </button>
+        </form>
       </div>
       {renderDropdown()} {/* Render the dropdown here */}
       {/* <div className="Books-searchContainer">
