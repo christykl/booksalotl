@@ -13,6 +13,8 @@ import { User } from "../../../../server/models/User";
 import { get } from "../../utilities";
 import { Book } from "../../../../server/models/Book";
 import LibraryCard from "../modules/LibraryCard";
+import PagesGraph from "./PagesGraph";
+import GenreGraph from "./GenreGraph";
 
 const primaryColor = getComputedStyle(document.documentElement).getPropertyValue("--primary");
 const primaryDimColor = getComputedStyle(document.documentElement).getPropertyValue(
@@ -61,24 +63,6 @@ const ProfileData = (props: ProfileProps) => {
 
   useEffect(loadBooks, [library]);
 
-  /* Fiction vs. Nonfiction Pie Chart */
-  const fictionCount = bookData.filter((bookObj) => bookObj.genre === "fiction").length;
-  const nonficCount = bookData.filter((bookObj) => bookObj.genre === "non-fiction").length;
-  const otherCount = bookData.filter(
-    (bookObj) => bookObj.genre !== "fiction" && bookObj.genre !== "non-fiction"
-  ).length;
-
-  const ficData = {
-    labels: ["Fiction", "Nonfiction", "Other"],
-    datasets: [
-      {
-        data: [fictionCount, nonficCount, otherCount],
-        backgroundColor: [primaryColor, primaryDimColor, greyColor],
-        hoverOffset: 4,
-      },
-    ],
-  };
-
   const shortCount = bookData.filter((bookObj) => bookObj.pages < 200).length;
   const mediumCount = bookData.filter(
     (bookObj) => bookObj.pages >= 200 && bookObj.pages < 400
@@ -94,69 +78,6 @@ const ProfileData = (props: ProfileProps) => {
         hoverOffset: 4,
       },
     ]
-  }
-
-
-  const createPagesData = () => {
-    /* Total Pages Read Line Graph */
-    // const bookCopy: Book[] = bookData.slice();
-    // bookCopy.sort((a, b) => (a.dateread > b.dateread) ? 1 : -1);
-
-    const pagesRead: number[] = bookData.map((book) => book.pages);
-
-    const today = new Date();
-    const startDate = new Date(today.getFullYear() - 1, today.getMonth(), today.getDate());
-    const endDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
-
-    const monthData: string[] = [];
-    const pageData: number[] = [];
-    for (let i = 0; i < 13; i++) {
-      pageData.push(0);
-    }
-
-    let currDate = startDate;
-    while (currDate <= endDate) {
-      monthData.push(
-        (currDate.getMonth() + 1).toString() + "/" + currDate.getFullYear().toString()
-      );
-      currDate = new Date(currDate.getFullYear(), currDate.getMonth() + 1, currDate.getDate());
-    }
-
-    const convertDate = (month: number, year: number) => {
-      let val: number;
-      if (year == today.getFullYear() - 1) {
-        val = month - today.getMonth();
-      } else {
-        val = month + 12 - today.getMonth();
-      }
-      if (val >= 0 && val <= 12) {
-        return val;
-      }
-      return -1;
-    };
-
-    for (let bk of bookData) {
-      const newDate = new Date(bk.dateread);
-      let convert = convertDate(newDate.getMonth(), newDate.getFullYear());
-      if (convert != -1) {
-        pageData[convert] += bk.pages;
-      }
-    }
-
-    const pagesData = {
-      labels: monthData,
-      datasets: [
-        {
-          label: "Number of Pages",
-          data: pageData,
-          yAxisID: "Total Pages Read",
-          fill: false,
-          borderColor: greyColor,
-          tension: 0.1,
-        },
-      ],
-    };
-    return pagesData;
   };
 
   useEffect(() => {
@@ -182,32 +103,17 @@ const ProfileData = (props: ProfileProps) => {
 
   return (
     <div className="Profile-flexContainer">
-      <div className="Profile-chartContainer">
-        <p className="Profile-chartHeader u-subheader">Fiction vs. Nonfiction</p>
-        <Doughnut className="Profile-chartSubContainer" data={ficData} />
+      <div className="Blends-chart-container">
+        <p className="Profile-chartHeader">Your Top Genres</p>
+        <GenreGraph bookData={bookData}/>
       </div>
-      <div className="Profile-chartContainer">
-        <p className="Profile-chartHeader u-subheader">Book Length</p>
+      <div className="Blends-chart-container">
+        <p className="Profile-chartHeader">Book Length</p>
         <Doughnut className="Profile-chartSubContainer" data={lengthData} />
       </div>
-      <div className="Profile-chartContainer">
-        <p className="Profile-chartHeader u-subheader">Pages Read</p>
-        <Bar
-          className="Profile-chartSubContainer"
-          data={createPagesData()}
-          style={{
-            width: 650,
-            height: 2000,
-          }}
-          options={{
-            maintainAspectRatio: true,
-            scales: {
-              y: {
-                beginAtZero: true,
-              },
-            },
-          }}
-        />
+      <div className="Blends-chart-container">
+        <p className="Profile-chartHeader">Pages Read in the Past Year</p>
+        <PagesGraph bookData={bookData}/>
       </div>
     </div>
   );

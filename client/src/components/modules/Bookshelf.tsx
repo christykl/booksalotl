@@ -1,6 +1,9 @@
 import React from "react";
 import { Book } from "../../../../server/models/Book";
 import LibraryCard from "./LibraryCard";
+import "./Bookshelf.css";
+import "../pages/Books.css";
+import { Badge } from "@mantine/core";
 
 type BookshelfProps = {
   userId: string;
@@ -11,12 +14,26 @@ type BookshelfProps = {
 const Bookshelf = (props) => {
   return (
     <>
-      <div>
-        <h2>{props.title}</h2>
+      <div className="Books-lineOuterContainer">
+        <div className="Books-lineInnerContainer">
+          <hr></hr>
+        </div>
       </div>
-      {props.books.map((book) => (
-        <LibraryCard book={book} userId={props.userId}/>
-      ))}
+      <div className="u-textCenter">
+        <div className="Books-badgeContainer">
+          <Badge variant="filled" size="xl">
+            {props.title}
+          </Badge>
+        </div>
+      </div>
+      
+      <div className="Books-container">
+        {props.books.map((book) => (
+          <div className="Books-card">
+            <LibraryCard book={book} userId={props.userId}/>
+          </div>
+        ))}
+      </div>
     </>
   );
 }

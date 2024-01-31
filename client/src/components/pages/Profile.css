@@ -49,7 +49,8 @@
 .Profile-subContainer {
   padding: 0;
   margin: 16px;
-  width: 100vh;
+  /* width: 70vw; */
+  flex: 1;
 }
 
 .Profile-chartContainer {
@@ -67,7 +68,7 @@
 }
 
 .Profile-chartHeader {
-  font-size: 24px;
+  font-size: 30px;
   position: relative;
   text-align: center;
   color: --grey;
@@ -80,6 +81,8 @@
   border-width: 4px;
   border-color: var(--primary);
   margin-top: 8px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Create flexible columns */
 }
 
 .Profile-button {
@@ -87,10 +90,10 @@
   font-style: italic;
   color: var(--white);
   border-width: 2px;
-  border-color: var(--green);
+  border-color: var(--primary--dim);
   border-style: dotted;
   border-radius: 10px;
-  background-color: var(--green);
+  background-color: var(--primary--dim);
 }
 
 .Profile-button:hover {
@@ -101,13 +104,13 @@
   border-color: var(--white);
   border-style: dotted;
   border-radius: 10px;
-  background-color: var(--green);
+  background-color: var(--primary);
 }
 
 .Profile-dataContainer {
   display: flex;
   flex-direction: column;
-  width: 100vw;
+  flex: 1;
 }
 
 .Profile-horizontalContainer {
@@ -116,12 +119,14 @@
   flex-direction: row;
   flex-wrap: wrap;
   width: 92%;
+  margin-left: 12%;
 }
 
 .Profile-histoContainer {
   width: 800px;
   padding: 0;
   margin: 16px;
+  margin-left: 12%;
   flex-direction: column;
   display: flex;
 }
