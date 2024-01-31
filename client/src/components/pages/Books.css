@@ -29,6 +29,7 @@
 }
 
 .library-container {
+  min-height: 70vh;
   padding: 24px;
   display: flex;
   flex-wrap: wrap;
@@ -71,6 +72,7 @@
   border-style: dotted;
   border-radius: 10px;
   background-color: var(--green);
+  margin: 4px;
 }
 
 .Books-button:hover {

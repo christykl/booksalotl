@@ -3,14 +3,15 @@
 }
 
 .Profile-bioContainer {
-  padding: 40px 40px;
+  padding: 20px 20px;
   width: var(--biowidth);
   height: auto;
+  margin: 16px;
 }
 
 .Profile-image {
-  width: var(--biowidth);
-  height: var(--biowidth);
+  width: var(--biowidthimg);
+  height: var(--biowidthimg);
   border-radius: 50%;
   position: relative;
   background-size: cover;
@@ -19,7 +20,7 @@
 }
 
 .Profile-name {
-  font-size: 36px;
+  font-size: 28px;
   font-weight: bold;
   position: relative;
   text-align: center;
@@ -27,11 +28,11 @@
 
 .Profile-nameContainer {
   padding: 0;
-  margin: 0;
+  margin: 16px;
 }
 
 .Profile-content {
-  font-size: 24px;
+  font-size: 22px;
   position: relative;
   text-align: left;
   margin: 0;
@@ -48,16 +49,21 @@
 .Profile-subContainer {
   padding: 0;
   margin: 16px;
+  width: 100vh;
 }
 
 .Profile-chartContainer {
   padding: 0;
   margin: 16px;
+  flex-direction: column;
+  display: flex;
+  width: 400px;
 }
 
 .Profile-chartSubContainer {
   padding: 0;
-  margin: 0;
+  margin: 16px;
+  display: flex;
 }
 
 .Profile-chartHeader {
@@ -66,6 +72,7 @@
   text-align: center;
   color: --grey;
   margin: 16px;
+  display: flex;
 }
 
 .Profile-bookContainer {
@@ -73,4 +80,48 @@
   border-width: 4px;
   border-color: var(--primary);
   margin-top: 8px;
+}
+
+.Profile-button {
+  font-family: "Courier Prime";
+  font-style: italic;
+  color: var(--white);
+  border-width: 2px;
+  border-color: var(--green);
+  border-style: dotted;
+  border-radius: 10px;
+  background-color: var(--green);
+}
+
+.Profile-button:hover {
+  font-family: "Courier Prime";
+  font-style: italic;
+  color: var(--white);
+  border-width: 2px;
+  border-color: var(--white);
+  border-style: dotted;
+  border-radius: 10px;
+  background-color: var(--green);
+}
+
+.Profile-dataContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+}
+
+.Profile-horizontalContainer {
+  display: flex;
+  margin: 16px;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 92%;
+}
+
+.Profile-histoContainer {
+  width: 800px;
+  padding: 0;
+  margin: 16px;
+  flex-direction: column;
+  display: flex;
 }

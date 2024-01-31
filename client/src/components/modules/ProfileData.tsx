@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { Chart as ChartJS, registerables } from "chart.js";
 ChartJS.register(...registerables);
 // import 'chartjs-adapter-date-fns';
 // import 'date-fns';
 import { Chart, Pie, Doughnut, Line, Bar } from "react-chartjs-2";
 import "../../utilities.css";
-import "./Profile.css";
+import "../pages/Profile.css";
 // import { Book } from "./Books";
 // import Books from "./Books";
 // import SingleBook from "../modules/SingleBook";
@@ -14,7 +13,6 @@ import { User } from "../../../../server/models/User";
 import { get } from "../../utilities";
 import { Book } from "../../../../server/models/Book";
 import LibraryCard from "../modules/LibraryCard";
-import GenreGraph from "../modules/GenreGraph";
 
 const primaryColor = getComputedStyle(document.documentElement).getPropertyValue("--primary");
 const primaryDimColor = getComputedStyle(document.documentElement).getPropertyValue(
@@ -26,14 +24,12 @@ type ProfileProps = {
   userId: string;
 };
 
-const Profile = (props: ProfileProps) => {
+const ProfileData = (props: ProfileProps) => {
   const [bookData, setBookData] = useState<Book[]>([]);
   const [username, setUsername] = useState<string>("Janelle Cai");
-  const [numBlends, setNumBlends] = useState<number>(0);
   const [library, setLibrary] = useState<Book[]>([]);
   const [currentBook, setCurrentBook] = useState<Book[]>([]);
   const [lifetimePages, setLifetimePages] = useState<number>(0);
-  const [favoriteBooks, setFavoriteBooks] = useState<Book[]>([]);
 
   const [id, setId] = useState<string>("Janelle Cai");
 
@@ -42,7 +38,6 @@ const Profile = (props: ProfileProps) => {
       if (user._id) {
         setUsername(user.name);
         setId(user._id);
-        setNumBlends(user.blends.length);
       }
     });
   }, []);
@@ -55,6 +50,7 @@ const Profile = (props: ProfileProps) => {
 
   /* Placeholder data */
   const loadBooks = () => {
+    console.log("userId", props.userId);
     library.map((book) => {
       if (book.reader_id && book.reader_id == props.userId) {
         setBookData((prev) => [...prev, book]);
@@ -97,8 +93,9 @@ const Profile = (props: ProfileProps) => {
         backgroundColor: [primaryColor, primaryDimColor, greyColor],
         hoverOffset: 4,
       },
-    ],
-  };
+    ]
+  }
+
 
   const createPagesData = () => {
     /* Total Pages Read Line Graph */
@@ -181,110 +178,39 @@ const Profile = (props: ProfileProps) => {
     }
   }, [bookData]);
 
-  useEffect(() => {
-    for (let bk of bookData) {
-      if (bk != undefined && bk.rating == 5) {
-        setFavoriteBooks((prev) => [...prev, bk]);
-      }
-    }
-  }, [bookData]);
-
-  const link = "https://bookblendr-7aw5.onrender.com/blends/" + id;
-
-  const navigate = useNavigate();
-
-  const handleEditClick = () => {
-    navigate("/my-books");
-  };
+  // const link = "https://bookblendr-7aw5.onrender.com/blends/" + id;
 
   return (
     <div className="Profile-flexContainer">
-      <div className="Profile-bioContainer">
-        <div className="Profile-image" />
-        <div className="Profile-nameContainer">
-          <h1 className="Profile-name">{username}</h1>
-        </div>
-        <div className="Profile-subContainer">
-          <button
-            className="Profile-button"
-            onClick={() => {
-              navigator.clipboard.writeText(link);
-            }}
-          >
-            custom blend link
-          </button>
-        </div>
-        <div className="Profile-subContainer">
-          <p className="Profile-subhead u-subheader">Blends</p>
-          <p className="Profile-content u-subheader">{numBlends}</p>
-        </div>
-        <div className="Profile-subContainer">
-          <p className="Profile-subhead u-subheader">Lifetime Pages Read</p>
-          <p className="Profile-content u-subheader">{lifetimePages}</p>
-        </div>
+      <div className="Profile-chartContainer">
+        <p className="Profile-chartHeader u-subheader">Fiction vs. Nonfiction</p>
+        <Doughnut className="Profile-chartSubContainer" data={ficData} />
       </div>
-
-      <div className="Profile-dataContainer">
-        <div className="Profile-subContainer">
-          <button className="Profile-button Profile-subhead" onClick={handleEditClick}>
-            currently reading
-          </button>
-          <p className="Profile-content u-subheader Profile-bookContainer">
-            {currentBook.length > 0 ? (
-              currentBook.map((book) => <LibraryCard userId={props.userId} book={book} />)
-            ) : (
-              <p>none</p>
-            )}
-          </p>
-        </div>
-        <div className="Profile-subContainer">
-          <button className="Profile-button Profile-subhead" onClick={handleEditClick}>
-            favorites
-          </button>
-          <p className="Profile-content u-subheader Profile-bookContainer">
-            {/* <button onClick={handleEditClick}>Edit</button> */}
-            {favoriteBooks.length > 0 ? (
-              favoriteBooks.map((book) => <LibraryCard userId={props.userId} book={book} />)
-            ) : (
-              <p>none</p>
-            )}
-          </p>
-        </div>
-
-        <div className="Profile-horizontalContainer">
-          <div className="Profile-chartContainer">
-            <p className="Profile-chartHeader u-subheader">Your Top Genres</p>
-            <GenreGraph bookData={bookData}/>
-          </div>
-
-          <div className="Profile-chartContainer">
-            <p className="Profile-chartHeader u-subheader">Book Length</p>
-            <Doughnut className="Profile-chartSubContainer" data={lengthData} />
-          </div>
-        </div>
-
-        <div className="Profile-histoContainer">
-          <p className="Profile-chartHeader u-subheader">Pages Read</p>
-          <Bar
-            className="Profile-chartSubContainer"
-            data={createPagesData()}
-            style={{
-              width: 480,
-              height: 400,
-            }}
-            options={{
-              maintainAspectRatio: true,
-              scales: {
-                y: {
-                  beginAtZero: true,
-                },
+      <div className="Profile-chartContainer">
+        <p className="Profile-chartHeader u-subheader">Book Length</p>
+        <Doughnut className="Profile-chartSubContainer" data={lengthData} />
+      </div>
+      <div className="Profile-chartContainer">
+        <p className="Profile-chartHeader u-subheader">Pages Read</p>
+        <Bar
+          className="Profile-chartSubContainer"
+          data={createPagesData()}
+          style={{
+            width: 650,
+            height: 2000,
+          }}
+          options={{
+            maintainAspectRatio: true,
+            scales: {
+              y: {
+                beginAtZero: true,
               },
-            }}
-          />
-        </div>
+            },
+          }}
+        />
       </div>
     </div>
   );
 };
 
-export default Profile;
+export default ProfileData;

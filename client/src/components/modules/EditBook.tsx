@@ -2,29 +2,28 @@
 
 import React, { useEffect, useState } from "react";
 import Genre from "./Genre";
+import { Rating } from "@mantine/core";
 import Status from "./Status";
 
-const BookInfo = ({ item, onClose, datecb, ratingcb, genrecb, addbook, dropdowncb, statuscb }) => {
-  let thumbnail =
-    item.volumeInfo && item.volumeInfo.imageLinks && item.volumeInfo.imageLinks.smallThumbnail;
+const EditBook = ({ item, onClose, datecb, ratingcb, genrecb, updatebook, statuscb }) => {
+  let thumbnail = item.cover;
+    // item.volumeInfo && item.volumeInfo.imageLinks && item.volumeInfo.imageLinks.smallThumbnail;
   let today = new Date();
-  const [genre, setGenre] = useState<string>("");
-  const [date, setDate] = useState<string>(today.toString());
-  const [rating, setRating] = useState<number>(0);
-  const [submit, setSubmit] = useState<boolean>(false);
-  const [status, setStatus] = useState<string>("read");
+  const [genre, setGenre] = useState<string>(item.genre || ""); 
+  const [date, setDate] = useState<string>(item.dateread ? item.dateread.toString() : new Date().toString());
+  const [rating, setRating] = useState<number>(item.rating || 0);
+  const [status, setStatus] = useState<string>(item.status || "read");
+  const [submit, setSubmit] = useState<boolean>(false); 
 
   const handleSubmit = (event) => {
     event.preventDefault(); // Prevent default form submission behavior
     setSubmit(true);
-  };
+  }
 
   useEffect(() => {
     if (submit) {
-      dropdowncb(); // Close the dropdown
-      addbook(item); // Add the book to the library
-    }
-  }, [submit]);
+      updatebook(item); // Add the book to the library
+    }}, [submit]); 
 
   useEffect(() => {
     datecb(new Date(date));
@@ -32,12 +31,12 @@ const BookInfo = ({ item, onClose, datecb, ratingcb, genrecb, addbook, dropdownc
 
   useEffect(() => {
     ratingcb(rating);
-  }, [rating]);
+  }, [rating]); 
 
   useEffect(() => {
     genrecb(genre);
-  }, [genre]);
-
+  }, [genre]);  
+  
   const handleGenreChange = (event) => {
     setGenre(event.target.value);
   };
@@ -54,19 +53,17 @@ const BookInfo = ({ item, onClose, datecb, ratingcb, genrecb, addbook, dropdownc
     <div>
       <div className="overlay">
         <div className="overlay-inner">
-          <button className="close" onClick={onClose}>
-            X
-          </button>
+          <button className="close" onClick={onClose}>X</button>
           <div className="inner-box">
             <img src={thumbnail} alt="" />
             <div className="info">
-              <h3>{item.volumeInfo.title}</h3>
-              <h4>{item.volumeInfo.authors}</h4>
-              <h5>
-                {item.volumeInfo.publisher}
-                <span>{item.volumeInfo.published_date}</span>
-              </h5>
-              <br />
+            <h1>{item.title}</h1>
+               <h3>{item.authors}</h3>
+               <h5>
+                 {item.publisher + ' '}
+                 <span>{item.published_date}</span>
+               </h5>
+               <br />
               <form onSubmit={handleSubmit}>
                 {status==="read" && (
                   <>
@@ -76,7 +73,7 @@ const BookInfo = ({ item, onClose, datecb, ratingcb, genrecb, addbook, dropdownc
                       min="1900-01-01"
                       id="date"
                       name="date"
-                      value={date.toString()}
+                      value={date.split('T')[0]} // Ensure format is compatible with input type=date
                       onChange={(e) => setDate(e.target.value)}
                     />
                   </>
@@ -84,31 +81,24 @@ const BookInfo = ({ item, onClose, datecb, ratingcb, genrecb, addbook, dropdownc
                 <br/>
                 <label htmlFor="status">Status:</label>
                 <Status onChange={handleStatusChange} value={status} />
-                <br />
+                <br/>
                 <label htmlFor="genre">Genre:</label>
                 <Genre onChange={handleGenreChange} value={genre} />
-                <br />
+                <br/>
                 <label htmlFor="rating">Rating:</label>
-                <input
-                  type="number"
-                  id="rating"
-                  name="rating"
-                  placeholder="Rating"
-                  value={rating}
-                  onChange={(e) => setRating(Number(e.target.value))}
-                />
-                <br />
-                <button type="submit">Add</button>
+                <Rating value={rating} onChange={setRating} defaultValue={rating}/>
+                <br/>
+                <button type="submit">Update Book</button>
               </form>
             </div>
           </div>
           <div className="description">
-            <h4 className="description">{item.volumeInfo.description}</h4>
+            <h4 className="description">{item.description}</h4>
           </div>
         </div>
       </div>
     </div>
-  );
+  )
 };
 
-export default BookInfo;
+export default EditBook;

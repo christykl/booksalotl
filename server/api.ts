@@ -80,13 +80,34 @@ router.post("/books", auth.ensureLoggedIn, (req, res) => {
     preview_link: req.body.preview_link,
     description: req.body.description,
     genre: req.body.genre,
+    status: req.body.status,
   });
 
   newBook.save().then((book) => res.send(book));
 });
 
+router.get("/users", (req, res) => {
+  // empty selector means get all documents
+  User.find({}).then((users) => res.send(users));
+});
+
 router.delete("/books", auth.ensureLoggedIn, (req, res) => {
   Book.findByIdAndRemove(req.body.id).then(() => res.send({}));
+});
+
+router.post("/updateUsers", (req, res) => {
+  console.log(req.body.passedId);
+  if (!req.user) {
+    res.status(400);
+    res.send({ message: "error not logged in" });
+    return;
+  }
+  const user = req.user;
+  User.updateOne({ _id: req.user._id }, { $addToSet: { blends: req.body.passedId } }).then(
+     () => {
+      res.send({});
+    }
+  );
 });
 
 // anything else falls to this "not found" case

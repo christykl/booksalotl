@@ -8,6 +8,7 @@ type SingleFriendProps = {
   userId: string;
   profileImage?: string;
   userName: string;
+  url: string;
 };
 
 const SingleFriend = (props: SingleFriendProps) => {
@@ -16,24 +17,21 @@ const SingleFriend = (props: SingleFriendProps) => {
     //   <Grid.Col span={4}>1</Grid.Col>
     //   <Grid.Col span={4}>2</Grid.Col>
     //   <Grid.Col span={4}>3</Grid.Col>
-    // </Grid>
-    <Container className="SingleFriend-container">
-      <Grid className="grid-container" justify="center" align="stretch">
-        <Grid.Col span={3}>
-          <Avatar src={props.profileImage} alt={props.userName} radius="xl" />
-        </Grid.Col>
-        <Grid.Col span={6}>
-          <Text className="u-textCenter" size="lg">
-            {props.userName}
-          </Text>
-        </Grid.Col>
-        <Grid.Col span={3}>
-          <Button className="SingleFriend-button">
-            <p> ~~Blend~~ </p>
-          </Button>
-        </Grid.Col>
-      </Grid>
-    </Container>
+
+    <div className="SingleFriend-container">
+      <div className="SingleFriend-grid-container">
+        <Avatar src={props.profileImage} alt={props.userName} radius="xl" />
+        <Text className="u-textCenter" size="lg">
+          {props.userName}
+        </Text>
+         <a href={props.url}>
+            <button className="SingleFriend-button">
+              <p> ~~View Blend~~ </p>
+            </button>
+          </a>
+      </div>
+    </div>
+
   );
 };
 

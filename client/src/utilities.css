@@ -20,14 +20,15 @@
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
 
 :root {
-  --primary: #DAA5A4;
-  --primary--dim: #B88988;
-  --white: #FFFDFB;
-  --black: #1F1F1F;
+  --primary: #daa5a4;
+  --primary--dim: #b88988;
+  --white: #fffdfb;
+  --black: #1f1f1f;
   --grey: #939393;
-  --green: #AFC8AD;
-  --lavender: #E6E6FA;
-  --blue: #B0E0E6;
+  --green: #afc8ad;
+  --lavender: #d7b5e1;
+  --blue: #c7ddef;
+  --beige: #f0d9ca;
   /* --primary--dim: #6987db;
   --darkgrey: #d4d4d4;
   --medgrey: #e0e0e0;
@@ -40,6 +41,7 @@
   --l: 24px;
 
   --biowidth: 280px;
+  --biowidthimg: 240px;
 }
 
 body {
@@ -107,8 +109,21 @@ form {
 
 h1 {
   margin: 0;
+  font-size: 84px;
+}
+
+h2 {
+  margin: 0;
+}
+
+h3 {
+  margin: 0;
 }
 
 h4 {
+  margin: 0;
+}
+
+h5 {
   margin: 0;
 }
