@@ -187,26 +187,24 @@ const Books = (props: BooksProps) => {
 
   const updateBook = (updatedBook) => {
     const bookIndex = library.findIndex(book => book._id === updatedBook._id);
+    
+    if (bookIndex !== -1) {
+      // Update the book in the existing library array
+      const updatedLibrary = [...library];
+      updatedLibrary[bookIndex] = updatedBook;
   
-    // Create a new array with the updated book
-    const updatedLibrary = [...library];
-    updatedLibrary[bookIndex] = updatedBook;
-
-    // Update the state
-    setLibrary(updatedLibrary);
-
-    // setReadLib(updatedLibrary.filter(book => book.status === "read"));
-    // setCurLib(updatedLibrary.filter(book => book.status === "currently reading"));
-    // setWantLib(updatedLibrary.filter(book => book.status === "want to read"));
-
-    // Close the edit book overlay
-    setEditBook(null);
-    addFromEdit(updatedBook);
-    remove("/api/books/", { id: updatedBook._id });
+      // Update the state
+      setLibrary(updatedLibrary);
+  
+      // Update the book in the backend
+      post("/api/updateBook", { updatedBook }).then(() => {
+        console.log("Book updated in backend");
+      });
+    }
   }
 
-
   useEffect(() => {
+    console.log("updating library");
     setThreeLib([
       library.filter((book) => book.status === "currently reading"),
       library.filter((book) => book.status === "want to read"),
@@ -214,43 +212,36 @@ const Books = (props: BooksProps) => {
     ]);
   }, [library]); 
 
-  const handleEditBook = (book) => { 
-    setEditBook(book);
-  };
 
-
-  const LibrarySection = (lib: Book[]) => {
+  const LibrarySection = (lib: Book[], statusFilter: string) => {
     console.log("library section", lib);
     return (
-        <div className="library-container">
-          {lib.map((book, index) => {
-            // console.log(book);
-            if (book.reader_id && book.reader_id == props.userId && book.status === status)
-              return (
-                <div className="Books-card">
-                  <LibraryCard userId={props.userId} book={book} key={book._id} />
-                  <div>
-                    <button
-                      className="Books-button"
-                      onClick={() => {
-                        removeBook(book);
-                      }}
-                    >
-                      Remove
-                    </button>
-                    <button
-                      className="Books-button"
-                      onClick={() => {
-                        setEditBook(book);
-                      }}
-                    >
-                      Edit
-                    </button>
-                  </div>
+      <div className="library-container">
+        {lib.map((book, index) => {
+          if (book.reader_id && book.reader_id === props.userId && book.status === statusFilter) {
+            return (
+              <div className="Books-card" key={book._id}>
+                <LibraryCard userId={props.userId} book={book} />
+                <div>
+                  <button
+                    className="Books-button"
+                    onClick={() => removeBook(book)}
+                  >
+                    Remove
+                  </button>
+                  <button
+                    className="Books-button"
+                    onClick={() => setEditBook(book)}
+                  >
+                    Edit
+                  </button>
                 </div>
-              );
-          })}
-          {toShow && (
+              </div>
+            );
+          }
+          return null;
+        })}
+        {toShow && (
             <div className="overlay">
               <BookInfo 
                 onClose={closeBookInfo} 
@@ -275,11 +266,71 @@ const Books = (props: BooksProps) => {
                 statuscb={statusCallback}/>
             </div>
           )}
-        </div>
+      </div>
     );
-}
+  }
 
-const sectionnames = ["Read", "Currently Reading", "Want to Read"];
+//   const LibrarySection = (lib: Book[]) => {
+//     console.log("library section", lib);
+//     return (
+//         <div className="library-container">
+//           {lib.map((book, index) => {
+//             // console.log(book);
+//             if (book.reader_id && book.reader_id == props.userId && book.status === status)
+//               return (
+//                 <div className="Books-card">
+//                   <LibraryCard userId={props.userId} book={book} key={book._id} />
+//                   <div>
+//                     <button
+//                       className="Books-button"
+//                       onClick={() => {
+//                         removeBook(book);
+//                       }}
+//                     >
+//                       Remove
+//                     </button>
+//                     <button
+//                       className="Books-button"
+//                       onClick={() => {
+//                         setEditBook(book);
+//                       }}
+//                     >
+//                       Edit
+//                     </button>
+//                   </div>
+//                 </div>
+//               );
+//           })}
+//           {toShow && (
+//             <div className="overlay">
+//               <BookInfo 
+//                 onClose={closeBookInfo} 
+//                 item={toShow} 
+//                 datecb={dateCallback} 
+//                 ratingcb={ratingCallback} 
+//                 genrecb={genreCallback} 
+//                 addbook={addBookToLibrary} 
+//                 dropdowncb={noDropdown} 
+//                 statuscb={statusCallback}/>
+//             </div>  
+//           )}
+//           {editBook && (
+//             <div className="overlay">
+//               <EditBook 
+//                 onClose={closeEditBook} 
+//                 item={editBook} 
+//                 datecb={dateCallback} 
+//                 ratingcb={ratingCallback} 
+//                 genrecb={genreCallback} 
+//                 updatebook={updateBook} 
+//                 statuscb={statusCallback}/>
+//             </div>
+//           )}
+//         </div>
+//     );
+// }
+
+const sectionnames = ["Currently Reading", "Want to Read", "Read"];
 
   return (
     <div>
@@ -307,16 +358,14 @@ const sectionnames = ["Read", "Currently Reading", "Want to Read"];
           <h3>Your Library</h3>
         </div>
         {
-          threeLib.map((lib, index) => {
-            return (
-              <>
-                <div className="u-textCenter">
-                  <h4>{sectionnames[index]}</h4>
-                </div>
-                {LibrarySection(lib)}
-              </>
-            );
-          })
+          threeLib.map((lib, index) => (
+            <>
+              <div className="u-textCenter">
+                <h4>{sectionnames[index]}</h4>
+              </div>
+              {LibrarySection(lib, sectionnames[index].toLowerCase())}
+            </>
+          ))
         }
       </div>
     </div>
