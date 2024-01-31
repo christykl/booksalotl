@@ -4,17 +4,20 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #f0f0f0;
   margin-bottom: 16px;
+  margin-left: 16px;
 }
 
 .dropdown {
   position: absolute;
-  background-color: var(--grey);
-  min-width: 300px;
+  top: 175px;
+  background-color: var(--white);
+  width:64%;
   border: 1px solid #ddd;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
+  margin-left: 16px;
+  border-radius: 30px;
 }
 
 .dropdown div {
@@ -26,6 +29,7 @@
 
 .dropdown div:hover {
   background-color: #f1f1f1;
+  border-radius: 30px;
 }
 
 /* .library-container {
@@ -83,6 +87,8 @@
   border-radius: 30px;
   font-family: "Courier New", Courier, monospace;
   color: var(--grey);
+  border: var(--primary) 2px solid;
+
 }
 
 /* Apply CSS styles to the button container */
@@ -120,6 +126,19 @@
   left: 20px; 
 }
 
+.Books-search-button {
+  width: 80px;
+  font-family: "Courier Prime";
+  font-style: italic;
+  color: var(--white);
+  border-width: 2px;
+  border-color: var(--green);
+  border-style: dotted;
+  border-radius: 10px;
+  background-color: var(--green);
+  margin: 4px;
+  position: absolute;
+}
 
 
 .Books-button:hover {

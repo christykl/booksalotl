@@ -288,9 +288,9 @@ const sectionnames = ["Currently Reading", "Want to Read", "Read"];
             onKeyUp={searchBook}
             className="Books-input"
           />
-          <button className="Books-button" type="submit">
+          {/* <button className="Books-search-button" type="submit">
             search
-          </button>
+          </button> */}
         </form>
       </div>
       {renderDropdown()} {/* Render the dropdown here */}

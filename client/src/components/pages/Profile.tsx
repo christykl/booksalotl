@@ -163,7 +163,26 @@ const Profile = (props: ProfileProps) => {
         </div>
       </div>
 
+
+
       <div className="Profile-dataContainer">
+        <div className="Profile-horizontalContainer">
+          <div className="Profile-chartContainer">
+            <p className="Profile-chartHeader u-subheader">Your Top Genres</p>
+            <GenreGraph bookData={bookData}/>
+          </div>
+
+          <div className="Profile-chartContainer">
+            <p className="Profile-chartHeader u-subheader">Book Length</p>
+            <Doughnut className="Profile-chartSubContainer" data={lengthData} />
+          </div>
+          </div>
+
+          <div className="Profile-histoContainer">
+            <p className="Profile-chartHeader u-subheader">Pages Read</p>
+            <PagesGraph bookData={bookData}/>
+          </div>
+
         <div className="Profile-subContainer">
           <button className="Profile-button Profile-subhead" onClick={handleEditClick}>
             currently reading
@@ -188,23 +207,6 @@ const Profile = (props: ProfileProps) => {
               <p>none</p>
             )}
           </p>
-        </div>
-
-        <div className="Profile-horizontalContainer">
-          <div className="Profile-chartContainer">
-            <p className="Profile-chartHeader u-subheader">Your Top Genres</p>
-            <GenreGraph bookData={bookData}/>
-          </div>
-
-          <div className="Profile-chartContainer">
-            <p className="Profile-chartHeader u-subheader">Book Length</p>
-            <Doughnut className="Profile-chartSubContainer" data={lengthData} />
-          </div>
-        </div>
-
-        <div className="Profile-histoContainer">
-          <p className="Profile-chartHeader u-subheader">Pages Read</p>
-          <PagesGraph bookData={bookData}/>
         </div>
       </div>
     </div>

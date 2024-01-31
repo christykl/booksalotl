@@ -110,7 +110,7 @@
 .Profile-dataContainer {
   display: flex;
   flex-direction: column;
-  width: 100vw;
+  flex: 1;
 }
 
 .Profile-horizontalContainer {

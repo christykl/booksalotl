@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Modal from "./Modal";
 import "./Modal.css";
+// import "./Card.css";
 
 const LibraryCard = ({ book, userId }) => {
   const [show, setShow] = useState<boolean>(false);
