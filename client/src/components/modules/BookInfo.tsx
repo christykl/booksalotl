@@ -62,7 +62,6 @@ const BookInfo = ({ item, onClose, datecb, ratingcb, genrecb, addbook, dropdownc
                 <span>{item.volumeInfo.published_date}</span>
               </h5>
               <br />
-              {/* ... Other info elements ... */}
               <form onSubmit={handleSubmit}>
                 {!current && (
                   <>
