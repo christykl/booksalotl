@@ -19,11 +19,14 @@ const Bookshelf = (props) => {
           <hr></hr>
         </div>
       </div>
-      <div className="Books-badgeContainer">
-        <Badge variant="filled" size="xl">
-          {props.title}
-        </Badge>
+      <div className="u-textCenter">
+        <div className="Books-badgeContainer">
+          <Badge variant="filled" size="xl">
+            {props.title}
+          </Badge>
+        </div>
       </div>
+      
       <div className="Books-container">
         {props.books.map((book) => (
           <div className="Books-card">

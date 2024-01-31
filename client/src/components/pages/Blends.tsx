@@ -10,6 +10,7 @@ import "./Profile.css";
 import ProfileData from "../modules/ProfileData";
 import Bookshelf from "../modules/Bookshelf";
 import { set } from "mongoose";
+import { Badge } from "@mantine/core";
 
 type BlendsProps = {
   userId: string;
@@ -117,16 +118,34 @@ const Blends = (props: BlendsProps) => {
           <Bookshelf userId={id!} title="Books you both enjoyed" books={bothBooks} />
         </div>
         <div>
+        <div className="Books-lineOuterContainer">
+          <div className="Books-lineInnerContainer">
+            <hr></hr>
+          </div>
+        </div>
           <div className="u-textCenter">
-            <h3>{username}'s Profile</h3>
+            <div className="Blends-badgeContainer">
+              <Badge variant="filled" size="xl">
+                {username}'s Profile
+              </Badge>
+            </div>
           </div>
           <div className="library-container">
             <ProfileData userId={selfid} />
           </div>
         </div>
         <div>
+        <div className="Books-lineOuterContainer">
+          <div className="Books-lineInnerContainer">
+            <hr></hr>
+          </div>
+        </div>
           <div className="u-textCenter">
-            <h3>{username2}'s Profile</h3>
+            <div className="Blends-badgeContainer">
+              <Badge variant="filled" size="xl">
+                {username2}'s Profile
+              </Badge>
+            </div>
           </div>
           <div className="library-container">
             <ProfileData userId={id!} />
