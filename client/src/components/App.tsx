@@ -14,10 +14,30 @@ import "../utilities.css";
 import Friends from "./pages/Friends";
 import Blends from "./pages/Blends";
 import { MantineProvider, createTheme } from "@mantine/core";
-// import '@mantine/core/styles.css'; // Import Mantine styles
+import "@mantine/core/styles.css"; // Import Mantine styles
 import Books from "./pages/Books";
+import { FooterSimple } from "./modules/Footer";
 import { User } from "../../../server/models/User";
 import BlendsRoute from "./BlendsRoute";
+
+const theme = createTheme({
+  colors: {
+    fadedpink: [
+      "#DAA5A4",
+      "#B88988",
+      "#B88988",
+      "#B88988",
+      "#B88988",
+      "#B88988",
+      "#DAA5A4",
+      "#AFC8AD",
+      "#AFC8AD",
+      "#AFC8AD",
+    ],
+  },
+  fontFamily: "Courier Prime, Open Sans, sans-serif",
+  primaryColor: "fadedpink",
+});
 
 const App = () => {
   const [userId, setUserId] = useState<string | undefined>(undefined);
@@ -61,7 +81,7 @@ const App = () => {
   // NOTE:
   // All the pages need to have the props extended via RouteComponentProps for @reach/router to work properly. Please use the Skeleton as an example.
   return (
-    <MantineProvider>
+    <MantineProvider theme={theme}>
       <BrowserRouter>
         {!userId ? (
           <Home handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} />
@@ -79,6 +99,7 @@ const App = () => {
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </div>
+            <FooterSimple />
           </>
         )}
       </BrowserRouter>
