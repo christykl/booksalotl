@@ -25,7 +25,6 @@ const Books = (props: BooksProps) => {
   const [rating, setRating] = useState<number>(0);
   const [current, setCurrent] = useState<boolean>(false);
   const [editBook, setEditBook] = useState<Book | null>(null);
-  const [searchSubmit, setSearchSubmit] = useState<boolean>(false);
 
   const genreCallback = (genreval) => {
     setGenre(genreval);
@@ -52,28 +51,41 @@ const Books = (props: BooksProps) => {
     }
   };
 
-  const searchBook = (evt) => {
-    if (evt.key === "Enter") {
-      axios
-        .get(
-          "https://www.googleapis.com/books/v1/volumes?q=" +
-            search +
-            "&key=AIzaSyDjnJHbxfCAqhtxJr1YYzleaQGQB8MdbEA&maxResults=10"
-        )
-        .then((res) => {
-          setSearchResults(res.data.items.filter(hasThumbnail));
-          setShowDropdown(true); // Show the dropdown
-        })
-        .catch((err) => console.log(err));
-      if (searchSubmit) {
-        setSearchSubmit(false);
-      }
-    }
+  const searchBook = () => {
+    axios
+      .get(`https://www.googleapis.com/books/v1/volumes?q=${search}&key=AIzaSyDjnJHbxfCAqhtxJr1YYzleaQGQB8MdbEA&maxResults=10`)
+      .then((res) => {
+        setSearchResults(res.data.items.filter(hasThumbnail));
+        setShowDropdown(true);
+      })
+      .catch((err) => console.log(err));
   };
+  
 
-  useEffect(() => {
-    if (searchSubmit) searchBook(search);
-  }, [searchSubmit]);
+  // const searchBook = (evt) => {
+  //   if (evt.key === "Enter") {
+  //     axios
+  //       .get(
+  //         "https://www.googleapis.com/books/v1/volumes?q=" +
+  //           search +
+  //           "&key=AIzaSyDjnJHbxfCAqhtxJr1YYzleaQGQB8MdbEA&maxResults=10"
+  //       )
+  //       .then((res) => {
+  //         setSearchResults(res.data.items.filter(hasThumbnail));
+  //         setShowDropdown(true); // Show the dropdown
+  //       })
+  //       .catch((err) => console.log(err));
+  //     if (searchSubmit) {
+  //       setSearchSubmit(false);
+  //     }
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   if (searchSubmit) {
+  //     searchBook(search);
+  //   }
+  // }, [searchSubmit]);
 
   const checkLibrary = (book) => {
     if (library.length > 0) {
@@ -147,6 +159,12 @@ const Books = (props: BooksProps) => {
     // setShowBookInfo(false);
   };
 
+  const handleFormSubmit = (event) => {
+    event.preventDefault(); // Prevents the default form submit action
+    searchBook(); // Directly call the search function
+  };  
+  
+
   const closeEditBook = () => {
     setEditBook(null);
   };
@@ -214,7 +232,7 @@ const Books = (props: BooksProps) => {
   return (
     <div>
       <div className="Books-searchContainer">
-        <form>
+        <form onSubmit={handleFormSubmit}>
           <input
             type="text"
             placeholder="Search..."
@@ -223,7 +241,7 @@ const Books = (props: BooksProps) => {
             onKeyUp={searchBook}
             className="Books-input"
           />
-          <button className="Books-button" type="submit" onSubmit={() => setSearchSubmit(true)}>
+          <button className="Books-button" type="submit">
             enter
           </button>
         </form>
