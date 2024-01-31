@@ -103,10 +103,35 @@ const Books = (props: BooksProps) => {
     }
   };
 
+  const addFromEdit = (book) => {
+    post("/api/books", {
+      title: book.title,
+      authors: book.authors,
+      isbn: book.isbn,
+      pages: book.pages,
+      dateread: date,
+      cover: book.cover,
+      rating: rating,
+      genre: genre,
+      publisher: book.publisher,
+      published_date: book.published_date,
+      preview_link: book.preview_link,
+      description: book.description,
+      current: current,
+    }).then((newBook) => {
+      setLibrary([...library, newBook]);
+    });
+    setToShow(null);
+  };
+
   const closeBookInfo = () => { 
     console.log("close book info");
     setToShow(null);
     // setShowBookInfo(false);
+  }
+
+  const closeEditBook = () => {
+    setEditBook(null);
   }
 
   const renderDropdown = () => {
@@ -150,6 +175,15 @@ const Books = (props: BooksProps) => {
   const noDropdown = () => { 
     setToShow(null);
     setShowDropdown(false);
+  }
+
+  const updateBook = (item) => {
+    removeBook(item);
+    addFromEdit(item);
+  }
+
+  const handleEditBook = (book) => { 
+    setEditBook(book);
   }
 
   return (
@@ -214,12 +248,12 @@ const Books = (props: BooksProps) => {
           {editBook &&
             <div className="overlay">
               <EditBook 
-                onClose={closeBookInfo} 
+                onClose={closeEditBook} 
                 item={editBook} 
                 datecb={dateCallback} 
                 ratingcb={ratingCallback} 
                 genrecb={genreCallback} 
-                addbook={addBookToLibrary} 
+                updatebook={updateBook} 
                 currentcb={currentCallback}/>
             </div>
           }

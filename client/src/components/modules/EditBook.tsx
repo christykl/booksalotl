@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import Genre from "./Genre";
 
 
-const EditBook = ({ item, onClose, datecb, ratingcb, genrecb, addbook, currentcb }) => {
+const EditBook = ({ item, onClose, datecb, ratingcb, genrecb, updatebook, currentcb }) => {
   let thumbnail = item.cover;
     // item.volumeInfo && item.volumeInfo.imageLinks && item.volumeInfo.imageLinks.smallThumbnail;
   let today = new Date();
@@ -21,7 +21,7 @@ const EditBook = ({ item, onClose, datecb, ratingcb, genrecb, addbook, currentcb
 
   useEffect(() => {
     if (submit) {
-      addbook(item); // Add the book to the library
+      updatebook(item); // Add the book to the library
     }}, [submit]); 
 
   useEffect(() => {
