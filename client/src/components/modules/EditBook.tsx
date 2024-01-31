@@ -11,7 +11,7 @@ const EditBook = ({ item, onClose, datecb, ratingcb, genrecb, updatebook, curren
   let today = new Date();
   const [genre, setGenre] = useState<string>(""); 
   const [date, setDate] = useState<string>(today.toString());
-  const [rating, setRating] = useState<number>(0);
+  const [rating, setRating] = useState<number>(item.rating || 0);
   const [submit, setSubmit] = useState<boolean>(false); 
   const [current, setCurrent] = useState<boolean>(false);
 
