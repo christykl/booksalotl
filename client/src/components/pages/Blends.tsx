@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./Blends.css"
-import { useParams } from 'react-router-dom';
+import { Await, useParams } from 'react-router-dom';
 import { get, post, remove } from "../../utilities";
 import LibraryCard from "../modules/LibraryCard";
 import { User } from "../../../../server/models/User";
@@ -32,8 +32,16 @@ const Blends = (props: BlendsProps) => {
   useEffect(() => {
     get("/api/users").then((users: User[]) => {
       setUserLibrary(users);
-    });
+    })
   }, []);
+
+  useEffect(() => {
+    for (let i = 0; i < userLibrary.length; i++) {
+        if (userLibrary[i]._id === id) {
+          setUsername2(userLibrary[i].name);
+        };
+      };
+  }, [userLibrary]);
 
   useEffect(() => {
     get("/api/books").then((books: Book[]) => {
@@ -41,13 +49,13 @@ const Blends = (props: BlendsProps) => {
     });
   }, []);
 
-  const getUsername2 = () => {
-    for (let i = 0; i < userLibrary.length; i++) {
-      if (userLibrary[i]._id === id) {
-        setUsername2(userLibrary[i].name);
-      }
-    }
-  }
+  // const getUsername2 = () => {
+  //   for (let i = 0; i < userLibrary.length; i++) {
+  //     if (userLibrary[i]._id === id) {
+  //       setUsername2(userLibrary[i].name);
+  //     };
+  //   };
+  // };
 
   return <div>
     <div className="u-textCenter">
