@@ -86,6 +86,25 @@ router.post("/books", auth.ensureLoggedIn, (req, res) => {
   newBook.save().then((book) => res.send(book));
 });
 
+router.post("/updateBook", auth.ensureLoggedIn, (req, res) => {
+  const bookId = req.body.updatedBook._id;
+  const updatedData = req.body.updatedBook;
+
+  console.log(bookId);
+  console.log(updatedData);
+
+  Book.findByIdAndUpdate(bookId, updatedData, { new: true }, (err, updatedBook) => {
+    if (err) {
+      console.error("Error updating book:", err);
+      res.status(500).json({ message: "Internal server error" });
+    } else if (!updatedBook) {
+      res.status(404).json({ message: "Book not found" });
+    } else {
+      res.json(updatedBook);
+    }
+  });
+});
+
 router.get("/users", (req, res) => {
   // empty selector means get all documents
   User.find({}).then((users) => res.send(users));

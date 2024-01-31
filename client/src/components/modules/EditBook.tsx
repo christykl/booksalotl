@@ -15,16 +15,22 @@ const EditBook = ({ item, onClose, datecb, ratingcb, genrecb, updatebook, status
   const [status, setStatus] = useState<string>(item.status || "read");
   const [submit, setSubmit] = useState<boolean>(false); 
 
+
   const handleSubmit = (event) => {
     event.preventDefault(); // Prevent default form submission behavior
-    setSubmit(true);
+
+    // Create an object with updated book data
+    const updatedBookData = {
+      ...item,
+      dateread: date,
+      rating: rating,
+      genre: genre,
+      status: status
+    };
+
+    updatebook(updatedBookData); // Update the book with new data
+    onClose(); // Close the edit book popup
   }
-
-  useEffect(() => {
-    if (submit) {
-      updatebook(item); // Add the book to the library
-    }}, [submit]); 
-
   useEffect(() => {
     datecb(new Date(date));
   }, [date]);
@@ -57,7 +63,7 @@ const EditBook = ({ item, onClose, datecb, ratingcb, genrecb, updatebook, status
           <div className="inner-box">
             <img src={thumbnail} alt="" />
             <div className="info">
-            <h1>{item.title}</h1>
+            <h2>{item.title}</h2>
                <h3>{item.authors}</h3>
                <h5>
                  {item.publisher + ' '}
