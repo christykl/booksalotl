@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import Genre from "./Genre";
 import Status from "./Status";
+import { Rating } from "@mantine/core";
 
 const BookInfo = ({ item, onClose, datecb, ratingcb, genrecb, addbook, dropdowncb, statuscb }) => {
   let thumbnail =
@@ -89,14 +90,7 @@ const BookInfo = ({ item, onClose, datecb, ratingcb, genrecb, addbook, dropdownc
                 <Genre onChange={handleGenreChange} value={genre} />
                 <br />
                 <label htmlFor="rating">Rating:</label>
-                <input
-                  type="number"
-                  id="rating"
-                  name="rating"
-                  placeholder="Rating"
-                  value={rating}
-                  onChange={(e) => setRating(Number(e.target.value))}
-                />
+                <Rating value={rating} onChange={setRating} defaultValue={rating}/>
                 <br />
                 <button type="submit">Add</button>
               </form>
