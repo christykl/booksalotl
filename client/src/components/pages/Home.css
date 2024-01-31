@@ -65,9 +65,7 @@
 }
 
 .Home-loginContainer {
-  order: 2;
-  flex: right;
-  padding: 16%;
+  padding: 16% 0;
 }
 
 .Home-loginButton {

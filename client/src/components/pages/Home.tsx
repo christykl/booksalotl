@@ -28,29 +28,31 @@ const Home = (props: Props) => {
       <div className="Home-container">
         <div className="Home-flexContainer">
           <div className="Home-content">
-            <h1>
-              book <br /> blendr
-            </h1>
+            <h1>bookblendr</h1>
             <div className="u-subheader Home-subtitle">
               <h4>blend and send to a friend</h4>
             </div>
+            <div className="u-subheader Home-loginContainer">
+              {props.userId ? (
+                <button
+                  className="Home-loginButton"
+                  onClick={() => {
+                    googleLogout();
+                    handleLogout();
+                  }}
+                >
+                  Logout
+                </button>
+              ) : (
+                <GoogleLogin
+                  onSuccess={handleLogin}
+                  onError={() => console.log("Error Logging in")}
+                />
+              )}
+            </div>
           </div>
         </div>
-        <div className="Home-loginContainer">
-          {props.userId ? (
-            <button
-              className="Home-loginButton"
-              onClick={() => {
-                googleLogout();
-                handleLogout();
-              }}
-            >
-              Logout
-            </button>
-          ) : (
-            <GoogleLogin onSuccess={handleLogin} onError={() => console.log("Error Logging in")} />
-          )}
-        </div>
+        <div className="Home-loginContainer"></div>
       </div>
       <FeaturesCards />
       <FooterSimple />
