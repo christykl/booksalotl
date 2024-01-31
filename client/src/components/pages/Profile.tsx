@@ -150,18 +150,18 @@ const Profile = (props: ProfileProps) => {
       <div className="Profile-dataContainer">
         <div className="Profile-horizontalContainer">
           <div className="Profile-chartContainer">
-            <p className="Profile-chartHeader u-subheader">Your Top Genres</p>
+            <p className="Profile-chartHeader">Your Top Genres</p>
             <GenreGraph bookData={bookData}/>
           </div>
 
           <div className="Profile-chartContainer">
-            <p className="Profile-chartHeader u-subheader">Book Length</p>
+            <p className="Profile-chartHeader">Book Length</p>
             <Doughnut className="Profile-chartSubContainer" data={lengthData} />
           </div>
           </div>
 
           <div className="Profile-histoContainer">
-            <p className="Profile-chartHeader u-subheader">Year-to-Date Pages Read</p>
+            <p className="Profile-chartHeader">Pages Read in the Past Year</p>
             <PagesGraph bookData={bookData}/>
           </div>
 
