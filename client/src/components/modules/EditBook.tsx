@@ -85,8 +85,12 @@ const EditBook = ({ item, onClose, datecb, ratingcb, genrecb, updatebook, status
                 <label htmlFor="genre">Genre:</label>
                 <Genre onChange={handleGenreChange} value={genre} />
                 <br/>
-                <label htmlFor="rating">Rating:</label>
-                <input type="number" id="rating" name="rating" placeholder="Rating" value={rating} onChange={(e) => setRating(Number(e.target.value))}/>  
+                {status==="read" && (
+                  <>
+                    <label htmlFor="rating">Rating:</label>
+                    <input type="number" id="rating" name="rating" placeholder="Rating" value={rating} onChange={(e) => setRating(Number(e.target.value))}/>
+                  </>
+                )}
                 <br/>
                 <button type="submit">Update Book</button>
               </form>
