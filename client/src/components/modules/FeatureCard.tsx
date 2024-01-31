@@ -24,20 +24,20 @@ const mockdata = [
   {
     title: "analyze your stats",
     description:
-      "Most New Year's resolutions don't go as planned ... keep yourself accountable by logging your progress and achieving your reading milestones.",
+      "Get an in-depth analysis of your preferences as a reader and track your reading progress over time.",
     icon: IconChartLine,
-  },
-  {
-    title: "discover new books",
-    description:
-      "Bored? bookblendr can recommend you a book that you'll love to diversify your knowledge and spark your creativity.",
-    icon: IconSearch,
   },
   {
     title: "create blends",
     description:
-      "Get the best of both worlds when you blend with a friend. Find where your interests intersect and work towards your reading goals together.",
+      "Send your custom blend link to a friend to see where your interests intersect.",
     icon: IconFriends,
+  },
+  {
+    title: "find your next read",
+    description:
+      "Embark on your literary journey with friends by discovering books that resonate with both of you.",
+    icon: IconSearch,
   },
 ];
 
@@ -58,7 +58,7 @@ export function FeaturesCards() {
     <Container size="lg" py="xl">
       <Group justify="center">
         <Badge variant="filled" size="lg">
-          Keep reading
+          the Axolotl intelligence (AI)-powered personal reading experience
         </Badge>
       </Group>
 
@@ -68,7 +68,7 @@ export function FeaturesCards() {
 
       <Text c="dimmed" className="Feature-description" ta="center" mt="md">
         Every once in a while, you’ll find a book that deserves to be read, reread, and shared. Use
-        bookblendr to keep a history of your media, from classics to fresh finds.
+        booksalotl to keep a history of your media, from classics to fresh finds.
       </Text>
 
       <SimpleGrid cols={{ base: 1, md: 3 }} spacing="xl" mt={50}>
