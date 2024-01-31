@@ -119,12 +119,14 @@
   flex-direction: row;
   flex-wrap: wrap;
   width: 92%;
+  margin-left: 12%;
 }
 
 .Profile-histoContainer {
   width: 800px;
   padding: 0;
   margin: 16px;
+  margin-left: 12%;
   flex-direction: column;
   display: flex;
 }
