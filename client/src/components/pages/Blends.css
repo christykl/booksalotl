@@ -21,3 +21,24 @@
 .Blends-bookshelf-container {
   justify-content: center;
 }
+
+.Blends-profile-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.Blends-chart-container {
+  flex: 1; /* This makes all items equal in width initially */
+}
+
+.Blends-chart-container:nth-child(1),
+.Blends-chart-container:nth-child(2) {
+  flex: 1; /* These two items take up 1/4 of the width each */
+}
+
+.Blends-chart-container:nth-child(3) {
+  flex: 2; /* This item takes up 1/2 of the width */
+}

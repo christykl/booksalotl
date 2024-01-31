@@ -120,7 +120,7 @@ const Blends = (props: BlendsProps) => {
           <div className="u-textCenter">
             <h3>{username}'s Profile</h3>
           </div>
-          <div className="library-container">
+          <div className="Blends-profile-container">
             <ProfileData userId={selfid} />
           </div>
         </div>
@@ -128,7 +128,7 @@ const Blends = (props: BlendsProps) => {
           <div className="u-textCenter">
             <h3>{username2}'s Profile</h3>
           </div>
-          <div className="library-container">
+          <div className="Blends-profile-container">
             <ProfileData userId={id!} />
           </div>
         </div>
