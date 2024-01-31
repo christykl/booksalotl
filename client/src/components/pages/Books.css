@@ -29,6 +29,7 @@
 }
 
 .library-container {
+  min-height: 70vh;
   padding: 24px;
   display: flex;
   flex-wrap: wrap;

@@ -15,6 +15,7 @@ import Friends from "./pages/Friends";
 import { MantineProvider, createTheme } from "@mantine/core";
 import "@mantine/core/styles.css"; // Import Mantine styles
 import Books from "./pages/Books";
+import { FooterSimple } from "./modules/Footer";
 
 const theme = createTheme({
   colors: {
@@ -94,6 +95,7 @@ const App = () => {
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </div>
+            <FooterSimple />
           </>
         )}
       </BrowserRouter>
