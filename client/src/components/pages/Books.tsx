@@ -210,30 +210,12 @@ const Books = (props: BooksProps) => {
     setEditBook(book);
   }
 
-  return (
-    <div>
-      <div className="Books-searchContainer">
-        <input
-          type="text"
-          placeholder="Search..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          onKeyUp={searchBook}
-          className="Books-input"
-        />
-      </div>
-      {renderDropdown()} {/* Render the dropdown here */}
-      {/* <div className="Books-searchContainer">
-        <FileUpload />
-      </div> */}
-      <div className="">
-        <div className="u-textCenter">
-          <h3>Your Library</h3>
-        </div>
+  const LibrarySection = (status) => {
+    return (
         <div className="library-container">
           {library.map((book, index) => {
             // console.log(book);
-            if (book.reader_id && book.reader_id == props.userId)
+            if (book.reader_id && book.reader_id == props.userId && book.status === status)
               return (
                 <div className="Books-card">
                   <LibraryCard userId={props.userId} book={book} key={book._id} />
@@ -282,6 +264,41 @@ const Books = (props: BooksProps) => {
             </div>
           }
         </div>
+    );
+}
+
+  return (
+    <div>
+      <div className="Books-searchContainer">
+        <input
+          type="text"
+          placeholder="Search..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          onKeyUp={searchBook}
+          className="Books-input"
+        />
+      </div>
+      {renderDropdown()} {/* Render the dropdown here */}
+      {/* <div className="Books-searchContainer">
+        <FileUpload />
+      </div> */}
+      <div className="">
+        <div className="u-textCenter">
+          <h3>Your Library</h3>
+        </div>
+        <div className="u-textCenter">
+          <h4>Read</h4>
+        </div>
+        {LibrarySection("read")}
+        <div className="u-textCenter">
+          <h4>Currently Reading</h4>
+        </div>
+        {LibrarySection("currently reading")}
+        <div className="u-textCenter">
+          <h4>Want to Read</h4>
+        </div>
+        {LibrarySection("want to read")}
       </div>
     </div>
   );

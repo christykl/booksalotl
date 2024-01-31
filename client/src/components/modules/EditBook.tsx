@@ -9,11 +9,11 @@ const EditBook = ({ item, onClose, datecb, ratingcb, genrecb, updatebook, status
   let thumbnail = item.cover;
     // item.volumeInfo && item.volumeInfo.imageLinks && item.volumeInfo.imageLinks.smallThumbnail;
   let today = new Date();
-  const [genre, setGenre] = useState<string>(""); 
-  const [date, setDate] = useState<string>(today.toString());
-  const [rating, setRating] = useState<number>(0);
+  const [genre, setGenre] = useState<string>(item.genre || ""); 
+  const [date, setDate] = useState<string>(item.dateread ? item.dateread.toString() : new Date().toString());
+  const [rating, setRating] = useState<number>(item.rating || 0);
+  const [status, setStatus] = useState<string>(item.status || "read");
   const [submit, setSubmit] = useState<boolean>(false); 
-  const [status, setStatus] = useState<string>("read");
 
   const handleSubmit = (event) => {
     event.preventDefault(); // Prevent default form submission behavior
@@ -68,7 +68,14 @@ const EditBook = ({ item, onClose, datecb, ratingcb, genrecb, updatebook, status
                 {status==="read" && (
                   <>
                     <label htmlFor="date">Date Completed:</label>
-                    <input type="date" min="1900-01-01" id="date" name="date" value={date.toString()} onChange={(e) => setDate(e.target.value)}/>
+                    <input
+                      type="date"
+                      min="1900-01-01"
+                      id="date"
+                      name="date"
+                      value={date.split('T')[0]} // Ensure format is compatible with input type=date
+                      onChange={(e) => setDate(e.target.value)}
+                    />
                   </>
                 )}
                 <br/>
