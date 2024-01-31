@@ -2,8 +2,8 @@
 
 import React, { useEffect, useState } from "react";
 import Genre from "./Genre";
+import { Rating } from "@mantine/core";
 import Status from "./Status";
-
 
 const EditBook = ({ item, onClose, datecb, ratingcb, genrecb, updatebook, statuscb }) => {
   let thumbnail = item.cover;
@@ -85,12 +85,8 @@ const EditBook = ({ item, onClose, datecb, ratingcb, genrecb, updatebook, status
                 <label htmlFor="genre">Genre:</label>
                 <Genre onChange={handleGenreChange} value={genre} />
                 <br/>
-                {status==="read" && (
-                  <>
-                    <label htmlFor="rating">Rating:</label>
-                    <input type="number" id="rating" name="rating" placeholder="Rating" value={rating} onChange={(e) => setRating(Number(e.target.value))}/>
-                  </>
-                )}
+                <label htmlFor="rating">Rating:</label>
+                <Rating value={rating} onChange={setRating} defaultValue={rating}/>
                 <br/>
                 <button type="submit">Update Book</button>
               </form>
