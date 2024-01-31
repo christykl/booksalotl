@@ -23,7 +23,7 @@ const Books = (props: BooksProps) => {
   const [genre, setGenre] = useState<string>("");
   const [date, setDate] = useState<Date>(new Date());
   const [rating, setRating] = useState<number>(0);
-  const [current, setCurrent] = useState<boolean>(false);
+  const [status, setStatus] = useState<string>("read");
   const [editBook, setEditBook] = useState<Book | null>(null);
 
   const genreCallback = (genreval) => {
@@ -38,9 +38,8 @@ const Books = (props: BooksProps) => {
     setRating(ratingval);
   };
 
-  const currentCallback = (currentval) => {
-    console.log(currentval);
-    setCurrent(currentval);
+  const statusCallback = (statusval) => {
+    setStatus(statusval);
   };
 
   const hasThumbnail = (book, key) => {
@@ -86,8 +85,6 @@ const Books = (props: BooksProps) => {
       alert("already in library");
       return;
     } else {
-      console.log(book);
-      console.log("adding lib,", current);
       post("/api/books", {
         title: book.volumeInfo.title,
         authors: book.volumeInfo.authors,
@@ -101,7 +98,7 @@ const Books = (props: BooksProps) => {
         published_date: book.volumeInfo.publishedDate,
         preview_link: book.volumeInfo.previewLink,
         description: book.volumeInfo.description,
-        current: current,
+        status: status,
       }).then((newBook) => {
         setLibrary([...library, newBook]);
         // setShowBookInfo(true);
@@ -126,7 +123,9 @@ const Books = (props: BooksProps) => {
       published_date: book.published_date,
       preview_link: book.preview_link,
       description: book.description,
-      current: current,
+      status: status,
+    }).then((newBook) => {
+      setLibrary([...library, newBook]);
     });
   };
 
@@ -267,7 +266,7 @@ const Books = (props: BooksProps) => {
                 genrecb={genreCallback} 
                 addbook={addBookToLibrary} 
                 dropdowncb={noDropdown} 
-                currentcb={currentCallback}/>
+                statuscb={statusCallback}/>
             </div>  
           )}
           {editBook &&
@@ -279,7 +278,7 @@ const Books = (props: BooksProps) => {
                 ratingcb={ratingCallback} 
                 genrecb={genreCallback} 
                 updatebook={updateBook} 
-                currentcb={currentCallback}/>
+                statuscb={statusCallback}/>
             </div>
           }
         </div>
