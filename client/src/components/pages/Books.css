@@ -207,3 +207,14 @@
 .Books-lineInnerContainer{
   width: 90%;
 }
+
+.books-emptyContainer {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+}
+
+.Books-emptyText{
+  margin-left: 20px;
+}

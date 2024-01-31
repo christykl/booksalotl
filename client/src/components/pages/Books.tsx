@@ -318,7 +318,14 @@ const sectionnames = ["Currently Reading", "Want to Read", "Read"];
                   </Badge>
                 </div>
               </div>
-              {LibrarySection(lib, sectionnames[index].toLowerCase())}
+              {lib.filter((book) => book.reader_id === props.userId).length == 0 && (
+              <div className="Books-emptyContainer">
+                <div className="Books-emptyText">
+                  <p>Nothing here yet! Add books to get started!</p>
+                </div>
+              </div>
+              )}
+              {lib.length != 0 && LibrarySection(lib, sectionnames[index].toLowerCase())}
             </>
           ))
         }

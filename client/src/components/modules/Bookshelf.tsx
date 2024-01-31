@@ -27,13 +27,22 @@ const Bookshelf = (props) => {
         </div>
       </div>
       
-      <div className="Books-container">
-        {props.books.map((book) => (
-          <div className="Books-card">
-            <LibraryCard book={book} userId={props.userId}/>
+      {props.books.length == 0 && (
+        <div className="Books-emptyContainer">
+          <div className="Books-emptyText">
+            <p>Nothing here yet! </p>
           </div>
-        ))}
-      </div>
+        </div>
+      )}
+      {(props.books.length > 0) && (
+        <div className="Books-container">
+          {props.books.map((book) => (
+            <div className="Books-card">
+              <LibraryCard book={book} userId={props.userId}/>
+            </div>
+          ))}
+        </div>
+      )}
     </>
   );
 }

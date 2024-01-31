@@ -174,7 +174,7 @@ const Profile = (props: ProfileProps) => {
             {currentBook.length > 0 ? (
               currentBook.map((book) => <LibraryCard userId={props.userId} book={book} />)
             ) : (
-              <p>none</p>
+              <p className="u-textCenter">you're currently not reading any books!</p>
             )}
           </p>
         </div>
@@ -187,7 +187,7 @@ const Profile = (props: ProfileProps) => {
             {favoriteBooks.length > 0 ? (
               favoriteBooks.map((book) => <LibraryCard userId={props.userId} book={book} />)
             ) : (
-              <p>none</p>
+              <p className="u-textCenter">you have not added any 5 star books! </p>
             )}
           </p>
         </div>
