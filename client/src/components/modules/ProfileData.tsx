@@ -14,6 +14,7 @@ import { get } from "../../utilities";
 import { Book } from "../../../../server/models/Book";
 import LibraryCard from "../modules/LibraryCard";
 import PagesGraph from "./PagesGraph";
+import GenreGraph from "./GenreGraph";
 
 const primaryColor = getComputedStyle(document.documentElement).getPropertyValue("--primary");
 const primaryDimColor = getComputedStyle(document.documentElement).getPropertyValue(
@@ -62,24 +63,6 @@ const ProfileData = (props: ProfileProps) => {
 
   useEffect(loadBooks, [library]);
 
-  /* Fiction vs. Nonfiction Pie Chart */
-  const fictionCount = bookData.filter((bookObj) => bookObj.genre === "fiction").length;
-  const nonficCount = bookData.filter((bookObj) => bookObj.genre === "non-fiction").length;
-  const otherCount = bookData.filter(
-    (bookObj) => bookObj.genre !== "fiction" && bookObj.genre !== "non-fiction"
-  ).length;
-
-  const ficData = {
-    labels: ["Fiction", "Nonfiction", "Other"],
-    datasets: [
-      {
-        data: [fictionCount, nonficCount, otherCount],
-        backgroundColor: [primaryColor, primaryDimColor, greyColor],
-        hoverOffset: 4,
-      },
-    ],
-  };
-
   const shortCount = bookData.filter((bookObj) => bookObj.pages < 200).length;
   const mediumCount = bookData.filter(
     (bookObj) => bookObj.pages >= 200 && bookObj.pages < 400
@@ -121,15 +104,15 @@ const ProfileData = (props: ProfileProps) => {
   return (
     <div className="Profile-flexContainer">
       <div className="Profile-chartContainer">
-        <p className="Profile-chartHeader u-subheader">Fiction vs. Nonfiction</p>
-        <Doughnut className="Profile-chartSubContainer" data={ficData} />
+        <p className="Profile-chartHeader u-subheader">Your Top Genres</p>
+        <GenreGraph bookData={bookData}/>
       </div>
       <div className="Profile-chartContainer">
         <p className="Profile-chartHeader u-subheader">Book Length</p>
         <Doughnut className="Profile-chartSubContainer" data={lengthData} />
       </div>
       <div className="Profile-chartContainer">
-        <p className="Profile-chartHeader u-subheader">Pages Read</p>
+        <p className="Profile-chartHeader u-subheader">Year-to-Date Pages Read</p>
         <PagesGraph bookData={bookData}/>
       </div>
     </div>

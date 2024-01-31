@@ -66,24 +66,6 @@ const Profile = (props: ProfileProps) => {
 
   useEffect(loadBooks, [library]);
 
-  /* Fiction vs. Nonfiction Pie Chart */
-  const fictionCount = bookData.filter((bookObj) => bookObj.genre === "fiction").length;
-  const nonficCount = bookData.filter((bookObj) => bookObj.genre === "non-fiction").length;
-  const otherCount = bookData.filter(
-    (bookObj) => bookObj.genre !== "fiction" && bookObj.genre !== "non-fiction"
-  ).length;
-
-  const ficData = {
-    labels: ["Fiction", "Nonfiction", "Other"],
-    datasets: [
-      {
-        data: [fictionCount, nonficCount, otherCount],
-        backgroundColor: [primaryColor, primaryDimColor, greyColor],
-        hoverOffset: 4,
-      },
-    ],
-  };
-
   const shortCount = bookData.filter((bookObj) => bookObj.pages < 200).length;
   const mediumCount = bookData.filter(
     (bookObj) => bookObj.pages >= 200 && bookObj.pages < 400
@@ -180,7 +162,7 @@ const Profile = (props: ProfileProps) => {
           </div>
 
           <div className="Profile-histoContainer">
-            <p className="Profile-chartHeader u-subheader">Pages Read</p>
+            <p className="Profile-chartHeader u-subheader">Year-to-Date Pages Read</p>
             <PagesGraph bookData={bookData}/>
           </div>
 
