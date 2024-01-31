@@ -130,7 +130,7 @@ const Blends = (props: BlendsProps) => {
               </Badge>
             </div>
           </div>
-          <div className="library-container">
+          <div className="Blends-profile-container">
             <ProfileData userId={selfid} />
           </div>
         </div>
@@ -147,7 +147,7 @@ const Blends = (props: BlendsProps) => {
               </Badge>
             </div>
           </div>
-          <div className="library-container">
+          <div className="Blends-profile-container">
             <ProfileData userId={id!} />
           </div>
         </div>
