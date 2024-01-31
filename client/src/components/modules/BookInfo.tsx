@@ -55,8 +55,8 @@ const BookInfo = ({ item, onClose, datecb, ratingcb, genrecb, addbook, dropdownc
           <div className="inner-box">
             <img src={thumbnail} alt="" />
             <div className="info">
-              <h2>{item.volumeInfo.title}</h2>
-              <h3>{item.volumeInfo.authors}</h3>
+              <h3>{item.volumeInfo.title}</h3>
+              <h4>{item.volumeInfo.authors}</h4>
               <h5>
                 {item.volumeInfo.publisher}
                 <span>{item.volumeInfo.published_date}</span>

@@ -14,7 +14,7 @@ const Modal = ({ show, item, onClose, userId }) => {
           <div className="inner-box">
             <img src={thumbnail} alt="" />
             <div className="info">
-              <h2>{item.title}</h2>
+              <h4>{item.title}</h4>
               <h4>{item.authors}</h4>
               <h5>
                 {item.publisher}

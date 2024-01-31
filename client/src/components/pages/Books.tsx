@@ -25,6 +25,7 @@ const Books = (props: BooksProps) => {
   const [rating, setRating] = useState<number>(0);
   const [current, setCurrent] = useState<boolean>(false);
   const [editBook, setEditBook] = useState<Book | null>(null);
+  const [searchSubmit, setSearchSubmit] = useState<boolean>(false);
 
   const genreCallback = (genreval) => {
     setGenre(genreval);
@@ -64,8 +65,15 @@ const Books = (props: BooksProps) => {
           setShowDropdown(true); // Show the dropdown
         })
         .catch((err) => console.log(err));
+      if (searchSubmit) {
+        setSearchSubmit(false);
+      }
     }
   };
+
+  useEffect(() => {
+    if (searchSubmit) searchBook(search);
+  }, [searchSubmit]);
 
   const checkLibrary = (book) => {
     if (library.length > 0) {
@@ -206,14 +214,19 @@ const Books = (props: BooksProps) => {
   return (
     <div>
       <div className="Books-searchContainer">
-        <input
-          type="text"
-          placeholder="Search..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          onKeyUp={searchBook}
-          className="Books-input"
-        />
+        <form>
+          <input
+            type="text"
+            placeholder="Search..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            onKeyUp={searchBook}
+            className="Books-input"
+          />
+          <button className="Books-button" type="submit" onSubmit={() => setSearchSubmit(true)}>
+            enter
+          </button>
+        </form>
       </div>
       {renderDropdown()} {/* Render the dropdown here */}
       {/* <div className="Books-searchContainer">
@@ -230,23 +243,24 @@ const Books = (props: BooksProps) => {
               return (
                 <div className="Books-card">
                   <LibraryCard userId={props.userId} book={book} key={book._id} />
-                  <div></div>
-                  <button
-                    className="Books-button"
-                    onClick={() => {
-                      removeBook(book);
-                    }}
-                  >
-                    Remove
-                  </button>
-                  <button
-                    className="Books-button"
-                    onClick={() => {
-                      setEditBook(book);
-                    }}
-                  >
-                    Edit
-                  </button>
+                  <div>
+                    <button
+                      className="Books-button"
+                      onClick={() => {
+                        removeBook(book);
+                      }}
+                    >
+                      Remove
+                    </button>
+                    <button
+                      className="Books-button"
+                      onClick={() => {
+                        setEditBook(book);
+                      }}
+                    >
+                      Edit
+                    </button>
+                  </div>
                 </div>
               );
           })}

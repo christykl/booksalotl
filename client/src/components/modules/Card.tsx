@@ -19,7 +19,7 @@ const Card = ({ book }) => {
         >
           <img src={thumbnail} alt="" />
           <div className="bottom">
-            <h4 className="title">{book.volumeInfo.title}</h4>
+            <h2 className="title">{book.volumeInfo.title}</h2>
             <h5 className="title">{book.volumeInfo.authors}</h5>
           </div>
         </div>
