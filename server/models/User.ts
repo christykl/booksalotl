@@ -4,6 +4,7 @@ const UserSchema = new Schema({
   name: String,
   googleid: String,
   user_id: String,
+  blends: [String],
 });
 
 export interface User extends Document {
@@ -11,6 +12,7 @@ export interface User extends Document {
   googleid: string;
   user_id: string;
   _id: string;
+  blends: [string];
 }
 
 const UserModel = model<User>("User", UserSchema);

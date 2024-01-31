@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import jwt_decode from "jwt-decode";
 import { CredentialResponse } from "@react-oauth/google";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, useParams } from "react-router-dom";
 
 import { get, post } from "../utilities";
 import NotFound from "./pages/NotFound";
@@ -9,13 +9,16 @@ import Home from "./pages/Home";
 import NavBar from "./modules/NavBar";
 import Profile from "./pages/Profile";
 import { socket } from "../client-socket";
-import User from "../../../shared/User";
+// import User from "../../../shared/User";
 import "../utilities.css";
 import Friends from "./pages/Friends";
+import Blends from "./pages/Blends";
 import { MantineProvider, createTheme } from "@mantine/core";
 import "@mantine/core/styles.css"; // Import Mantine styles
 import Books from "./pages/Books";
 import { FooterSimple } from "./modules/Footer";
+import { User } from "../../../server/models/User";
+import BlendsRoute from "./BlendsRoute";
 
 const theme = createTheme({
   colors: {
@@ -90,7 +93,8 @@ const App = () => {
                 {/* <Route path="/" element={} /> */}
                 <Route path="/profile/" element={<Profile userId={userId} />} />
                 <Route path="/my-books/" element={<Books userId={userId} />} />
-                <Route path="/friends/" element={<Friends userId={userId} />} />
+                <Route path="/blends/" element={<Friends userId={userId} />} />
+                <Route path="/blends/:id" element={<BlendsRoute userId={userId} />} />
                 <Route path="/" element={<Profile userId={userId} />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
