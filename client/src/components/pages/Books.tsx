@@ -7,6 +7,7 @@ import LibraryCard from "../modules/LibraryCard";
 import { Book } from "../../../../server/models/Book";
 import { remove } from "../../utilities";
 import BookInfo from "../modules/BookInfo";
+import EditBook from "../modules/EditBook";
 import useOutsideClick from "../modules/OutsideClick";
 
 type BooksProps = {
@@ -23,6 +24,7 @@ const Books = (props: BooksProps) => {
   const [date, setDate] = useState<Date>(new Date());
   const [rating, setRating] = useState<number>(0);
   const [current, setCurrent] = useState<boolean>(false);
+  const [editBook, setEditBook] = useState<Book | null>(null);
 
   const genreCallback = (genreval) => {
     setGenre(genreval);
@@ -110,14 +112,39 @@ const Books = (props: BooksProps) => {
     }
   };
 
-  const closeBookInfo = () => {
+  const addFromEdit = (book) => {
+    post("/api/books", {
+      title: book.title,
+      authors: book.authors,
+      isbn: book.isbn,
+      pages: book.pages,
+      dateread: date,
+      cover: book.cover,
+      rating: rating,
+      genre: genre,
+      publisher: book.publisher,
+      published_date: book.published_date,
+      preview_link: book.preview_link,
+      description: book.description,
+      current: current,
+    }).then((newBook) => {
+      setLibrary([...library, newBook]);
+    });
+    setToShow(null);
+  };
+
+  const closeBookInfo = () => { 
     console.log("close book info");
     setToShow(null);
     // setShowBookInfo(false);
   };
 
-  // const renderDropdown = () => {
-  //   if (!showDropdown) return null;
+  const closeEditBook = () => {
+    setEditBook(null);
+  }
+
+  const renderDropdown = () => {
+    if (!showDropdown) return null;
 
   //   return (
   //     <div className="dropdown">
@@ -181,6 +208,15 @@ const Books = (props: BooksProps) => {
     );
   };
 
+  const updateBook = (item) => {
+    removeBook(item);
+    addFromEdit(item);
+  }
+
+  const handleEditBook = (book) => { 
+    setEditBook(book);
+  }
+
   return (
     <div>
       <div className="Books-searchContainer">
@@ -216,23 +252,42 @@ const Books = (props: BooksProps) => {
                   >
                     Remove
                   </button>
+                  <button
+                    className="Books-button"
+                    onClick={() => {
+                      setEditBook(book);
+                    }}
+                  >
+                    Edit
+                  </button>
                 </div>
               );
           })}
           {toShow && (
             <div className="overlay">
-              <BookInfo
-                onClose={closeBookInfo}
-                item={toShow}
-                datecb={dateCallback}
-                ratingcb={ratingCallback}
-                genrecb={genreCallback}
-                addbook={addBookToLibrary}
-                dropdowncb={noDropdown}
-                currentcb={currentCallback}
-              />
+              <BookInfo 
+                onClose={closeBookInfo} 
+                item={toShow} 
+                datecb={dateCallback} 
+                ratingcb={ratingCallback} 
+                genrecb={genreCallback} 
+                addbook={addBookToLibrary} 
+                dropdowncb={noDropdown} 
+                currentcb={currentCallback}/>
+            </div>  
+          }
+          {editBook &&
+            <div className="overlay">
+              <EditBook 
+                onClose={closeEditBook} 
+                item={editBook} 
+                datecb={dateCallback} 
+                ratingcb={ratingCallback} 
+                genrecb={genreCallback} 
+                updatebook={updateBook} 
+                currentcb={currentCallback}/>
             </div>
-          )}
+          }
         </div>
       </div>
     </div>

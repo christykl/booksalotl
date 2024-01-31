@@ -20,8 +20,8 @@ const LibraryCard = ({ book, userId }) => {
         >
           <img src={thumbnail} alt="" />
           <div className="bottom">
-            <h3 className="title">{book.title}</h3>
-            <h4 className="subtitle">{book.authors}</h4>
+            <h4 className="title">{book.title}</h4>
+            <h5 className="subtitle">{book.authors}</h5>
           </div>
         </div>
         <Modal userId={userId} show={show} item={bookItem} onClose={() => setShow(false)} />
