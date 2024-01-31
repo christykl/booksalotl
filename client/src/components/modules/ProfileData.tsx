@@ -78,6 +78,24 @@ const ProfileData = (props: ProfileProps) => {
     ],
   };
 
+  const shortCount = bookData.filter((bookObj) => bookObj.pages < 200).length;
+  const mediumCount = bookData.filter(
+    (bookObj) => bookObj.pages >= 200 && bookObj.pages < 400
+  ).length;
+  const longCount = bookData.filter((bookObj) => bookObj.pages >= 400).length;
+
+  const lengthData = {
+    labels: ["short", "medium", "long"],
+    datasets: [
+      {
+        data: [shortCount, mediumCount, longCount],
+        backgroundColor: [primaryColor, primaryDimColor, greyColor],
+        hoverOffset: 4,
+      },
+    ]
+  }
+
+
   const createPagesData = () => {
     /* Total Pages Read Line Graph */
     // const bookCopy: Book[] = bookData.slice();
@@ -165,7 +183,11 @@ const ProfileData = (props: ProfileProps) => {
     <div className="Profile-flexContainer">
       <div className="Profile-chartContainer">
         <p className="Profile-chartHeader u-subheader">Fiction vs. Nonfiction</p>
-        <Pie className="Profile-chartSubContainer" data={ficData} />
+        <Doughnut className="Profile-chartSubContainer" data={ficData} />
+      </div>
+      <div className="Profile-chartContainer">
+        <p className="Profile-chartHeader u-subheader">Book Length</p>
+        <Doughnut className="Profile-chartSubContainer" data={lengthData} />
       </div>
       <div className="Profile-chartContainer">
         <p className="Profile-chartHeader u-subheader">Pages Read</p>
@@ -179,12 +201,6 @@ const ProfileData = (props: ProfileProps) => {
           options={{
             maintainAspectRatio: true,
             scales: {
-              // x: {
-              //   type: 'time',
-              //   time: {
-              //     unit: 'month',
-              //   }
-              // },
               y: {
                 beginAtZero: true,
               },

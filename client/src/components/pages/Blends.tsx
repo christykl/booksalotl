@@ -52,13 +52,6 @@ const Blends = (props: BlendsProps) => {
     });
   }, []);
 
-  // const getUsername2 = () => {
-  //   for (let i = 0; i < userLibrary.length; i++) {
-  //     if (userLibrary[i]._id === id) {
-  //       setUsername2(userLibrary[i].name);
-  //     };
-  //   };
-  // };
 
   return (
     <div>
