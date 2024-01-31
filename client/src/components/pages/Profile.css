@@ -90,10 +90,10 @@
   font-style: italic;
   color: var(--white);
   border-width: 2px;
-  border-color: var(--green);
+  border-color: var(--primary--dim);
   border-style: dotted;
   border-radius: 10px;
-  background-color: var(--green);
+  background-color: var(--primary--dim);
 }
 
 .Profile-button:hover {
@@ -104,7 +104,7 @@
   border-color: var(--white);
   border-style: dotted;
   border-radius: 10px;
-  background-color: var(--green);
+  background-color: var(--primary);
 }
 
 .Profile-dataContainer {

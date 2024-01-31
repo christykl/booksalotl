@@ -9,7 +9,7 @@ import { remove } from "../../utilities";
 import BookInfo from "../modules/BookInfo";
 import EditBook from "../modules/EditBook";
 import useOutsideClick from "../modules/OutsideClick";
-import { FaTrashAlt } from "react-icons/fa";
+import { FaTrashAlt, FaPencilAlt } from "react-icons/fa";
 
 
 type BooksProps = {
@@ -233,10 +233,10 @@ const Books = (props: BooksProps) => {
                       <FaTrashAlt />
                     </button>
                     <button
-                      className="Books-button"
+                      className="edit-button"
                       onClick={() => setEditBook(book)}
                     >
-                      Edit
+                      <FaPencilAlt />
                     </button>
                   </div>
                 </div>
