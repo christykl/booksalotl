@@ -2,7 +2,8 @@
 
 import React, { useEffect, useState } from "react";
 import Genre from "./Genre";
-
+import { Rating } from "@mantine/core";
+// import Rating from "./Rating";
 
 const EditBook = ({ item, onClose, datecb, ratingcb, genrecb, updatebook, currentcb }) => {
   let thumbnail = item.cover;
@@ -40,6 +41,10 @@ const EditBook = ({ item, onClose, datecb, ratingcb, genrecb, updatebook, curren
     setGenre(event.target.value);
   };
 
+  // const handleRatingChange = (event) => {
+  //   setRating(event.target.value == undefined ? 0 : Number(event.target.value));
+  // }
+
   useEffect(() => {
     currentcb(current);
   }, [current]);
@@ -73,7 +78,7 @@ const EditBook = ({ item, onClose, datecb, ratingcb, genrecb, updatebook, curren
                 <Genre onChange={handleGenreChange} value={genre} />
                 <br/>
                 <label htmlFor="rating">Rating:</label>
-                <input type="number" id="rating" name="rating" placeholder="Rating" value={rating} onChange={(e) => setRating(Number(e.target.value))}/>  
+                <Rating value={rating} onChange={setRating} defaultValue={rating}/>
                 <br/>
                 <button type="submit">Update Book</button>
               </form>
