@@ -127,10 +127,7 @@ const Books = (props: BooksProps) => {
       preview_link: book.preview_link,
       description: book.description,
       current: current,
-    }).then((newBook) => {
-      setLibrary([...library, newBook]);
     });
-    setToShow(null);
   };
 
   const closeBookInfo = () => { 
@@ -194,9 +191,20 @@ const Books = (props: BooksProps) => {
     );
   };
 
-  const updateBook = (item) => {
-    removeBook(item);
-    addFromEdit(item);
+  const updateBook = (updatedBook) => {
+    const bookIndex = library.findIndex(book => book._id === updatedBook._id);
+  
+    // Create a new array with the updated book
+    const updatedLibrary = [...library];
+    updatedLibrary[bookIndex] = updatedBook;
+
+    // Update the state
+    setLibrary(updatedLibrary);
+
+    // Close the edit book overlay
+    setEditBook(null);
+    addFromEdit(updatedBook);
+    remove("/api/books/", { id: updatedBook._id });
   }
 
   const handleEditBook = (book) => { 
