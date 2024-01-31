@@ -1,12 +1,13 @@
 .Home-container {
-  background-image: url("../../public/home_background_image.png");
+  /* background-image: url("../../public/home_background_image.png"); */
+  background-color: var(--primary);
   border: solid;
   border-width: 8px;
   border-color: var(--white);
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
-  height: 800px; /* Ensure the background covers the entire viewport height */
+  height: 70vh; /* Ensure the background covers the entire viewport height */
   display: flex;
   flex-flow: row wrap;
   /* align-items: center; */
