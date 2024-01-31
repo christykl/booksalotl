@@ -10,6 +10,7 @@ import BookInfo from "../modules/BookInfo";
 import EditBook from "../modules/EditBook";
 import useOutsideClick from "../modules/OutsideClick";
 import { FaTrashAlt, FaPencilAlt } from "react-icons/fa";
+import { Badge } from "@mantine/core";
 
 
 type BooksProps = {
@@ -301,11 +302,21 @@ const sectionnames = ["Currently Reading", "Want to Read", "Read"];
         <div className="u-textCenter">
           <h3>Your Library</h3>
         </div>
+        <br/>
         {
           threeLib.map((lib, index) => (
             <>
               <div className="u-textCenter">
-                <h4>{sectionnames[index]}</h4>
+                <div className="Books-lineOuterContainer">
+                  <div className="Books-lineInnerContainer">
+                    <hr></hr>
+                  </div>
+                </div>
+                <div className="Books-badgeContainer">
+                  <Badge variant="filled" size="xl">
+                    {sectionnames[index]}
+                  </Badge>
+                </div>
               </div>
               {LibrarySection(lib, sectionnames[index].toLowerCase())}
             </>
