@@ -1,6 +1,7 @@
 .SingleFriend-container {
   background-color: var(--green);
   width: 25%;
+  height: 40%;
   padding: 20px;
   display: flex;
   align-items: center;
