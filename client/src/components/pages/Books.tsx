@@ -300,7 +300,7 @@ const sectionnames = ["Currently Reading", "Want to Read", "Read"];
       </div> */}
       <div className="">
         <div className="u-textCenter">
-          <h3>Your Library</h3>
+          <h2>Your Library</h2>
         </div>
         <br/>
         {
