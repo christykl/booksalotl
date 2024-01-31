@@ -50,21 +50,41 @@ const Books = (props: BooksProps) => {
     }
   };
 
-  const searchBook = (evt) => {
-    if (evt.key === "Enter") {
-      axios
-        .get(
-          "https://www.googleapis.com/books/v1/volumes?q=" +
-            search +
-            "&key=AIzaSyDjnJHbxfCAqhtxJr1YYzleaQGQB8MdbEA&maxResults=10"
-        )
-        .then((res) => {
-          setSearchResults(res.data.items.filter(hasThumbnail));
-          setShowDropdown(true); // Show the dropdown
-        })
-        .catch((err) => console.log(err));
-    }
+  const searchBook = () => {
+    axios
+      .get(`https://www.googleapis.com/books/v1/volumes?q=${search}&key=AIzaSyDjnJHbxfCAqhtxJr1YYzleaQGQB8MdbEA&maxResults=10`)
+      .then((res) => {
+        setSearchResults(res.data.items.filter(hasThumbnail));
+        setShowDropdown(true);
+      })
+      .catch((err) => console.log(err));
   };
+  
+
+  // const searchBook = (evt) => {
+  //   if (evt.key === "Enter") {
+  //     axios
+  //       .get(
+  //         "https://www.googleapis.com/books/v1/volumes?q=" +
+  //           search +
+  //           "&key=AIzaSyDjnJHbxfCAqhtxJr1YYzleaQGQB8MdbEA&maxResults=10"
+  //       )
+  //       .then((res) => {
+  //         setSearchResults(res.data.items.filter(hasThumbnail));
+  //         setShowDropdown(true); // Show the dropdown
+  //       })
+  //       .catch((err) => console.log(err));
+  //     if (searchSubmit) {
+  //       setSearchSubmit(false);
+  //     }
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   if (searchSubmit) {
+  //     searchBook(search);
+  //   }
+  // }, [searchSubmit]);
 
   const checkLibrary = (book) => {
     if (library.length > 0) {
@@ -129,15 +149,21 @@ const Books = (props: BooksProps) => {
     });
   };
 
-  const closeBookInfo = () => { 
+  const closeBookInfo = () => {
     console.log("close book info");
     setToShow(null);
     // setShowBookInfo(false);
   };
 
+  const handleFormSubmit = (event) => {
+    event.preventDefault(); // Prevents the default form submit action
+    searchBook(); // Directly call the search function
+  };  
+  
+
   const closeEditBook = () => {
     setEditBook(null);
-  }
+  };
 
   const bookInfoPopup = (book) => {
     setToShow(book);
@@ -169,7 +195,7 @@ const Books = (props: BooksProps) => {
   };
 
   const dropdownRef = useRef(null);
-  
+
   useOutsideClick(dropdownRef, () => {
     if (toShow === null) {
       setShowDropdown(false);
@@ -205,10 +231,10 @@ const Books = (props: BooksProps) => {
     addFromEdit(updatedBook);
     remove("/api/books/", { id: updatedBook._id });
   }
-
-  const handleEditBook = (book) => { 
+  const handleEditBook = (book) => {
     setEditBook(book);
-  }
+  };
+
 
   const LibrarySection = (status) => {
     return (
@@ -219,22 +245,24 @@ const Books = (props: BooksProps) => {
               return (
                 <div className="Books-card">
                   <LibraryCard userId={props.userId} book={book} key={book._id} />
-                  <button
-                    className="Books-button"
-                    onClick={() => {
-                      removeBook(book);
-                    }}
-                  >
-                    Remove
-                  </button>
-                  <button
-                    className="Books-button"
-                    onClick={() => {
-                      setEditBook(book);
-                    }}
-                  >
-                    Edit
-                  </button>
+                  <div>
+                    <button
+                      className="Books-button"
+                      onClick={() => {
+                        removeBook(book);
+                      }}
+                    >
+                      Remove
+                    </button>
+                    <button
+                      className="Books-button"
+                      onClick={() => {
+                        setEditBook(book);
+                      }}
+                    >
+                      Edit
+                    </button>
+                  </div>
                 </div>
               );
           })}
@@ -251,7 +279,7 @@ const Books = (props: BooksProps) => {
                 statuscb={statusCallback}/>
             </div>  
           )}
-          {editBook &&
+          {editBook && (
             <div className="overlay">
               <EditBook 
                 onClose={closeEditBook} 
@@ -262,7 +290,7 @@ const Books = (props: BooksProps) => {
                 updatebook={updateBook} 
                 statuscb={statusCallback}/>
             </div>
-          }
+          )}
         </div>
     );
 }

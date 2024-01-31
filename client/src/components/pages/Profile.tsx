@@ -29,7 +29,7 @@ const Profile = (props: ProfileProps) => {
   const [bookData, setBookData] = useState<Book[]>([]);
   const [username, setUsername] = useState<string>("Janelle Cai");
   const [numBlends, setNumBlends] = useState<number>(0);
-  const [library, setLibrary] = useState<Book[]>([]); 
+  const [library, setLibrary] = useState<Book[]>([]);
   const [currentBook, setCurrentBook] = useState<Book[]>([]);
   const [lifetimePages, setLifetimePages] = useState<number>(0);
   const [favoriteBooks, setFavoriteBooks] = useState<Book[]>([]);
@@ -37,14 +37,13 @@ const Profile = (props: ProfileProps) => {
   const [id, setId] = useState<string>("Janelle Cai");
 
   useEffect(() => {
-    get("/api/whoami")
-      .then((user: User) => {
-        if (user._id) {
-          setUsername(user.name);
-          setId(user._id);
-          setNumBlends(user.blends.length);
-        }
-      })
+    get("/api/whoami").then((user: User) => {
+      if (user._id) {
+        setUsername(user.name);
+        setId(user._id);
+        setNumBlends(user.blends.length);
+      }
+    });
   }, []);
 
   useEffect(() => {
@@ -97,9 +96,8 @@ const Profile = (props: ProfileProps) => {
         backgroundColor: [primaryColor, primaryDimColor, greyColor],
         hoverOffset: 4,
       },
-    ]
-  }
-
+    ],
+  };
 
   const createPagesData = () => {
     /* Total Pages Read Line Graph */
@@ -192,11 +190,10 @@ const Profile = (props: ProfileProps) => {
 
   const link = "https://bookblendr-7aw5.onrender.com/blends/" + id;
 
-
   const navigate = useNavigate();
 
   const handleEditClick = () => {
-    navigate('/my-books');
+    navigate("/my-books");
   };
 
   return (
@@ -208,11 +205,12 @@ const Profile = (props: ProfileProps) => {
         </div>
         <div className="Profile-subContainer">
           <button
+            className="Profile-button"
             onClick={() => {
               navigator.clipboard.writeText(link);
             }}
           >
-            Copy custom blend link
+            custom blend link
           </button>
         </div>
         <div className="Profile-subContainer">
@@ -223,63 +221,66 @@ const Profile = (props: ProfileProps) => {
           <p className="Profile-subhead u-subheader">Lifetime Pages Read</p>
           <p className="Profile-content u-subheader">{lifetimePages}</p>
         </div>
+      </div>
+
+      <div className="Profile-dataContainer">
         <div className="Profile-subContainer">
-          <p className="Profile-subhead u-subheader">Currently Reading</p>
+          <button className="Profile-button Profile-subhead" onClick={handleEditClick}>
+            currently reading
+          </button>
           <p className="Profile-content u-subheader Profile-bookContainer">
-            <button onClick={handleEditClick}>Edit</button>
-            { currentBook.length > 0 ? (
-              currentBook.map((book) => (
-                <LibraryCard
-                  userId={props.userId}
-                  book={book}
-                />
-              ))) : (<p>none</p>)
-            }
+            {currentBook.length > 0 ? (
+              currentBook.map((book) => <LibraryCard userId={props.userId} book={book} />)
+            ) : (
+              <p>none</p>
+            )}
           </p>
         </div>
         <div className="Profile-subContainer">
-          <p className="Profile-subhead u-subheader">Favorites</p>
+          <button className="Profile-button Profile-subhead" onClick={handleEditClick}>
+            favorites
+          </button>
           <p className="Profile-content u-subheader Profile-bookContainer">
             {/* <button onClick={handleEditClick}>Edit</button> */}
-            { favoriteBooks.length > 0 ? (
-              favoriteBooks.map((book) => (
-                <LibraryCard
-                  userId={props.userId}
-                  book={book}
-                />
-              ))) : (<p>none</p>)
-            }
+            {favoriteBooks.length > 0 ? (
+              favoriteBooks.map((book) => <LibraryCard userId={props.userId} book={book} />)
+            ) : (
+              <p>none</p>
+            )}
           </p>
         </div>
-      </div>
-      <div className="Profile-chartContainer">
-        <p className="Profile-chartHeader u-subheader">Fiction vs. Nonfiction</p>
-        <Doughnut className="Profile-chartSubContainer" data={ficData} />
-      </div>
 
-      <div className="Profile-chartContainer">
-        <p className="Profile-chartHeader u-subheader">Book Length</p>
-        <Doughnut className="Profile-chartSubContainer" data={lengthData} />
-      </div>
+        <div className="Profile-horizontalContainer">
+          <div className="Profile-chartContainer">
+            <p className="Profile-chartHeader u-subheader">Fiction vs. Nonfiction</p>
+            <Doughnut className="Profile-chartSubContainer" data={ficData} />
+          </div>
 
-      <div className="Profile-chartContainer">
-        <p className="Profile-chartHeader u-subheader">Pages Read</p>
-        <Bar
-          className="Profile-chartSubContainer"
-          data={createPagesData()}
-          style={{
-            width: 650,
-            height: 2000,
-          }}
-          options={{
-            maintainAspectRatio: true,
-            scales: {
-              y: {
-                beginAtZero: true,
+          <div className="Profile-chartContainer">
+            <p className="Profile-chartHeader u-subheader">Book Length</p>
+            <Doughnut className="Profile-chartSubContainer" data={lengthData} />
+          </div>
+        </div>
+
+        <div className="Profile-histoContainer">
+          <p className="Profile-chartHeader u-subheader">Pages Read</p>
+          <Bar
+            className="Profile-chartSubContainer"
+            data={createPagesData()}
+            style={{
+              width: 480,
+              height: 400,
+            }}
+            options={{
+              maintainAspectRatio: true,
+              scales: {
+                y: {
+                  beginAtZero: true,
+                },
               },
-            },
-          }}
-        />
+            }}
+          />
+        </div>
       </div>
     </div>
   );
