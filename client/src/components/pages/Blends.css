@@ -8,11 +8,16 @@
 }
 
 .Blends-header {
-  background-color: var(--primary--dim);
+  /* background-color: var(--white); */
   padding: 20px;
-  color: white;
+  color: var(--primary--dim);
   text-align: center;
   width: fit-content;
   border-radius: 20px;
+  /* border-color: var(--primary--dim); */
   font-size: large;
+}
+
+.Blends-bookshelf-container {
+  justify-content: center;
 }

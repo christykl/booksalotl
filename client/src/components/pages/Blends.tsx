@@ -35,10 +35,17 @@ const Blends = (props: BlendsProps) => {
         setSelfID(user._id);
         setUsername(user.name);
       }
-      setIsLoading(false);
     });
   }, []);
 
+  useEffect(() => {
+    if (selfid && library.length > 0 && username2 !== "" && username !== "" && id) {
+      setIsLoading(false);
+    } else {
+      setIsLoading(true);
+    }
+  }, [selfid, library, username2, username, id]);
+  
   useEffect(() => {
     get("/api/users").then((users: User[]) => {
       setUserLibrary(users);
@@ -94,36 +101,40 @@ const Blends = (props: BlendsProps) => {
     setBothBooks(library.filter((book) => bothLike.includes(book)));
   }, [lib1, lib2]);
 
-  return (
-    <div>
-      <div className="Blends-container">
-        <div className="Blends-header u-textCenter">
-          <h2>{username} and {username2}'s Blend</h2>
+  if (isLoading) {
+    return <div>Loading...</div>
+  }
+  else {
+    return (
+      <div>
+        <div className="Blends-container">
+          <div className="Blends-header u-textCenter">
+            <h2>{username} and {username2}'s Blend</h2>
+          </div>
         </div>
-      </div>
-      <Bookshelf userId={id!} title="Books you both want to read" books={bothWantBooks} />
-      <Bookshelf userId={id!} title="Books you both enjoyed" books={bothBooks} />
-      <div className="Blend-split-container">
-        <div>
-        <div className="u-textCenter">
-          <h3>{username}'s Profile</h3>
-        </div>
-        <div className="library-container">
-          {isLoading ? <div>Loading...</div> : <ProfileData userId={selfid} />}
-        </div>
+        <div className="Blends-bookshelf-container">
+          <Bookshelf userId={id!} title="Books you both want to read" books={bothWantBooks} />
+          <Bookshelf userId={id!} title="Books you both enjoyed" books={bothBooks} />
         </div>
         <div>
-        <div className="u-textCenter">
-          <h3>{username2}'s Profile</h3>
+          <div className="u-textCenter">
+            <h3>{username}'s Profile</h3>
+          </div>
+          <div className="library-container">
+            <ProfileData userId={selfid} />
+          </div>
         </div>
-        <div className="library-container">
-          <ProfileData userId={id!} />
-        </div>
+        <div>
+          <div className="u-textCenter">
+            <h3>{username2}'s Profile</h3>
+          </div>
+          <div className="library-container">
+            <ProfileData userId={id!} />
+          </div>
         </div>
       </div>
-      
-    </div>
-  );
+    );
+  }
 };
 
 export default Blends;
