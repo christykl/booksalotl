@@ -7,7 +7,7 @@ import { User } from "../../../../server/models/User";
 import { Book } from "../../../../server/models/Book";
 import "./Books.css";
 import "./Profile.css";
-import Profile from "./Profile";
+import ProfileData from "../modules/ProfileData";
 
 type BlendsProps = {
   userId: string;
@@ -66,13 +66,13 @@ const Blends = (props: BlendsProps) => {
         <h3>{username}'s Profile</h3>
       </div>
       <div className="library-container">
-        <Profile userId={selfid} />
+        <ProfileData userId={selfid} />
       </div>
       <div className="u-textCenter">
         <h3>{username2}'s Profile</h3>
       </div>
       <div className="library-container">
-        <Profile userId={id!} />
+        <ProfileData userId={id!} />
       </div>
     </div>
   );
