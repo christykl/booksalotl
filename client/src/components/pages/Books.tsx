@@ -134,14 +134,7 @@ const Books = (props: BooksProps) => {
   const closeBookInfo = () => {
     console.log("close book info");
     setToShow(null);
-    // setShowBookInfo(false);
   };
-
-  const handleFormSubmit = (event) => {
-    event.preventDefault(); // Prevents the default form submit action
-    searchBook(); // Directly call the search function
-  };  
-  
 
   const closeEditBook = () => {
     setEditBook(null);
