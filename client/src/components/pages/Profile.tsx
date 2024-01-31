@@ -32,6 +32,7 @@ const Profile = (props: ProfileProps) => {
   const [library, setLibrary] = useState<Book[]>([]); 
   const [currentBook, setCurrentBook] = useState<Book[]>([]);
   const [lifetimePages, setLifetimePages] = useState<number>(0);
+  const [favoriteBooks, setFavoriteBooks] = useState<Book[]>([]);
 
   const [id, setId] = useState<string>("Janelle Cai");
 
@@ -163,14 +164,20 @@ const Profile = (props: ProfileProps) => {
     }
   }, [bookData]);
 
+  useEffect(() => {
+    for (let bk of bookData) {
+      if (bk != undefined && bk.rating == 5) {
+        setFavoriteBooks((prev) => [...prev, bk]);
+      }
+    }
+  }, [bookData]);
+
   const link = "https://bookblendr-7aw5.onrender.com/blends/" + id;
 
 
   const navigate = useNavigate();
 
   const handleEditClick = () => {
-  
-    // For React Router v6
     navigate('/my-books');
   };
 
@@ -208,7 +215,21 @@ const Profile = (props: ProfileProps) => {
                   userId={props.userId}
                   book={book}
                 />
-              ))) : (<p>nothing</p>)
+              ))) : (<p>none</p>)
+            }
+          </p>
+        </div>
+        <div className="Profile-subContainer">
+          <p className="Profile-subhead u-subheader">Favorites</p>
+          <p className="Profile-content u-subheader Profile-bookContainer">
+            {/* <button onClick={handleEditClick}>Edit</button> */}
+            { favoriteBooks.length > 0 ? (
+              favoriteBooks.map((book) => (
+                <LibraryCard
+                  userId={props.userId}
+                  book={book}
+                />
+              ))) : (<p>none</p>)
             }
           </p>
         </div>
