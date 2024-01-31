@@ -141,21 +141,7 @@ const Books = (props: BooksProps) => {
 
   const closeEditBook = () => {
     setEditBook(null);
-  }
-
-  const renderDropdown = () => {
-    if (!showDropdown) return null;
-
-  //   return (
-  //     <div className="dropdown">
-  //       {searchResults.map((book, index) => (
-  //         <div key={index} onClick={() => bookInfoPopup(book)}>
-  //           <Card book={book} />
-  //         </div>
-  //       ))}
-  //     </div>
-  //   );
-  // };
+  };
 
   const bookInfoPopup = (book) => {
     setToShow(book);
@@ -266,18 +252,19 @@ const Books = (props: BooksProps) => {
           })}
           {toShow && (
             <div className="overlay">
-              <BookInfo 
-                onClose={closeBookInfo} 
-                item={toShow} 
-                datecb={dateCallback} 
-                ratingcb={ratingCallback} 
-                genrecb={genreCallback} 
-                addbook={addBookToLibrary} 
-                dropdowncb={noDropdown} 
-                currentcb={currentCallback}/>
-            </div>  
+              <BookInfo
+                onClose={closeBookInfo}
+                item={toShow}
+                datecb={dateCallback}
+                ratingcb={ratingCallback}
+                genrecb={genreCallback}
+                addbook={addBookToLibrary}
+                dropdowncb={noDropdown}
+                currentcb={currentCallback}
+              />
+            </div>
           )}
-          {editBook &&
+          {editBook && (
             <div className="overlay">
               <EditBook
                 onClose={closeEditBook}

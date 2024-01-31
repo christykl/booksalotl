@@ -221,10 +221,14 @@ const Profile = (props: ProfileProps) => {
           <p className="Profile-subhead u-subheader">Lifetime Pages Read</p>
           <p className="Profile-content u-subheader">{lifetimePages}</p>
         </div>
+      </div>
+
+      <div className="Profile-dataContainer">
         <div className="Profile-subContainer">
-          <p className="Profile-subhead u-subheader">Currently Reading</p>
+          <button className="Profile-button Profile-subhead" onClick={handleEditClick}>
+            currently reading
+          </button>
           <p className="Profile-content u-subheader Profile-bookContainer">
-            <button onClick={handleEditClick}>Edit</button>
             {currentBook.length > 0 ? (
               currentBook.map((book) => <LibraryCard userId={props.userId} book={book} />)
             ) : (
@@ -233,7 +237,9 @@ const Profile = (props: ProfileProps) => {
           </p>
         </div>
         <div className="Profile-subContainer">
-          <p className="Profile-subhead u-subheader">Favorites</p>
+          <button className="Profile-button Profile-subhead" onClick={handleEditClick}>
+            favorites
+          </button>
           <p className="Profile-content u-subheader Profile-bookContainer">
             {/* <button onClick={handleEditClick}>Edit</button> */}
             {favoriteBooks.length > 0 ? (
@@ -243,35 +249,38 @@ const Profile = (props: ProfileProps) => {
             )}
           </p>
         </div>
-      </div>
-      <div className="Profile-chartContainer">
-        <p className="Profile-chartHeader u-subheader">Fiction vs. Nonfiction</p>
-        <Doughnut className="Profile-chartSubContainer" data={ficData} />
-      </div>
 
-      <div className="Profile-chartContainer">
-        <p className="Profile-chartHeader u-subheader">Book Length</p>
-        <Doughnut className="Profile-chartSubContainer" data={lengthData} />
-      </div>
+        <div className="Profile-horizontalContainer">
+          <div className="Profile-chartContainer">
+            <p className="Profile-chartHeader u-subheader">Fiction vs. Nonfiction</p>
+            <Doughnut className="Profile-chartSubContainer" data={ficData} />
+          </div>
 
-      <div className="Profile-chartContainer">
-        <p className="Profile-chartHeader u-subheader">Pages Read</p>
-        <Bar
-          className="Profile-chartSubContainer"
-          data={createPagesData()}
-          style={{
-            width: 325,
-            height: 1800,
-          }}
-          options={{
-            maintainAspectRatio: true,
-            scales: {
-              y: {
-                beginAtZero: true,
+          <div className="Profile-chartContainer">
+            <p className="Profile-chartHeader u-subheader">Book Length</p>
+            <Doughnut className="Profile-chartSubContainer" data={lengthData} />
+          </div>
+        </div>
+
+        <div className="Profile-histoContainer">
+          <p className="Profile-chartHeader u-subheader">Pages Read</p>
+          <Bar
+            className="Profile-chartSubContainer"
+            data={createPagesData()}
+            style={{
+              width: 480,
+              height: 400,
+            }}
+            options={{
+              maintainAspectRatio: true,
+              scales: {
+                y: {
+                  beginAtZero: true,
+                },
               },
-            },
-          }}
-        />
+            }}
+          />
+        </div>
       </div>
     </div>
   );
