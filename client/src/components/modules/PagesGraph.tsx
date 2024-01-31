@@ -9,8 +9,11 @@ const PagesGraph = ({ bookData }) => {
   const readBooks = bookData.filter(book => book.status === "read");
 
   const today = new Date();
-  const startDate = new Date(today.getFullYear() - 1, today.getMonth(), today.getDate());
-  const endDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+  const startDate = new Date(today.getFullYear() - 1, today.getMonth(), 1);
+  const endDate = new Date(today.getFullYear(), today.getMonth() + 1, 1);
+  // endDate.setDate(endDate.getDate() + 1);
+  // console.log("end date", endDate);
+  // console.log("start date", startDate);
 
   const monthData: string[] = [];
   const pageData: number[] = [];
@@ -19,32 +22,27 @@ const PagesGraph = ({ bookData }) => {
   }
 
   let currDate = startDate;
-  while (currDate <= endDate) {
+  while (currDate < endDate) {
+    console.log(currDate);
     monthData.push(
       (currDate.getMonth() + 1).toString() + "/" + currDate.getFullYear().toString()
     );
     currDate = new Date(currDate.getFullYear(), currDate.getMonth() + 1, currDate.getDate());
   }
+  console.log(monthData);
+  console.log(pageData);
 
-  const convertDate = (month: number, year: number) => {
-    let val: number;
-    if (year == today.getFullYear() - 1) {
-      val = month - today.getMonth();
-    } else {
-      val = month + 12 - today.getMonth();
-    }
-    if (val >= 0 && val <= 12) {
-      return val;
-    }
-    return -1;
+  const convertDate = (readDate: Date) => {
+    const monthsDifference = (readDate.getFullYear() - startDate.getFullYear()) * 12 
+                            + readDate.getMonth() - startDate.getMonth();
+    return monthsDifference;
   };
-
+  
   for (let bk of readBooks) {
     const newDate = new Date(bk.dateread);
-    let convert = convertDate(newDate.getMonth(), newDate.getFullYear());
-    if (convert != -1) {
-      pageData[convert] += bk.pages;
-      console.log(`Book: ${bk.title}, Date: ${bk.dateread}, Pages: ${bk.pages}, Convert: ${convert}`);
+    const index = convertDate(newDate);
+    if (index >= 0 && index < 13) {
+      pageData[index] += bk.pages;
     }
   }
 

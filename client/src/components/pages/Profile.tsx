@@ -101,68 +101,6 @@ const Profile = (props: ProfileProps) => {
     ],
   };
 
-  const createPagesData = () => {
-    /* Total Pages Read Line Graph */
-    // const bookCopy: Book[] = bookData.slice();
-    // bookCopy.sort((a, b) => (a.dateread > b.dateread) ? 1 : -1);
-
-    const pagesRead: number[] = bookData.map((book) => book.pages);
-
-    const today = new Date();
-    const startDate = new Date(today.getFullYear() - 1, today.getMonth(), today.getDate());
-    const endDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
-
-    const monthData: string[] = [];
-    const pageData: number[] = [];
-    for (let i = 0; i < 13; i++) {
-      pageData.push(0);
-    }
-
-    let currDate = startDate;
-    while (currDate <= endDate) {
-      monthData.push(
-        (currDate.getMonth() + 1).toString() + "/" + currDate.getFullYear().toString()
-      );
-      currDate = new Date(currDate.getFullYear(), currDate.getMonth() + 1, currDate.getDate());
-    }
-
-    const convertDate = (month: number, year: number) => {
-      let val: number;
-      if (year == today.getFullYear() - 1) {
-        val = month - today.getMonth();
-      } else {
-        val = month + 12 - today.getMonth();
-      }
-      if (val >= 0 && val <= 12) {
-        return val;
-      }
-      return -1;
-    };
-
-    for (let bk of bookData) {
-      const newDate = new Date(bk.dateread);
-      let convert = convertDate(newDate.getMonth(), newDate.getFullYear());
-      if (convert != -1) {
-        pageData[convert] += bk.pages;
-      }
-    }
-
-    const pagesData = {
-      labels: monthData,
-      datasets: [
-        {
-          label: "Number of Pages",
-          data: pageData,
-          yAxisID: "Total Pages Read",
-          fill: false,
-          borderColor: greyColor,
-          tension: 0.1,
-        },
-      ],
-    };
-    return pagesData;
-  };
-
   useEffect(() => {
     for (let bk of bookData) {
       setLifetimePages((prev) => {

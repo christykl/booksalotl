@@ -13,6 +13,7 @@ import { User } from "../../../../server/models/User";
 import { get } from "../../utilities";
 import { Book } from "../../../../server/models/Book";
 import LibraryCard from "../modules/LibraryCard";
+import PagesGraph from "./PagesGraph";
 
 const primaryColor = getComputedStyle(document.documentElement).getPropertyValue("--primary");
 const primaryDimColor = getComputedStyle(document.documentElement).getPropertyValue(
@@ -192,22 +193,7 @@ const ProfileData = (props: ProfileProps) => {
       </div>
       <div className="Profile-chartContainer">
         <p className="Profile-chartHeader u-subheader">Pages Read</p>
-        <Bar
-          className="Profile-chartSubContainer"
-          data={createPagesData()}
-          style={{
-            width: 650,
-            height: 2000,
-          }}
-          options={{
-            maintainAspectRatio: true,
-            scales: {
-              y: {
-                beginAtZero: true,
-              },
-            },
-          }}
-        />
+        <PagesGraph bookData={bookData}/>
       </div>
     </div>
   );
