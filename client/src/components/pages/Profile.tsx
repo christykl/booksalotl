@@ -146,6 +146,7 @@ const Profile = (props: ProfileProps) => {
         <div className="Profile-subContainer">
           <button
             className="Profile-button"
+            title="Click to copy and share your custom blend link"
             onClick={() => {
               navigator.clipboard.writeText(link);
             }}

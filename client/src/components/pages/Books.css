@@ -109,6 +109,16 @@
   color: grey;
 }
 
+.edit-button {
+  position: absolute;
+  bottom: 10px;
+  left: 30px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: grey;
+}
+
 
 .Books-button {
   width: 80px;
@@ -154,4 +164,30 @@
 
 .overlay {
   z-index: 100;
+}
+
+
+/* Tooltip styling */
+.Profile-button:hover::after {
+  content: attr(title); /* Use the title attribute's value as content */
+  position: absolute;
+  bottom: -30px; /* Adjust position as needed */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #333; /* Tooltip background */
+  color: #fff; /* Tooltip text color */
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 0.8em;
+  white-space: nowrap;
+  z-index: 1000;
+}
+
+/* Hide the tooltip when not hovering */
+.Profile-button::after {
+  display: none;
+}
+
+.Profile-button:hover::after {
+  display: block;
 }
