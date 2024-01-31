@@ -25,6 +25,10 @@ const Books = (props: BooksProps) => {
   const [rating, setRating] = useState<number>(0);
   const [status, setStatus] = useState<string>("read");
   const [editBook, setEditBook] = useState<Book | null>(null);
+  const [threeLib, setThreeLib] = useState<Book[][]>([[]]);
+  // const [curLib, setCurLib] = useState<Book[]>([]);
+  // const [wantLib, setWantLib] = useState<Book[]>([]);
+  // const [readLib, setReadLib] = useState<Book[]>([]);
 
   const genreCallback = (genreval) => {
     setGenre(genreval);
@@ -61,30 +65,11 @@ const Books = (props: BooksProps) => {
   };
   
 
-  // const searchBook = (evt) => {
-  //   if (evt.key === "Enter") {
-  //     axios
-  //       .get(
-  //         "https://www.googleapis.com/books/v1/volumes?q=" +
-  //           search +
-  //           "&key=AIzaSyDjnJHbxfCAqhtxJr1YYzleaQGQB8MdbEA&maxResults=10"
-  //       )
-  //       .then((res) => {
-  //         setSearchResults(res.data.items.filter(hasThumbnail));
-  //         setShowDropdown(true); // Show the dropdown
-  //       })
-  //       .catch((err) => console.log(err));
-  //     if (searchSubmit) {
-  //       setSearchSubmit(false);
-  //     }
-  //   }
-  // };
+  const handleFormSubmit = (event) => {
+    event.preventDefault(); // Prevents the default form submit action
+    searchBook(); // Directly call the search function
+  };  
 
-  // useEffect(() => {
-  //   if (searchSubmit) {
-  //     searchBook(search);
-  //   }
-  // }, [searchSubmit]);
 
   const checkLibrary = (book) => {
     if (library.length > 0) {
@@ -121,9 +106,6 @@ const Books = (props: BooksProps) => {
         status: status,
       }).then((newBook) => {
         setLibrary([...library, newBook]);
-        // setShowBookInfo(true);
-        // setToShow(newBook);
-        // console.log("show book info");
       });
       setShowDropdown(false); // Optionally close the dropdown after adding a book
     }
@@ -176,17 +158,11 @@ const Books = (props: BooksProps) => {
   }, []);
 
   const removeBook = (item) => {
-    console.log(item._id);
-    console.log("before");
-    console.log(library.map((book) => book._id));
     remove("/api/books/", { id: item._id }).then(() => {
       const newLibrary = library.filter((book) => book._id !== item._id);
       setLibrary(newLibrary);
       console.log(newLibrary);
     });
-    console.log("after");
-    console.log(library.map((book) => book._id));
-    console.log("removed book");
   };
 
   const noDropdown = () => {
@@ -226,22 +202,36 @@ const Books = (props: BooksProps) => {
     // Update the state
     setLibrary(updatedLibrary);
 
+    // setReadLib(updatedLibrary.filter(book => book.status === "read"));
+    // setCurLib(updatedLibrary.filter(book => book.status === "currently reading"));
+    // setWantLib(updatedLibrary.filter(book => book.status === "want to read"));
+
     // Close the edit book overlay
     setEditBook(null);
     addFromEdit(updatedBook);
     remove("/api/books/", { id: updatedBook._id });
   }
-  const handleEditBook = (book) => {
+
+  useEffect(() => {
+    setThreeLib([
+      library.filter((book) => book.status === "currently reading"),
+      library.filter((book) => book.status === "want to read"),
+      library.filter((book) => book.status === "read")
+    ]);
+  }, [library]); 
+
+  const handleEditBook = (book) => { 
     setEditBook(book);
   };
 
 
-  const LibrarySection = (status) => {
+  const LibrarySection = (lib: Book[]) => {
+    console.log("library section", lib);
     return (
         <div className="library-container">
-          {library.map((book, index) => {
+          {lib.map((book, index) => {
             // console.log(book);
-            if (book.reader_id && book.reader_id == props.userId && book.status === status)
+            if (book.reader_id && book.reader_id == props.userId)
               return (
                 <div className="Books-card">
                   <LibraryCard userId={props.userId} book={book} key={book._id} />
@@ -295,17 +285,24 @@ const Books = (props: BooksProps) => {
     );
 }
 
+const sectionnames = ["Read", "Currently Reading", "Want to Read"];
+
   return (
     <div>
       <div className="Books-searchContainer">
-        <input
-          type="text"
-          placeholder="Search..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          onKeyUp={searchBook}
-          className="Books-input"
-        />
+        <form onSubmit={handleFormSubmit}>
+          <input
+            type="text"
+            placeholder="Search..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            onKeyUp={searchBook}
+            className="Books-input"
+          />
+          <button className="Books-button" type="submit">
+            search
+          </button>
+        </form>
       </div>
       {renderDropdown()} {/* Render the dropdown here */}
       {/* <div className="Books-searchContainer">
@@ -315,18 +312,18 @@ const Books = (props: BooksProps) => {
         <div className="u-textCenter">
           <h3>Your Library</h3>
         </div>
-        <div className="u-textCenter">
-          <h4>Read</h4>
-        </div>
-        {LibrarySection("read")}
-        <div className="u-textCenter">
-          <h4>Currently Reading</h4>
-        </div>
-        {LibrarySection("currently reading")}
-        <div className="u-textCenter">
-          <h4>Want to Read</h4>
-        </div>
-        {LibrarySection("want to read")}
+        {
+          threeLib.map((lib, index) => {
+            return (
+              <>
+                <div className="u-textCenter">
+                  <h4>{sectionnames[index]}</h4>
+                </div>
+                {LibrarySection(lib)}
+              </>
+            );
+          })
+        }
       </div>
     </div>
   );
