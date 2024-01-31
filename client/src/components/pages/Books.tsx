@@ -25,6 +25,7 @@ const Books = (props: BooksProps) => {
   const [rating, setRating] = useState<number>(0);
   const [status, setStatus] = useState<string>("read");
   const [editBook, setEditBook] = useState<Book | null>(null);
+  const [searchSubmit, setSearchSubmit] = useState<boolean>(false);
 
   const genreCallback = (genreval) => {
     setGenre(genreval);
@@ -63,8 +64,15 @@ const Books = (props: BooksProps) => {
           setShowDropdown(true); // Show the dropdown
         })
         .catch((err) => console.log(err));
+      if (searchSubmit) {
+        setSearchSubmit(false);
+      }
     }
   };
+
+  useEffect(() => {
+    if (searchSubmit) searchBook(search);
+  }, [searchSubmit]);
 
   const checkLibrary = (book) => {
     if (library.length > 0) {
@@ -129,7 +137,7 @@ const Books = (props: BooksProps) => {
     });
   };
 
-  const closeBookInfo = () => { 
+  const closeBookInfo = () => {
     console.log("close book info");
     setToShow(null);
     // setShowBookInfo(false);
@@ -137,7 +145,7 @@ const Books = (props: BooksProps) => {
 
   const closeEditBook = () => {
     setEditBook(null);
-  }
+  };
 
   const bookInfoPopup = (book) => {
     setToShow(book);
@@ -169,7 +177,7 @@ const Books = (props: BooksProps) => {
   };
 
   const dropdownRef = useRef(null);
-  
+
   useOutsideClick(dropdownRef, () => {
     if (toShow === null) {
       setShowDropdown(false);
@@ -206,9 +214,9 @@ const Books = (props: BooksProps) => {
     remove("/api/books/", { id: updatedBook._id });
   }
 
-  const handleEditBook = (book) => { 
+  const handleEditBook = (book) => {
     setEditBook(book);
-  }
+  };
 
   const LibrarySection = (status) => {
     return (
@@ -219,22 +227,24 @@ const Books = (props: BooksProps) => {
               return (
                 <div className="Books-card">
                   <LibraryCard userId={props.userId} book={book} key={book._id} />
-                  <button
-                    className="Books-button"
-                    onClick={() => {
-                      removeBook(book);
-                    }}
-                  >
-                    Remove
-                  </button>
-                  <button
-                    className="Books-button"
-                    onClick={() => {
-                      setEditBook(book);
-                    }}
-                  >
-                    Edit
-                  </button>
+                  <div>
+                    <button
+                      className="Books-button"
+                      onClick={() => {
+                        removeBook(book);
+                      }}
+                    >
+                      Remove
+                    </button>
+                    <button
+                      className="Books-button"
+                      onClick={() => {
+                        setEditBook(book);
+                      }}
+                    >
+                      Edit
+                    </button>
+                  </div>
                 </div>
               );
           })}
@@ -251,7 +261,7 @@ const Books = (props: BooksProps) => {
                 statuscb={statusCallback}/>
             </div>  
           )}
-          {editBook &&
+          {editBook && (
             <div className="overlay">
               <EditBook 
                 onClose={closeEditBook} 
@@ -262,7 +272,7 @@ const Books = (props: BooksProps) => {
                 updatebook={updateBook} 
                 statuscb={statusCallback}/>
             </div>
-          }
+          )}
         </div>
     );
 }
@@ -270,14 +280,19 @@ const Books = (props: BooksProps) => {
   return (
     <div>
       <div className="Books-searchContainer">
-        <input
-          type="text"
-          placeholder="Search..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          onKeyUp={searchBook}
-          className="Books-input"
-        />
+        <form>
+          <input
+            type="text"
+            placeholder="Search..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            onKeyUp={searchBook}
+            className="Books-input"
+          />
+          <button className="Books-button" type="submit" onSubmit={() => setSearchSubmit(true)}>
+            enter
+          </button>
+        </form>
       </div>
       {renderDropdown()} {/* Render the dropdown here */}
       {/* <div className="Books-searchContainer">
