@@ -5,7 +5,7 @@ ChartJS.register(...registerables);
 // import 'date-fns';
 import { Chart, Pie, Doughnut, Line, Bar } from "react-chartjs-2";
 import "../../utilities.css";
-import "./Profile.css";
+import "../pages/Profile.css";
 // import { Book } from "./Books";
 // import Books from "./Books";
 // import SingleBook from "../modules/SingleBook";
@@ -24,25 +24,22 @@ type ProfileProps = {
   userId: string;
 };
 
-const Profile = (props: ProfileProps) => {
+const ProfileData = (props: ProfileProps) => {
   const [bookData, setBookData] = useState<Book[]>([]);
   const [username, setUsername] = useState<string>("Janelle Cai");
-  const [numBlends, setNumBlends] = useState<number>(0);
-  const [library, setLibrary] = useState<Book[]>([]); 
+  const [library, setLibrary] = useState<Book[]>([]);
   const [currentBook, setCurrentBook] = useState<Book[]>([]);
   const [lifetimePages, setLifetimePages] = useState<number>(0);
 
   const [id, setId] = useState<string>("Janelle Cai");
 
   useEffect(() => {
-    get("/api/whoami")
-      .then((user: User) => {
-        if (user._id) {
-          setUsername(user.name);
-          setId(user._id);
-          setNumBlends(user.blends.length);
-        }
-      })
+    get("/api/whoami").then((user: User) => {
+      if (user._id) {
+        setUsername(user.name);
+        setId(user._id);
+      }
+    });
   }, []);
 
   useEffect(() => {
@@ -166,39 +163,6 @@ const Profile = (props: ProfileProps) => {
 
   return (
     <div className="Profile-flexContainer">
-      <div className="Profile-bioContainer">
-        <div className="Profile-image" />
-        <div className="Profile-nameContainer">
-          <h1 className="Profile-name">{username}</h1>
-        </div>
-        <div className="Profile-subContainer">
-          <button
-            onClick={() => {
-              navigator.clipboard.writeText(link);
-            }}
-          >
-            Copy custom blend link
-          </button>
-        </div>
-        <div className="Profile-subContainer">
-          <p className="Profile-subhead u-subheader">Blends</p>
-          <p className="Profile-content u-subheader">{numBlends}</p>
-        </div>
-        <div className="Profile-subContainer">
-          <p className="Profile-subhead u-subheader">Lifetime Pages Read</p>
-          <p className="Profile-content u-subheader">{lifetimePages}</p>
-        </div>
-        <div className="Profile-subContainer">
-          <p className="Profile-subhead u-subheader">Currently Reading</p>
-          <p className="Profile-content u-subheader Profile-bookContainer">
-            {currentBook.length > 0 ? (
-              currentBook.map((book) => <LibraryCard userId={props.userId} book={book} />)
-            ) : (
-              <p>nothing</p>
-            )}
-          </p>
-        </div>
-      </div>
       <div className="Profile-chartContainer">
         <p className="Profile-chartHeader u-subheader">Fiction vs. Nonfiction</p>
         <Pie className="Profile-chartSubContainer" data={ficData} />
@@ -232,4 +196,4 @@ const Profile = (props: ProfileProps) => {
   );
 };
 
-export default Profile;
+export default ProfileData;
