@@ -96,6 +96,11 @@ const Blends = (props: BlendsProps) => {
 
   return (
     <div>
+      <div className="Blends-container">
+        <div className="Blends-header u-textCenter">
+          <h2>{username} and {username2}'s Blend</h2>
+        </div>
+      </div>
       <Bookshelf userId={id!} title="Books you both want to read" books={bothWantBooks} />
       <Bookshelf userId={id!} title="Books you both enjoyed" books={bothBooks} />
       <div className="Blend-split-container">
