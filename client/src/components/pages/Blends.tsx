@@ -21,6 +21,8 @@ const Blends = (props: BlendsProps) => {
   const [blendsList, setBlendsList] = useState<string[]>([]);
   const [library, setLibrary] = useState<Book[]>([]);
   const [username2, setUsername2] = useState<string>("");
+  const [isLoading, setIsLoading] = useState(true);
+
 
   useEffect(() => {
     get("/api/whoami").then((user: User) => {
@@ -29,6 +31,7 @@ const Blends = (props: BlendsProps) => {
         setUsername(user.name);
         setBlendsList(user.blends);
       }
+      setIsLoading(false);
     });
   }, []);
 
@@ -59,7 +62,7 @@ const Blends = (props: BlendsProps) => {
         <h3>{username}'s Profile</h3>
       </div>
       <div className="library-container">
-        <ProfileData userId={selfid} />
+        {isLoading ? <div>Loading...</div> : <ProfileData userId={selfid} />}
       </div>
       <div className="u-textCenter">
         <h3>{username2}'s Profile</h3>

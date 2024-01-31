@@ -50,6 +50,7 @@ const ProfileData = (props: ProfileProps) => {
 
   /* Placeholder data */
   const loadBooks = () => {
+    console.log("userId", props.userId);
     library.map((book) => {
       if (book.reader_id && book.reader_id == props.userId) {
         setBookData((prev) => [...prev, book]);
@@ -177,7 +178,7 @@ const ProfileData = (props: ProfileProps) => {
     }
   }, [bookData]);
 
-  const link = "https://bookblendr-7aw5.onrender.com/blends/" + id;
+  // const link = "https://bookblendr-7aw5.onrender.com/blends/" + id;
 
   return (
     <div className="Profile-flexContainer">
