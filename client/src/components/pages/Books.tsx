@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import Card from "../modules/Card";
 import "./Books.css";
@@ -7,6 +7,7 @@ import LibraryCard from "../modules/LibraryCard";
 import { Book } from "../../../../server/models/Book";
 import { remove } from "../../utilities";
 import BookInfo from "../modules/BookInfo";
+import useOutsideClick from "../modules/OutsideClick";
 
 type BooksProps = {
   userId: string;
@@ -115,19 +116,19 @@ const Books = (props: BooksProps) => {
     // setShowBookInfo(false);
   };
 
-  const renderDropdown = () => {
-    if (!showDropdown) return null;
+  // const renderDropdown = () => {
+  //   if (!showDropdown) return null;
 
-    return (
-      <div className="dropdown">
-        {searchResults.map((book, index) => (
-          <div key={index} onClick={() => bookInfoPopup(book)}>
-            <Card book={book} />
-          </div>
-        ))}
-      </div>
-    );
-  };
+  //   return (
+  //     <div className="dropdown">
+  //       {searchResults.map((book, index) => (
+  //         <div key={index} onClick={() => bookInfoPopup(book)}>
+  //           <Card book={book} />
+  //         </div>
+  //       ))}
+  //     </div>
+  //   );
+  // };
 
   const bookInfoPopup = (book) => {
     setToShow(book);
@@ -156,6 +157,28 @@ const Books = (props: BooksProps) => {
   const noDropdown = () => {
     setToShow(null);
     setShowDropdown(false);
+  };
+
+  const dropdownRef = useRef(null);
+  
+  useOutsideClick(dropdownRef, () => {
+    if (toShow === null) {
+      setShowDropdown(false);
+    }
+  });
+
+  const renderDropdown = () => {
+    if (!showDropdown) return null;
+
+    return (
+      <div ref={dropdownRef} className="dropdown">
+        {searchResults.map((book, index) => (
+          <div key={index} onClick={() => bookInfoPopup(book)}>
+            <Card book={book} />
+          </div>
+        ))}
+      </div>
+    );
   };
 
   return (

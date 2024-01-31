@@ -27,6 +27,7 @@ type ProfileProps = {
 const Profile = (props: ProfileProps) => {
   const [bookData, setBookData] = useState<Book[]>([]);
   const [username, setUsername] = useState<string>("Janelle Cai");
+  const [numBlends, setNumBlends] = useState<number>(0);
   const [library, setLibrary] = useState<Book[]>([]); 
   const [currentBook, setCurrentBook] = useState<Book[]>([]);
   const [lifetimePages, setLifetimePages] = useState<number>(0);
@@ -39,6 +40,7 @@ const Profile = (props: ProfileProps) => {
         if (user._id) {
           setUsername(user.name);
           setId(user._id);
+          setNumBlends(user.blends.length);
         }
       })
   }, []);
@@ -174,8 +176,8 @@ const Profile = (props: ProfileProps) => {
           <button onClick={() => {navigator.clipboard.writeText(link);}}>Copy custom blend link</button>
         </div>
         <div className="Profile-subContainer">
-          <p className="Profile-subhead u-subheader">Friends</p>
-          <p className="Profile-content u-subheader">0</p>
+          <p className="Profile-subhead u-subheader">Blends</p>
+          <p className="Profile-content u-subheader">{numBlends}</p>
         </div>
         <div className="Profile-subContainer">
           <p className="Profile-subhead u-subheader">Lifetime Pages Read</p>
