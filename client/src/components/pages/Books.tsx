@@ -71,11 +71,6 @@ const Books = (props: BooksProps) => {
     searchBook(); // Directly call the search function
   };  
 
-
-  useEffect(() => {
-    if (searchSubmit) searchBook(search);
-  }, [searchSubmit]);
-
   const checkLibrary = (book) => {
     if (library.length > 0) {
       for (let i = 0; i < library.length; i++) {
