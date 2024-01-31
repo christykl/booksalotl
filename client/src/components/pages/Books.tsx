@@ -17,7 +17,7 @@ const Books = (props: BooksProps) => {
   const [library, setLibrary] = useState<Book[]>([]);
   const [search, setSearch] = useState<string>("");
   const [showDropdown, setShowDropdown] = useState<boolean>(false);
-  const [toShow, setToShow] = useState<Book | null>(null); 
+  const [toShow, setToShow] = useState<Book | null>(null);
   const [genre, setGenre] = useState<string>("");
   const [date, setDate] = useState<Date>(new Date());
   const [rating, setRating] = useState<number>(0);
@@ -25,20 +25,28 @@ const Books = (props: BooksProps) => {
 
   const genreCallback = (genreval) => {
     setGenre(genreval);
-  }
+  };
 
-  const dateCallback = (dateval) => { 
+  const dateCallback = (dateval) => {
     setDate(dateval);
-  }
+  };
 
-  const ratingCallback = (ratingval) => { 
+  const ratingCallback = (ratingval) => {
     setRating(ratingval);
-  } 
+  };
 
   const currentCallback = (currentval) => {
     console.log(currentval);
     setCurrent(currentval);
-  }
+  };
+
+  const hasThumbnail = (book, key) => {
+    if (book.volumeInfo.imageLinks !== undefined) {
+      return true;
+    } else {
+      return false;
+    }
+  };
 
   const searchBook = (evt) => {
     if (evt.key === "Enter") {
@@ -49,7 +57,7 @@ const Books = (props: BooksProps) => {
             "&key=AIzaSyDjnJHbxfCAqhtxJr1YYzleaQGQB8MdbEA&maxResults=10"
         )
         .then((res) => {
-          setSearchResults(res.data.items);
+          setSearchResults(res.data.items.filter(hasThumbnail));
           setShowDropdown(true); // Show the dropdown
         })
         .catch((err) => console.log(err));
@@ -74,7 +82,7 @@ const Books = (props: BooksProps) => {
       // error message popup
       alert("already in library");
       return;
-    } else {      
+    } else {
       console.log(book);
       console.log("adding lib,", current);
       post("/api/books", {
@@ -101,11 +109,11 @@ const Books = (props: BooksProps) => {
     }
   };
 
-  const closeBookInfo = () => { 
+  const closeBookInfo = () => {
     console.log("close book info");
     setToShow(null);
     // setShowBookInfo(false);
-  }
+  };
 
   const renderDropdown = () => {
     if (!showDropdown) return null;
@@ -123,7 +131,7 @@ const Books = (props: BooksProps) => {
 
   const bookInfoPopup = (book) => {
     setToShow(book);
-  }
+  };
 
   useEffect(() => {
     get("/api/books").then((books: Book[]) => {
@@ -136,7 +144,7 @@ const Books = (props: BooksProps) => {
     console.log("before");
     console.log(library.map((book) => book._id));
     remove("/api/books/", { id: item._id }).then(() => {
-      const newLibrary = library.filter((book) => (book._id !== item._id));
+      const newLibrary = library.filter((book) => book._id !== item._id);
       setLibrary(newLibrary);
       console.log(newLibrary);
     });
@@ -145,10 +153,10 @@ const Books = (props: BooksProps) => {
     console.log("removed book");
   };
 
-  const noDropdown = () => { 
+  const noDropdown = () => {
     setToShow(null);
     setShowDropdown(false);
-  }
+  };
 
   return (
     <div>
@@ -188,19 +196,20 @@ const Books = (props: BooksProps) => {
                 </div>
               );
           })}
-          {toShow && 
+          {toShow && (
             <div className="overlay">
-              <BookInfo 
-                onClose={closeBookInfo} 
-                item={toShow} 
-                datecb={dateCallback} 
-                ratingcb={ratingCallback} 
-                genrecb={genreCallback} 
-                addbook={addBookToLibrary} 
-                dropdowncb={noDropdown} 
-                currentcb={currentCallback}/>
-            </div>  
-          }
+              <BookInfo
+                onClose={closeBookInfo}
+                item={toShow}
+                datecb={dateCallback}
+                ratingcb={ratingCallback}
+                genrecb={genreCallback}
+                addbook={addBookToLibrary}
+                dropdowncb={noDropdown}
+                currentcb={currentCallback}
+              />
+            </div>
+          )}
         </div>
       </div>
     </div>
