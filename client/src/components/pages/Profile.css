@@ -3,14 +3,15 @@
 }
 
 .Profile-bioContainer {
-  padding: 40px 40px;
+  padding: 20px 20px;
   width: var(--biowidth);
   height: auto;
+  margin: 16px;
 }
 
 .Profile-image {
-  width: var(--biowidth);
-  height: var(--biowidth);
+  width: var(--biowidthimg);
+  height: var(--biowidthimg);
   border-radius: 50%;
   position: relative;
   background-size: cover;
@@ -19,7 +20,7 @@
 }
 
 .Profile-name {
-  font-size: 36px;
+  font-size: 28px;
   font-weight: bold;
   position: relative;
   text-align: center;
@@ -27,11 +28,11 @@
 
 .Profile-nameContainer {
   padding: 0;
-  margin: 0;
+  margin: 16px;
 }
 
 .Profile-content {
-  font-size: 24px;
+  font-size: 22px;
   position: relative;
   text-align: left;
   margin: 0;
@@ -57,7 +58,7 @@
 
 .Profile-chartSubContainer {
   padding: 0;
-  margin: 0;
+  margin: 16px;
 }
 
 .Profile-chartHeader {

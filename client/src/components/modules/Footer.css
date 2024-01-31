@@ -1,0 +1,28 @@
+.Footer-footer {
+  margin: 32px 32px 0;
+  height: 80px;
+  border-top: rem(40px) solid var(--primary--dim);
+  display: flex;
+  justify-content: right;
+}
+
+.Footer-inner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: var(--l);
+  padding-bottom: var(--l);
+
+  @media (max-width: var(--s)) {
+    flex-direction: column;
+  }
+}
+
+.Footer-links,
+.Footer-links:visited {
+  @media (max-width: var(--s)) {
+    margin-top: var(--m);
+  }
+  text-decoration: none;
+  color: var(--primary--dim);
+}
