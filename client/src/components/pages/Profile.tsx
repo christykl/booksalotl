@@ -4,7 +4,7 @@ import { Chart as ChartJS, registerables } from "chart.js";
 ChartJS.register(...registerables);
 // import 'chartjs-adapter-date-fns';
 // import 'date-fns';
-import { Chart, Pie, Doughnut, Line, Bar } from "react-chartjs-2";
+import { Doughnut } from "react-chartjs-2";
 import "../../utilities.css";
 import "./Profile.css";
 // import { Book } from "./Books";
@@ -15,6 +15,7 @@ import { get } from "../../utilities";
 import { Book } from "../../../../server/models/Book";
 import LibraryCard from "../modules/LibraryCard";
 import GenreGraph from "../modules/GenreGraph";
+import PagesGraph from "../modules/PagesGraph";
 
 const primaryColor = getComputedStyle(document.documentElement).getPropertyValue("--primary");
 const primaryDimColor = getComputedStyle(document.documentElement).getPropertyValue(
@@ -265,22 +266,7 @@ const Profile = (props: ProfileProps) => {
 
         <div className="Profile-histoContainer">
           <p className="Profile-chartHeader u-subheader">Pages Read</p>
-          <Bar
-            className="Profile-chartSubContainer"
-            data={createPagesData()}
-            style={{
-              width: 480,
-              height: 400,
-            }}
-            options={{
-              maintainAspectRatio: true,
-              scales: {
-                y: {
-                  beginAtZero: true,
-                },
-              },
-            }}
-          />
+          <PagesGraph bookData={bookData}/>
         </div>
       </div>
     </div>
