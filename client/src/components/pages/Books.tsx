@@ -143,20 +143,6 @@ const Books = (props: BooksProps) => {
     setEditBook(null);
   }
 
-  const renderDropdown = () => {
-    if (!showDropdown) return null;
-
-  //   return (
-  //     <div className="dropdown">
-  //       {searchResults.map((book, index) => (
-  //         <div key={index} onClick={() => bookInfoPopup(book)}>
-  //           <Card book={book} />
-  //         </div>
-  //       ))}
-  //     </div>
-  //   );
-  // };
-
   const bookInfoPopup = (book) => {
     setToShow(book);
   };
@@ -275,7 +261,7 @@ const Books = (props: BooksProps) => {
                 dropdowncb={noDropdown} 
                 currentcb={currentCallback}/>
             </div>  
-          }
+          )}
           {editBook &&
             <div className="overlay">
               <EditBook 

@@ -32,6 +32,7 @@ const Profile = (props: ProfileProps) => {
   const [library, setLibrary] = useState<Book[]>([]); 
   const [currentBook, setCurrentBook] = useState<Book[]>([]);
   const [lifetimePages, setLifetimePages] = useState<number>(0);
+  const [favoriteBooks, setFavoriteBooks] = useState<Book[]>([]);
 
   const [id, setId] = useState<string>("Janelle Cai");
 
@@ -81,6 +82,24 @@ const Profile = (props: ProfileProps) => {
       },
     ],
   };
+
+  const shortCount = bookData.filter((bookObj) => bookObj.pages < 200).length;
+  const mediumCount = bookData.filter(
+    (bookObj) => bookObj.pages >= 200 && bookObj.pages < 400
+  ).length;
+  const longCount = bookData.filter((bookObj) => bookObj.pages >= 400).length;
+
+  const lengthData = {
+    labels: ["short", "medium", "long"],
+    datasets: [
+      {
+        data: [shortCount, mediumCount, longCount],
+        backgroundColor: [primaryColor, primaryDimColor, greyColor],
+        hoverOffset: 4,
+      },
+    ]
+  }
+
 
   const createPagesData = () => {
     /* Total Pages Read Line Graph */
@@ -163,14 +182,20 @@ const Profile = (props: ProfileProps) => {
     }
   }, [bookData]);
 
+  useEffect(() => {
+    for (let bk of bookData) {
+      if (bk != undefined && bk.rating == 5) {
+        setFavoriteBooks((prev) => [...prev, bk]);
+      }
+    }
+  }, [bookData]);
+
   const link = "https://bookblendr-7aw5.onrender.com/blends/" + id;
 
 
   const navigate = useNavigate();
 
   const handleEditClick = () => {
-  
-    // For React Router v6
     navigate('/my-books');
   };
 
@@ -208,15 +233,35 @@ const Profile = (props: ProfileProps) => {
                   userId={props.userId}
                   book={book}
                 />
-              ))) : (<p>nothing</p>)
+              ))) : (<p>none</p>)
+            }
+          </p>
+        </div>
+        <div className="Profile-subContainer">
+          <p className="Profile-subhead u-subheader">Favorites</p>
+          <p className="Profile-content u-subheader Profile-bookContainer">
+            {/* <button onClick={handleEditClick}>Edit</button> */}
+            { favoriteBooks.length > 0 ? (
+              favoriteBooks.map((book) => (
+                <LibraryCard
+                  userId={props.userId}
+                  book={book}
+                />
+              ))) : (<p>none</p>)
             }
           </p>
         </div>
       </div>
       <div className="Profile-chartContainer">
         <p className="Profile-chartHeader u-subheader">Fiction vs. Nonfiction</p>
-        <Pie className="Profile-chartSubContainer" data={ficData} />
+        <Doughnut className="Profile-chartSubContainer" data={ficData} />
       </div>
+
+      <div className="Profile-chartContainer">
+        <p className="Profile-chartHeader u-subheader">Book Length</p>
+        <Doughnut className="Profile-chartSubContainer" data={lengthData} />
+      </div>
+
       <div className="Profile-chartContainer">
         <p className="Profile-chartHeader u-subheader">Pages Read</p>
         <Bar
