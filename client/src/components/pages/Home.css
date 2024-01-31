@@ -7,7 +7,7 @@
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
-  height: 70vh; /* Ensure the background covers the entire viewport height */
+  height: 70vh;
   display: flex;
   flex-flow: row wrap;
   align-items: center;

@@ -30,9 +30,7 @@ export const removeUser = (user: User, socket: Socket): void => {
 export const init = (server: http.Server): void => {
   io = new Server(server);
   io.on("connection", (socket) => {
-    console.log(`socket has connected ${socket.id}`);
     socket.on("disconnect", () => {
-      console.log(`socket has disconnected ${socket.id}`);
       const user = getUserFromSocketID(socket.id);
       if (user !== undefined) removeUser(user, socket);
     });

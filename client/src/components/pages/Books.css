@@ -47,10 +47,10 @@
 .library-container {
   min-height: 20vh;
   padding: 0 24px;
-  display: grid; /* Use grid layout */
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Create flexible columns */
-  grid-gap: 10px; /* Adjust the gap between items */
-  background: var(--white); /* Background for the user's library */
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-gap: 10px;
+  background: var(--white);
 }
 
 
@@ -64,8 +64,8 @@
 }
 
 .Books-card {
-  width: 30%; /* Adjust the width to make the item wider */
-  height: auto; /* Let the height adjust proportionally based on the content */
+  width: 30%;
+  height: auto;
   padding: 20px;
   display: flex;
   align-items: center;
@@ -91,11 +91,11 @@
   border: var(--primary) 2px solid;
 }
 
-/* Apply CSS styles to the button container */
+
 .button-container {
-  display: flex; /* Make the buttons inside the container flex items */
-  align-items: center; /* Vertically align the buttons */
-  justify-content: space-between; /* Add space between buttons */
+  display: flex;
+  align-items: center; 
+  justify-content: space-between;
 }
 
 
@@ -167,15 +167,14 @@
 }
 
 
-/* Tooltip styling */
 .Profile-button:hover::after {
-  content: attr(title); /* Use the title attribute's value as content */
+  content: attr(title);
   position: absolute;
-  bottom: -30px; /* Adjust position as needed */
+  bottom: -30px;
   left: 50%;
   transform: translateX(-50%);
-  background-color: #333; /* Tooltip background */
-  color: #fff; /* Tooltip text color */
+  background-color: #333;
+  color: #fff;
   padding: 5px 10px;
   border-radius: 4px;
   font-size: 0.8em;
@@ -183,7 +182,6 @@
   z-index: 1000;
 }
 
-/* Hide the tooltip when not hovering */
 .Profile-button::after {
   display: none;
 }

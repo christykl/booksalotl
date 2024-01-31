@@ -14,10 +14,6 @@ type SingleFriendProps = {
 
 const SingleFriend = (props: SingleFriendProps) => {
   return (
-    // <Grid>
-    //   <Grid.Col span={4}>1</Grid.Col>
-    //   <Grid.Col span={4}>2</Grid.Col>
-    //   <Grid.Col span={4}>3</Grid.Col>
 
     <div className="SingleFriend-container">
       <div className="SingleFriend-grid-container">

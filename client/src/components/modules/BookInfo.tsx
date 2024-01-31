@@ -16,14 +16,14 @@ const BookInfo = ({ item, onClose, datecb, ratingcb, genrecb, addbook, dropdownc
   const [status, setStatus] = useState<string>("read");
 
   const handleSubmit = (event) => {
-    event.preventDefault(); // Prevent default form submission behavior
+    event.preventDefault();
     setSubmit(true);
   };
 
   useEffect(() => {
     if (submit) {
-      dropdowncb(); // Close the dropdown
-      addbook(item); // Add the book to the library
+      dropdowncb();
+      addbook(item);
     }
   }, [submit]);
 

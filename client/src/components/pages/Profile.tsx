@@ -54,12 +54,10 @@ const Profile = (props: ProfileProps) => {
     });
   }, []);
 
-  /* Placeholder data */
   const loadBooks = () => {
     library.map((book) => {
       if (book.reader_id && book.reader_id == props.userId) {
         setBookData((prev) => [...prev, book]);
-        console.log(" in load book book: ", book);
       }
     });
   };

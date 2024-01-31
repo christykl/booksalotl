@@ -61,7 +61,6 @@ const App = () => {
   const handleLogin = (credentialResponse: CredentialResponse) => {
     const userToken = credentialResponse.credential;
     const decodedCredential = jwt_decode(userToken as string) as { name: string; email: string };
-    console.log(`Logged in as ${decodedCredential.name}`);
     post("/api/login", { token: userToken }).then((user) => {
       setUserId(user._id);
       post("/api/initsocket", { socketid: socket.id });
@@ -73,10 +72,6 @@ const App = () => {
     setUserId(undefined);
     post("/api/logout");
   };
-
-  // const theme = createTheme({
-  //   fontFamily: 'Courier Prime sans-serif'
-  // });
 
   // NOTE:
   // All the pages need to have the props extended via RouteComponentProps for @reach/router to work properly. Please use the Skeleton as an example.

@@ -7,7 +7,6 @@ import Status from "./Status";
 
 const EditBook = ({ item, onClose, datecb, ratingcb, genrecb, updatebook, statuscb }) => {
   let thumbnail = item.cover;
-    // item.volumeInfo && item.volumeInfo.imageLinks && item.volumeInfo.imageLinks.smallThumbnail;
   let today = new Date();
   const [genre, setGenre] = useState<string>(item.genre || ""); 
   const [date, setDate] = useState<string>(item.dateread ? item.dateread.toString() : new Date().toString());
@@ -17,9 +16,8 @@ const EditBook = ({ item, onClose, datecb, ratingcb, genrecb, updatebook, status
 
 
   const handleSubmit = (event) => {
-    event.preventDefault(); // Prevent default form submission behavior
+    event.preventDefault();
 
-    // Create an object with updated book data
     const updatedBookData = {
       ...item,
       dateread: date,
@@ -28,8 +26,8 @@ const EditBook = ({ item, onClose, datecb, ratingcb, genrecb, updatebook, status
       status: status
     };
 
-    updatebook(updatedBookData); // Update the book with new data
-    onClose(); // Close the edit book popup
+    updatebook(updatedBookData); 
+    onClose(); 
   }
   useEffect(() => {
     datecb(new Date(date));
@@ -79,7 +77,7 @@ const EditBook = ({ item, onClose, datecb, ratingcb, genrecb, updatebook, status
                       min="1900-01-01"
                       id="date"
                       name="date"
-                      value={date.split('T')[0]} // Ensure format is compatible with input type=date
+                      value={date.split('T')[0]}
                       onChange={(e) => setDate(e.target.value)}
                     />
                   </>

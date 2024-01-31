@@ -29,9 +29,6 @@ const Books = (props: BooksProps) => {
   const [status, setStatus] = useState<string>("read");
   const [editBook, setEditBook] = useState<Book | null>(null);
   const [threeLib, setThreeLib] = useState<Book[][]>([[]]);
-  // const [curLib, setCurLib] = useState<Book[]>([]);
-  // const [wantLib, setWantLib] = useState<Book[]>([]);
-  // const [readLib, setReadLib] = useState<Book[]>([]);
   
   const genreCallback = (genreval) => {
     setGenre(genreval);
@@ -70,8 +67,8 @@ const Books = (props: BooksProps) => {
   
 
   const handleFormSubmit = (event) => {
-    event.preventDefault(); // Prevents the default form submit action
-    searchBook(); // Directly call the search function
+    event.preventDefault();
+    searchBook();
   };  
 
   const checkLibrary = (book) => {
@@ -86,10 +83,7 @@ const Books = (props: BooksProps) => {
   };
 
   const addBookToLibrary = (book) => {
-    // setLibrary([...library, book]);
-    console.log("adding book to library");
     if (checkLibrary(book)) {
-      // error message popup
       alert("already in library");
       return;
     } else {
@@ -110,7 +104,7 @@ const Books = (props: BooksProps) => {
       }).then((newBook) => {
         setLibrary([...library, newBook]);
       });
-      setShowDropdown(false); // Optionally close the dropdown after adding a book
+      setShowDropdown(false);
     }
   };
 
@@ -135,7 +129,6 @@ const Books = (props: BooksProps) => {
   };
 
   const closeBookInfo = () => {
-    console.log("close book info");
     setToShow(null);
   };
 
@@ -157,7 +150,6 @@ const Books = (props: BooksProps) => {
     remove("/api/books/", { id: item._id }).then(() => {
       const newLibrary = library.filter((book) => book._id !== item._id);
       setLibrary(newLibrary);
-      console.log(newLibrary);
     });
   };
 
@@ -192,22 +184,17 @@ const Books = (props: BooksProps) => {
     const bookIndex = library.findIndex(book => book._id === updatedBook._id);
     
     if (bookIndex !== -1) {
-      // Update the book in the existing library array
       const updatedLibrary = [...library];
       updatedLibrary[bookIndex] = updatedBook;
   
-      // Update the state
       setLibrary(updatedLibrary);
   
-      // Update the book in the backend
       post("/api/updateBook", { updatedBook }).then(() => {
-        console.log("Book updated in backend");
       });
     }
   }
 
   useEffect(() => {
-    console.log("updating library");
     setThreeLib([
       library.filter((book) => book.status === "currently reading"),
       library.filter((book) => book.status === "want to read"),
@@ -217,7 +204,6 @@ const Books = (props: BooksProps) => {
 
 
   const LibrarySection = (lib: Book[], statusFilter: string) => {
-    console.log("library section", lib);
     return (
       <div className="library-container">
         {lib.map((book, index) => {
@@ -289,15 +275,9 @@ const sectionnames = ["Currently Reading", "Want to Read", "Read"];
             onKeyUp={searchBook}
             className="Books-input"
           />
-          {/* <button className="Books-search-button" type="submit">
-            search
-          </button> */}
         </form>
       </div>
-      {renderDropdown()} {/* Render the dropdown here */}
-      {/* <div className="Books-searchContainer">
-        <FileUpload />
-      </div> */}
+      {renderDropdown()}
       <div className="">
         <div className="u-textCenter">
           <h2>Your Library</h2>

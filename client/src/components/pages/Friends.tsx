@@ -12,15 +12,11 @@ type Friend = {
   url: string;
 }
 
-// type FriendData = {
-//   friends: Friend[];
-// }
 
 type FriendsProps = {
   userId: string;
 }
 
-// const frienddata: Friend[] = [{_id: "1", userName: "janelle"}, {_id: "2", userName: "christy"}];
 
 const Friends = (props: FriendsProps) => {
   const [friendData, setFriendData] = useState<Friend[]>([]);
@@ -47,17 +43,14 @@ const Friends = (props: FriendsProps) => {
     for (let j = 0; j < idData.length; j++) {
       for (let i = 0; i < userLibrary.length; i++) {
         if (userLibrary[i]._id === idData[j]) {
-          console.log(userLibrary[i]._id);
           friendsList.push({ _id: userLibrary[i]._id, userName: userLibrary[i].name, url:  "https://bookblendr-7aw5.onrender.com/blends/" + userLibrary[i]._id});
         };
       };
     };
     setFriendData(friendsList);
-    console.log(friendData);
   }, [userLibrary, idData]);
 
   useEffect(() => {
-    console.log(friendData);
   }, [friendData])
 
   return <div className="outer-container">

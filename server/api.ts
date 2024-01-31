@@ -65,7 +65,6 @@ router.get("/books", (req, res) => {
 });
 
 router.post("/books", auth.ensureLoggedIn, (req, res) => {
-  console.log(req.body);
   const newBook = new Book({
     title: req.body.title,
     authors: req.body.authors,
@@ -90,9 +89,6 @@ router.post("/updateBook", auth.ensureLoggedIn, (req, res) => {
   const bookId = req.body.updatedBook._id;
   const updatedData = req.body.updatedBook;
 
-  console.log(bookId);
-  console.log(updatedData);
-
   Book.findByIdAndUpdate(bookId, updatedData, { new: true }, (err, updatedBook) => {
     if (err) {
       console.error("Error updating book:", err);
@@ -115,7 +111,6 @@ router.delete("/books", auth.ensureLoggedIn, (req, res) => {
 });
 
 router.post("/updateUsers", (req, res) => {
-  console.log(req.body.passedId);
   if (!req.user) {
     res.status(400);
     res.send({ message: "error not logged in" });

@@ -1,18 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Chart as ChartJS, registerables } from "chart.js";
 ChartJS.register(...registerables);
-// import 'chartjs-adapter-date-fns';
-// import 'date-fns';
-import { Chart, Pie, Doughnut, Line, Bar } from "react-chartjs-2";
+import { Doughnut } from "react-chartjs-2";
 import "../../utilities.css";
 import "../pages/Profile.css";
-// import { Book } from "./Books";
-// import Books from "./Books";
-// import SingleBook from "../modules/SingleBook";
 import { User } from "../../../../server/models/User";
 import { get } from "../../utilities";
 import { Book } from "../../../../server/models/Book";
-import LibraryCard from "../modules/LibraryCard";
 import PagesGraph from "./PagesGraph";
 import GenreGraph from "./GenreGraph";
 
@@ -52,11 +46,9 @@ const ProfileData = (props: ProfileProps) => {
 
   /* Placeholder data */
   const loadBooks = () => {
-    console.log("userId", props.userId);
     library.map((book) => {
       if (book.reader_id && book.reader_id == props.userId) {
         setBookData((prev) => [...prev, book]);
-        console.log(" in load book book: ", book);
       }
     });
   };
@@ -98,8 +90,6 @@ const ProfileData = (props: ProfileProps) => {
       }
     }
   }, [bookData]);
-
-  // const link = "https://bookblendr-7aw5.onrender.com/blends/" + id;
 
   return (
     <div className="Profile-flexContainer">

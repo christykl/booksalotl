@@ -82,7 +82,7 @@
   border-color: var(--primary);
   margin-top: 8px;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Create flexible columns */
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
 }
 
 .Profile-button {

@@ -8,8 +8,8 @@
 }
 
 .Books-card {
-  width: 30%; /* Adjust the width to make the item wider */
-  height: auto; /* Let the height adjust proportionally based on the content */
+  width: 30%;
+  height: auto;
   padding: 20px;
   display: flex;
   align-items: center;

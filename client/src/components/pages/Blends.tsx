@@ -73,8 +73,6 @@ const Blends = (props: BlendsProps) => {
   }, [library, selfid, id!]);
 
   useEffect(() => {
-    console.log("lib1", lib1);
-    console.log("lib2", lib2)
     const want1 = lib1.filter((book) => book.status === "want to read");
     const want2 = lib2.filter((book) => book.status === "want to read");
     const bothWant = want1.filter((book) => {

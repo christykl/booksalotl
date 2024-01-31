@@ -11,9 +11,6 @@ const PagesGraph = ({ bookData }) => {
   const today = new Date();
   const startDate = new Date(today.getFullYear() - 1, today.getMonth(), 1);
   const endDate = new Date(today.getFullYear(), today.getMonth() + 1, 1);
-  // endDate.setDate(endDate.getDate() + 1);
-  // console.log("end date", endDate);
-  // console.log("start date", startDate);
 
   const monthData: string[] = [];
   const pageData: number[] = [];
@@ -23,14 +20,11 @@ const PagesGraph = ({ bookData }) => {
 
   let currDate = startDate;
   while (currDate < endDate) {
-    console.log(currDate);
     monthData.push(
       (currDate.getMonth() + 1).toString() + "/" + currDate.getFullYear().toString()
     );
     currDate = new Date(currDate.getFullYear(), currDate.getMonth() + 1, currDate.getDate());
   }
-  console.log(monthData);
-  console.log(pageData);
 
   const convertDate = (readDate: Date) => {
     const monthsDifference = (readDate.getFullYear() - startDate.getFullYear()) * 12 
@@ -61,7 +55,6 @@ const PagesGraph = ({ bookData }) => {
   };
 
   const maxYValue = Math.max(...pageData);
-  console.log(pageData)
 
   return (
     <Bar

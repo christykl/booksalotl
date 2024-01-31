@@ -39,15 +39,11 @@ const BlendsRoute = ({ userId }) => {
   useEffect(() => {
     if (!checkBlends(id)) {
         post("/api/updateUsers", { passedId: id });
-        // console.log("adding blend");
     }
   })
 
   const checkBlends = (id) => {
-    // console.log(blendsList);
     for (let i = 0; i < blendsList.length; i++) {
-      // console.log(blendsList[i]);
-      // console.log(id);
       if (blendsList[i] === id) {
         return true;
       }

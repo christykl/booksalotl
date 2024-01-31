@@ -35,3 +35,5 @@ const Modal = ({ show, item, onClose, userId }) => {
   );
 };
 export default Modal;
+
+// code inspired by https://github.com/Kirti-salunkhe/OpenBook

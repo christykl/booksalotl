@@ -47,5 +47,5 @@
 .SingleFriend-avatar-container {
   border: 2px solid var(--white);
   border-radius: 50%;
-  background-color: white; /* This line sets the background color to white */
+  background-color: white;
 }
