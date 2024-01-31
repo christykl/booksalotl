@@ -23,7 +23,7 @@ const Books = (props: BooksProps) => {
   const [genre, setGenre] = useState<string>("");
   const [date, setDate] = useState<Date>(new Date());
   const [rating, setRating] = useState<number>(0);
-  const [current, setCurrent] = useState<boolean>(false);
+  const [status, setStatus] = useState<string>("read");
   const [editBook, setEditBook] = useState<Book | null>(null);
 
   const genreCallback = (genreval) => {
@@ -38,9 +38,8 @@ const Books = (props: BooksProps) => {
     setRating(ratingval);
   };
 
-  const currentCallback = (currentval) => {
-    console.log(currentval);
-    setCurrent(currentval);
+  const statusCallback = (statusval) => {
+    setStatus(statusval);
   };
 
   const hasThumbnail = (book, key) => {
@@ -106,8 +105,6 @@ const Books = (props: BooksProps) => {
       alert("already in library");
       return;
     } else {
-      console.log(book);
-      console.log("adding lib,", current);
       post("/api/books", {
         title: book.volumeInfo.title,
         authors: book.volumeInfo.authors,
@@ -121,7 +118,7 @@ const Books = (props: BooksProps) => {
         published_date: book.volumeInfo.publishedDate,
         preview_link: book.volumeInfo.previewLink,
         description: book.volumeInfo.description,
-        current: current,
+        status: status,
       }).then((newBook) => {
         setLibrary([...library, newBook]);
         // setShowBookInfo(true);
@@ -146,11 +143,10 @@ const Books = (props: BooksProps) => {
       published_date: book.published_date,
       preview_link: book.preview_link,
       description: book.description,
-      current: current,
+      status: status,
     }).then((newBook) => {
       setLibrary([...library, newBook]);
     });
-    setToShow(null);
   };
 
   const closeBookInfo = () => {
@@ -220,44 +216,32 @@ const Books = (props: BooksProps) => {
     );
   };
 
-  const updateBook = (item) => {
-    removeBook(item);
-    addFromEdit(item);
-  };
+  const updateBook = (updatedBook) => {
+    const bookIndex = library.findIndex(book => book._id === updatedBook._id);
+  
+    // Create a new array with the updated book
+    const updatedLibrary = [...library];
+    updatedLibrary[bookIndex] = updatedBook;
 
+    // Update the state
+    setLibrary(updatedLibrary);
+
+    // Close the edit book overlay
+    setEditBook(null);
+    addFromEdit(updatedBook);
+    remove("/api/books/", { id: updatedBook._id });
+  }
   const handleEditBook = (book) => {
     setEditBook(book);
   };
 
-  return (
-    <div>
-      <div className="Books-searchContainer">
-        <form onSubmit={handleFormSubmit}>
-          <input
-            type="text"
-            placeholder="Search..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            onKeyUp={searchBook}
-            className="Books-input"
-          />
-          <button className="Books-button" type="submit">
-            enter
-          </button>
-        </form>
-      </div>
-      {renderDropdown()} {/* Render the dropdown here */}
-      {/* <div className="Books-searchContainer">
-        <FileUpload />
-      </div> */}
-      <div className="">
-        <div className="u-textCenter">
-          <h3>Your Library</h3>
-        </div>
+
+  const LibrarySection = (status) => {
+    return (
         <div className="library-container">
           {library.map((book, index) => {
             // console.log(book);
-            if (book.reader_id && book.reader_id == props.userId)
+            if (book.reader_id && book.reader_id == props.userId && book.status === status)
               return (
                 <div className="Books-card">
                   <LibraryCard userId={props.userId} book={book} key={book._id} />
@@ -284,32 +268,65 @@ const Books = (props: BooksProps) => {
           })}
           {toShow && (
             <div className="overlay">
-              <BookInfo
-                onClose={closeBookInfo}
-                item={toShow}
-                datecb={dateCallback}
-                ratingcb={ratingCallback}
-                genrecb={genreCallback}
-                addbook={addBookToLibrary}
-                dropdowncb={noDropdown}
-                currentcb={currentCallback}
-              />
-            </div>
+              <BookInfo 
+                onClose={closeBookInfo} 
+                item={toShow} 
+                datecb={dateCallback} 
+                ratingcb={ratingCallback} 
+                genrecb={genreCallback} 
+                addbook={addBookToLibrary} 
+                dropdowncb={noDropdown} 
+                statuscb={statusCallback}/>
+            </div>  
           )}
           {editBook && (
             <div className="overlay">
-              <EditBook
-                onClose={closeEditBook}
-                item={editBook}
-                datecb={dateCallback}
-                ratingcb={ratingCallback}
-                genrecb={genreCallback}
-                updatebook={updateBook}
-                currentcb={currentCallback}
-              />
+              <EditBook 
+                onClose={closeEditBook} 
+                item={editBook} 
+                datecb={dateCallback} 
+                ratingcb={ratingCallback} 
+                genrecb={genreCallback} 
+                updatebook={updateBook} 
+                statuscb={statusCallback}/>
             </div>
           )}
         </div>
+    );
+}
+
+  return (
+    <div>
+      <div className="Books-searchContainer">
+        <input
+          type="text"
+          placeholder="Search..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          onKeyUp={searchBook}
+          className="Books-input"
+        />
+      </div>
+      {renderDropdown()} {/* Render the dropdown here */}
+      {/* <div className="Books-searchContainer">
+        <FileUpload />
+      </div> */}
+      <div className="">
+        <div className="u-textCenter">
+          <h3>Your Library</h3>
+        </div>
+        <div className="u-textCenter">
+          <h4>Read</h4>
+        </div>
+        {LibrarySection("read")}
+        <div className="u-textCenter">
+          <h4>Currently Reading</h4>
+        </div>
+        {LibrarySection("currently reading")}
+        <div className="u-textCenter">
+          <h4>Want to Read</h4>
+        </div>
+        {LibrarySection("want to read")}
       </div>
     </div>
   );

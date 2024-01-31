@@ -2,8 +2,9 @@
 
 import React, { useEffect, useState } from "react";
 import Genre from "./Genre";
+import Status from "./Status";
 
-const BookInfo = ({ item, onClose, datecb, ratingcb, genrecb, addbook, dropdowncb, currentcb }) => {
+const BookInfo = ({ item, onClose, datecb, ratingcb, genrecb, addbook, dropdowncb, statuscb }) => {
   let thumbnail =
     item.volumeInfo && item.volumeInfo.imageLinks && item.volumeInfo.imageLinks.smallThumbnail;
   let today = new Date();
@@ -11,7 +12,7 @@ const BookInfo = ({ item, onClose, datecb, ratingcb, genrecb, addbook, dropdownc
   const [date, setDate] = useState<string>(today.toString());
   const [rating, setRating] = useState<number>(0);
   const [submit, setSubmit] = useState<boolean>(false);
-  const [current, setCurrent] = useState<boolean>(false);
+  const [status, setStatus] = useState<string>("read");
 
   const handleSubmit = (event) => {
     event.preventDefault(); // Prevent default form submission behavior
@@ -41,9 +42,13 @@ const BookInfo = ({ item, onClose, datecb, ratingcb, genrecb, addbook, dropdownc
     setGenre(event.target.value);
   };
 
+  const handleStatusChange = (event) => {
+    setStatus(event.target.value);
+  };
+
   useEffect(() => {
-    currentcb(current);
-  }, [current]);
+    statuscb(status);
+  }, [status]);
 
   return (
     <div>
@@ -63,7 +68,7 @@ const BookInfo = ({ item, onClose, datecb, ratingcb, genrecb, addbook, dropdownc
               </h5>
               <br />
               <form onSubmit={handleSubmit}>
-                {!current && (
+                {status==="read" && (
                   <>
                     <label htmlFor="date">Date Completed:</label>
                     <input
@@ -76,14 +81,9 @@ const BookInfo = ({ item, onClose, datecb, ratingcb, genrecb, addbook, dropdownc
                     />
                   </>
                 )}
-                <label htmlFor="current">Currently Reading:</label>
-                <input
-                  type="checkbox"
-                  id="current"
-                  name="current"
-                  checked={current}
-                  onChange={(e) => setCurrent(e.target.checked)}
-                />
+                <br/>
+                <label htmlFor="status">Status:</label>
+                <Status onChange={handleStatusChange} value={status} />
                 <br />
                 <label htmlFor="genre">Genre:</label>
                 <Genre onChange={handleGenreChange} value={genre} />

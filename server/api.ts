@@ -80,7 +80,7 @@ router.post("/books", auth.ensureLoggedIn, (req, res) => {
     preview_link: req.body.preview_link,
     description: req.body.description,
     genre: req.body.genre,
-    current: req.body.current,
+    status: req.body.status,
   });
 
   newBook.save().then((book) => res.send(book));

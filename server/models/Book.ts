@@ -15,9 +15,9 @@ const BookSchema = new Schema({
   preview_link: String,
   description: String,
   genre: String, 
-  current: {
-    type: Boolean,
-    default: false,
+  status: {
+    type: String,
+    default: "read",
   },
 });
 
@@ -36,7 +36,7 @@ export interface Book extends Document {
   description: string;
   genre: string;
   _id: string;
-  current?: boolean;
+  status: string;
 }
 
 const BookModel = model<Book>("Book", BookSchema);
